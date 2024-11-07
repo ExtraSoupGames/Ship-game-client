@@ -22,9 +22,13 @@ Animatable::Animatable(vector<string> animationNames, TextureManager* t) {
 	}
 }
 void Animatable::PlayAnimation(int ID) {
-	if (ID > animations.size() || ID < 0) {
+	if (ID >= animations.size() || ID < 0) {
 		cout << "Animation ID provided was invalid, ID: " << ID << endl;
 		return;
+	}
+	if (ID != currentAnimation) {
+		//if changing to a new animation, reset current frame in case new animation is shorter
+		currentFrame = 0;
 	}
 	animating = true;
 	lastAnimated = SDL_GetTicks();

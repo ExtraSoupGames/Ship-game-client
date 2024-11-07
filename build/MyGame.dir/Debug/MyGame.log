@@ -1,24 +1,2 @@
 ﻿  Animation.cpp
-  Enemy.cpp
-C:\Users\jonny\Desktop\CI628\src\Enemy.cpp(25,52): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\jonny\Desktop\CI628\src\Enemy.cpp(26,52): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-  PlayerController.cpp
-C:\Users\jonny\Desktop\CI628\src\PlayerController.cpp(10,20): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\jonny\Desktop\CI628\src\PlayerController.cpp(11,20): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\jonny\Desktop\CI628\src\PlayerController.cpp(126,40): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-C:\Users\jonny\Desktop\CI628\src\PlayerController.cpp(126,34): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-  ServerManager.cpp
-C:\Users\jonny\Desktop\CI628\src\ServerManager.cpp(26,15): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\jonny\Desktop\CI628\src\ServerManager.cpp(37,5): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  TextureManager.cpp
-C:\Users\jonny\Desktop\CI628\src\TextureManager.cpp(135,61): warning C4267: '=': conversion from 'size_t' to 'uint32_t', possible loss of data
-C:\Users\jonny\Desktop\CI628\src\TextureManager.cpp(280,18): warning C4101: 'returnTexture': unreferenced local variable
-C:\Users\jonny\Desktop\CI628\src\TextureManager.cpp(317,15): warning C4101: 'returnTexture': unreferenced local variable
-  Main.cpp
-C:\Users\jonny\Desktop\CI628\src\Main.cpp(9,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  MyGame.cpp
-C:\Users\jonny\Desktop\CI628\src\MyGame.cpp(52,22): warning C4244: 'initializing': conversion from '__int64' to 'double', possible loss of data
-C:\Users\jonny\Desktop\CI628\src\MyGame.cpp(95,22): warning C4244: 'initializing': conversion from '__int64' to 'double', possible loss of data
-C:\Users\jonny\Desktop\CI628\src\MyGame.cpp(142,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
   MyGame.vcxproj -> C:\Users\jonny\Desktop\CI628\build\Debug\MyGame.exe
