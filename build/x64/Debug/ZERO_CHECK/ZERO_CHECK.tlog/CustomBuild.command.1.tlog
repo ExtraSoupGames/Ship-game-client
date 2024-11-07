@@ -1,0 +1,10 @@
+^C:\USERS\JONNY\DESKTOP\CI628\BUILD\CMAKEFILES\486331BE573DF0C732E1172D07ACB453\GENERATE.STAMP.RULE
+setlocal
+C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\bin\cmake.exe -SC:/Users/jonny/Desktop/CI628 -BC:/Users/jonny/Desktop/CI628/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/jonny/Desktop/CI628/build/MyGame.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

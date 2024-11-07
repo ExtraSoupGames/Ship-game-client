@@ -1,0 +1,40 @@
+#pragma once
+#include <vector>
+#include <iostream>
+#include <thread>
+#include <SDL_thread.h>
+#include "TextureManager.h"
+#include "SDL.h"
+using namespace std;
+struct Frame {
+	SDL_Texture* texture;
+	Frame(SDL_Texture* t) {
+		texture = t;
+	}
+};
+struct Animation {
+	Animation(string name, TextureManager* t, float animationDuration, bool loop);
+	vector<Frame> frames;
+	float totalDuration;
+	float frameDuration();
+	bool looping;
+};
+class Animatable {
+private:
+	SDL_Texture* texture;
+	int defaultAnimation;
+	int currentFrame;
+	bool animating;
+	double lastAnimated;
+	vector<Animation> animations;
+	void SetTexture(SDL_Texture* t);
+protected:
+	int currentAnimation;
+public:
+	Animatable(vector<string> animationNames, TextureManager* t);
+	void PlayAnimation(int ID);
+	void StartAnimating();
+	void StopAnimating();
+	void UpdateAnimation();
+	void Render(SDL_Renderer* renderer, int xPos, int yPos, int width, int height);
+};
