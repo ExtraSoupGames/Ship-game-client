@@ -1,5 +1,5 @@
-# CI628-PongClient
-A simple multiplayer pong client in C++.
+# CI628-ShipGame Client
+Multiplayer ship game client adapted from [CI628-PongClient](https://github.com/AlmasB/CI628-PongClient)
 
 ### Build
 
