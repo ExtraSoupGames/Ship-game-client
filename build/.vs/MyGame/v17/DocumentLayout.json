@@ -28,8 +28,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Animation.cpp",
+              "DocumentMoniker": "C:\\Users\\jonny\\Desktop\\CI628\\src\\Animation.cpp",
+              "RelativeDocumentMoniker": "..\\src\\Animation.cpp",
+              "ToolTip": "C:\\Users\\jonny\\Desktop\\CI628\\src\\Animation.cpp",
+              "RelativeToolTip": "..\\src\\Animation.cpp",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAACYAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-11-07T22:38:14.554Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 3,
@@ -40,21 +53,7 @@
               "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.41.34120\\include\\vector",
               "ViewState": "AgIAAEwHAAAAAAAAAAAiwF8HAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-11-07T22:38:38.096Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Animation.cpp",
-              "DocumentMoniker": "C:\\Users\\jonny\\Desktop\\CI628\\src\\Animation.cpp",
-              "RelativeDocumentMoniker": "..\\src\\Animation.cpp",
-              "ToolTip": "C:\\Users\\jonny\\Desktop\\CI628\\src\\Animation.cpp",
-              "RelativeToolTip": "..\\src\\Animation.cpp",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAcwB4AAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-11-07T22:38:14.554Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-07T22:38:38.096Z"
             },
             {
               "$type": "Document",
@@ -66,8 +65,7 @@
               "RelativeToolTip": "..\\src\\Main.cpp",
               "ViewState": "AgIAAAkAAAAAAAAAAAAAABYAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-11-07T11:25:10.883Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-07T11:25:10.883Z"
             },
             {
               "$type": "Document",
@@ -90,7 +88,7 @@
               "RelativeDocumentMoniker": "..\\src\\PlayerController.cpp",
               "ToolTip": "C:\\Users\\jonny\\Desktop\\CI628\\src\\PlayerController.cpp",
               "RelativeToolTip": "..\\src\\PlayerController.cpp",
-              "ViewState": "AgIAAF0AAAAAAAAAAAAAAHgAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABUAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-11-06T10:04:14.443Z",
               "EditorCaption": ""

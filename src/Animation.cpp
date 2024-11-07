@@ -18,7 +18,7 @@ Animatable::Animatable(vector<string> animationNames, TextureManager* t) {
 	texture = t->GetErrorTexture();
 	for (string animation : animationNames) {
 		bool animationIsLooping = animation.at(0) == 'L';
-		animations.push_back(*new Animation(animation, t, 900, animationIsLooping));
+		animations.push_back(*new Animation(animation, t, 800, animationIsLooping));
 	}
 }
 void Animatable::PlayAnimation(int ID) {
@@ -29,9 +29,11 @@ void Animatable::PlayAnimation(int ID) {
 	if (ID != currentAnimation) {
 		//if changing to a new animation, reset current frame in case new animation is shorter
 		currentFrame = 0;
+		currentAnimation = ID;
+		lastAnimated = SDL_GetTicks();
+		SetTexture(animations[currentAnimation].frames[currentFrame].texture);
 	}
 	animating = true;
-	lastAnimated = SDL_GetTicks();
 	currentAnimation = ID;
 }
 void Animatable::StartAnimating()
