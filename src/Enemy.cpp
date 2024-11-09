@@ -45,6 +45,20 @@ void Enemy::Render(SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
     SDL_RenderDrawRect(renderer, enemyRect);
 }
+EnemyType Enemy::GetEnemyTypeFromBinary(string binaryIn)
+{
+    if (binaryIn == "000") {
+        return LEECH;
+    }
+    else if (binaryIn == "001") {
+        return FLOPPER;
+    }
+    return FLOPPER;
+}
+Enemy* Enemy::ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*> enemies, TextureManager* t)
+{
+    return nullptr;
+}
 Enemy::Enemy(int ID) : Interpolator(ID) {
     width = 20;
     height = 20;
@@ -55,6 +69,71 @@ void Enemy::OnInterpolate(DataPoint* data)
 Hitbox Enemy::GetHitbox() {
     return *new Hitbox{x, y, width, height};
 }
+Leech::Leech(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{"LeechAttack"}, t) {
+    Animatable::PlayAnimation(0);
+}
+void Leech::Render(SDL_Renderer* renderer) {
+    Animatable::Render(renderer, x, y, 20, 20);
+}
+Enemy* Leech::ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t)
+{
+    auto it = std::find_if(enemies->begin(), enemies->end(), [&ID](Enemy* e) {return e->HasID(ID); });
+    if (it == enemies->end()) {
+        //if this is a new enemy
+        Leech* newEnemy = new Leech(ID, t);
+        newEnemy->AddToBuffer(new DataStream{ data });
+        enemies->push_back(newEnemy);
+        return newEnemy;
+    }
+    else {
+        Leech* thisEnemy = (Leech*)(*it);
+        thisEnemy->AddToBuffer(new DataStream{ data, timestamp });
+        return thisEnemy;
+    }
+}
+Flopper::Flopper(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{ "LFlopperIdle", "LFlopperFly", "FlopperSpawn" }, t) {
+    state = SPAWNING;
+}
+void Flopper::SetState(string binaryIn)
+{
+    if (binaryIn == "00") {
+        state = GROUNDED;
+        Animatable::PlayAnimation(0);
+    }
+    else if (binaryIn == "01") {
+        state = AIRBORNE;
+        Animatable::PlayAnimation(1);
+    }
+    else if (binaryIn == "10") {
+        state = SPAWNING;
+        Animatable::PlayAnimation(2);
+    }
+    else {
+        throw new exception("Unexpected flopper information received");
+    }
+}
+void Flopper::Render(SDL_Renderer* renderer) {
+    //TODO draw the flopper based on the state
+    Animatable::Render(renderer, x, y, 20, 20);
+}
+
+Enemy* Flopper::ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t)
+{
+    auto it = std::find_if(enemies->begin(), enemies->end(), [&ID](Enemy* e) {return e->HasID(ID); });
+    if (it == enemies->end()) {
+        //if this is a new enemy
+        Flopper* newEnemy = new Flopper(ID, t);
+        newEnemy->AddToBuffer(new DataStream{ data });
+        enemies->push_back(newEnemy);
+        return newEnemy;
+    }
+    else {
+        Flopper* thisEnemy = (Flopper*)(*it);
+        thisEnemy->AddToBuffer(new DataStream{ data, timestamp });
+        return thisEnemy;
+    }
+}
+
 void OtherPlayer::Render(SDL_Renderer* renderer) {
     SDL_Rect* playerRect = new SDL_Rect{ x, y, 20, 20 };
     if (state.attackState == 1) {

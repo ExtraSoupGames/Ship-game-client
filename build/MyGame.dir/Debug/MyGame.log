@@ -1,2 +1,4 @@
-﻿  Animation.cpp
+﻿  Enemy.cpp
+C:\Users\jonny\Desktop\CI628\src\Enemy.cpp(25,52): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\jonny\Desktop\CI628\src\Enemy.cpp(26,52): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
   MyGame.vcxproj -> C:\Users\jonny\Desktop\CI628\build\Debug\MyGame.exe

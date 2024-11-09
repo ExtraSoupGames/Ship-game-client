@@ -44,8 +44,9 @@ MyGame::MyGame(int pClientID, UDPsocket* serverSocket, SDL_Renderer* gameRendere
 }
 #pragma region incomingData
 void MyGame::HandleEnemyData(string message) {
-    if (!((message.size() - 3 - 64) % 48) == 0 && message.size() > 1) { // size should be 3 for header + a multiple of 32 for the ID + 16 for the position per enemy + 64 for timestamp
-        int padding = (message.size() - 3 - 64) % 48;
+    int enemyPacketSize = 53;
+    if (!((message.size() - 3 - 64) % enemyPacketSize) == 0 && message.size() > 1) { // size should be 3 for header + a multiple of 32 for the ID + 16 for the position per enemy + 64 for timestamp
+        int padding = (message.size() - 3 - 64) % enemyPacketSize;
         message = message.substr(0, message.size() - padding); // remove the padding
     }
 
@@ -57,23 +58,25 @@ void MyGame::HandleEnemyData(string message) {
         enemies = new vector<Enemy*>;
         return;
     }
-    for (int i = 0; i < (enemyData.size() - 47); i += 48) { //iterate through each enemies data (each enemy has 48 bits to store position and ID
-        int ID = server->IntDecompress(enemyData.substr(i, 32));
-        int* position = server->PositionDecompress(enemyData.substr(i + 32, 16));
+    for (int i = 0; i < (enemyData.size() - (enemyPacketSize - 1)); i += enemyPacketSize) { //iterate through each enemies data (each enemy has 48 bits to store position and ID
+        EnemyType enemyType = Enemy::GetEnemyTypeFromBinary(enemyData.substr(i, 3));
+        int ID = server->IntDecompress(enemyData.substr(i+3, 32));
+        int* position = server->PositionDecompress(enemyData.substr(i + 35, 16));
         int X = *position;
         int Y = *(position + 1);
+        string ExtraData = enemyData.substr(i + 51, 2);
         aliveEnemyIDs.push_back(ID);
         // find the enemy with the given ID, if there is one
-        auto it = std::find_if(enemies->begin(), enemies->end(), [&ID](Enemy* e) {return e->HasID(ID); });
-        if (it == enemies->end()) {
-            //if this is a new enemy
-            Enemy* newEnemy = new Enemy(ID);
-            newEnemy->AddToBuffer(new DataStream({ new DataPoint{X, Y}, timestamp }));
-            enemies->push_back(newEnemy);
-        }
-        else {
-            Enemy* thisEnemy = *it;
-            thisEnemy->AddToBuffer(new DataStream({ new DataPoint{X, Y}, timestamp }));
+        switch (enemyType) {
+        case LEECH:
+            //no extra data for leech
+            Leech::ProcessEnemy(new DataPoint{X, Y}, ID, timestamp, enemies, textureManager);
+            break;
+        case FLOPPER:
+            //process extra 2 bits of information
+            Flopper* f = (Flopper*)Flopper::ProcessEnemy(new DataPoint{ X, Y }, ID, timestamp, enemies, textureManager);
+            f->SetState(ExtraData);
+            break;
         }
     }
     //remove any enemies that didnt have any data sent for them as they are dead

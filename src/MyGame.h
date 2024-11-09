@@ -17,7 +17,6 @@
 #include "PlayerController.h"
 #include "Data.h"
 using namespace std;
-
 struct Hitbox {
     //defined by a point and a width and height
     int x;
@@ -43,8 +42,6 @@ class MyGame {
         double broadcastSpacing = 20;
 
         Animatable* number;
-
-
         void HandlePlayerData(string data);
         void HandleEnemyData(string data);
         void HandleBoundaryData(string data);

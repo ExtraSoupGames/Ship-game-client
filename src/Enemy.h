@@ -7,6 +7,10 @@ using namespace std;
 struct DataStream;
 struct DataPoint;
 struct Hitbox;
+enum EnemyType {
+	LEECH,
+	FLOPPER
+};
 class Interpolator {
 private:
 	vector<DataStream*> incomingDataBuffer;
@@ -33,6 +37,27 @@ public:
 	Enemy(int ID);
 	int GetID();
 	void Render(SDL_Renderer* renderer);
+	static EnemyType GetEnemyTypeFromBinary(string binaryIn);
+	static Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*> enemies, TextureManager* t);
+};
+class Leech : public Enemy, public Animatable {
+public:
+	Leech(int ID, TextureManager* t);
+	void Render(SDL_Renderer* renderer);
+	static Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t);
+};
+enum FlopperStates {
+	GROUNDED,
+	AIRBORNE,
+	SPAWNING
+};
+class Flopper : public Enemy, public Animatable {
+	FlopperStates state;
+public:
+	Flopper(int ID, TextureManager* t);
+	void SetState(string binaryIn);
+	void Render(SDL_Renderer* renderer);
+	static Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t);
 };
 class OtherPlayer : public Interpolator, public Animatable
 {
