@@ -1,4 +1,16 @@
 ﻿  Enemy.cpp
 C:\Users\jonny\Desktop\CI628\src\Enemy.cpp(25,52): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
 C:\Users\jonny\Desktop\CI628\src\Enemy.cpp(26,52): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  PlayerController.cpp
+C:\Users\jonny\Desktop\CI628\src\PlayerController.cpp(10,20): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\jonny\Desktop\CI628\src\PlayerController.cpp(11,20): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\jonny\Desktop\CI628\src\PlayerController.cpp(124,40): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\jonny\Desktop\CI628\src\PlayerController.cpp(124,34): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Main.cpp
+C:\Users\jonny\Desktop\CI628\src\Main.cpp(9,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  MyGame.cpp
+C:\Users\jonny\Desktop\CI628\src\MyGame.cpp(53,22): warning C4244: 'initializing': conversion from '__int64' to 'double', possible loss of data
+C:\Users\jonny\Desktop\CI628\src\MyGame.cpp(98,22): warning C4244: 'initializing': conversion from '__int64' to 'double', possible loss of data
+C:\Users\jonny\Desktop\CI628\src\MyGame.cpp(145,27): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
   MyGame.vcxproj -> C:\Users\jonny\Desktop\CI628\build\Debug\MyGame.exe

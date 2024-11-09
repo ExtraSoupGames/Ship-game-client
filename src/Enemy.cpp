@@ -34,8 +34,8 @@ bool Interpolator::HasID(int IDToCompare) {
 }
 Interpolator::Interpolator(int pID) {
     ID = pID;
-    int x = 0;
-    int y = 0;
+    x = 0;
+    y = 0;
 }
 int Enemy::GetID() {
     return ID;
@@ -114,7 +114,8 @@ void Flopper::SetState(string binaryIn)
 }
 void Flopper::Render(SDL_Renderer* renderer) {
     //TODO draw the flopper based on the state
-    Animatable::Render(renderer, x, y, 20, 20);
+    Animatable::UpdateAnimation();
+    Animatable::Render(renderer, x, y, 30, 30);
 }
 
 Enemy* Flopper::ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t)

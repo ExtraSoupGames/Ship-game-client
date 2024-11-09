@@ -36,7 +36,7 @@ public:
 	Hitbox GetHitbox();
 	Enemy(int ID);
 	int GetID();
-	void Render(SDL_Renderer* renderer);
+	virtual void Render(SDL_Renderer* renderer);
 	static EnemyType GetEnemyTypeFromBinary(string binaryIn);
 	static Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*> enemies, TextureManager* t);
 };
