@@ -70,7 +70,7 @@ void MyGame::HandleEnemyData(string message) {
         switch (enemyType) {
         case LEECH:
             //no extra data for leech
-            Leech::ProcessEnemy(new DataPoint{X, Y}, ID, timestamp, enemies, textureManager);
+            Bobleech::ProcessEnemy(new DataPoint{X, Y}, ID, timestamp, enemies, textureManager);
             break;
         case FLOPPER:
             //process extra 2 bits of information

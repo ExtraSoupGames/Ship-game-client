@@ -40,9 +40,9 @@ public:
 	static EnemyType GetEnemyTypeFromBinary(string binaryIn);
 	static Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*> enemies, TextureManager* t);
 };
-class Leech : public Enemy, public Animatable {
+class Bobleech : public Enemy, public Animatable {
 public:
-	Leech(int ID, TextureManager* t);
+	Bobleech(int ID, TextureManager* t);
 	void Render(SDL_Renderer* renderer);
 	static Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t);
 };

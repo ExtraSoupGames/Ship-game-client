@@ -17,7 +17,7 @@ Animatable::Animatable(vector<string> animationNames, TextureManager* t) {
 	lastAnimated = SDL_GetTicks();
 	texture = t->GetErrorTexture();
 	for (string animation : animationNames) {
-		bool animationIsLooping = animation.at(0) == 'L';
+		bool animationIsLooping = animation.at(0) == '%';
 		animations.push_back(*new Animation(animation, t, 800, animationIsLooping));
 	}
 }

@@ -69,29 +69,29 @@ void Enemy::OnInterpolate(DataPoint* data)
 Hitbox Enemy::GetHitbox() {
     return *new Hitbox{x, y, width, height};
 }
-Leech::Leech(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{"LeechAttack"}, t) {
+Bobleech::Bobleech(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{"LeechAttack"}, t) {
     Animatable::PlayAnimation(0);
 }
-void Leech::Render(SDL_Renderer* renderer) {
+void Bobleech::Render(SDL_Renderer* renderer) {
     Animatable::Render(renderer, x, y, 20, 20);
 }
-Enemy* Leech::ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t)
+Enemy* Bobleech::ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t)
 {
     auto it = std::find_if(enemies->begin(), enemies->end(), [&ID](Enemy* e) {return e->HasID(ID); });
     if (it == enemies->end()) {
         //if this is a new enemy
-        Leech* newEnemy = new Leech(ID, t);
+        Bobleech* newEnemy = new Bobleech(ID, t);
         newEnemy->AddToBuffer(new DataStream{ data });
         enemies->push_back(newEnemy);
         return newEnemy;
     }
     else {
-        Leech* thisEnemy = (Leech*)(*it);
+        Bobleech* thisEnemy = (Bobleech*)(*it);
         thisEnemy->AddToBuffer(new DataStream{ data, timestamp });
         return thisEnemy;
     }
 }
-Flopper::Flopper(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{ "LFlopperIdle", "LFlopperFly", "FlopperSpawn" }, t) {
+Flopper::Flopper(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{ "%FlopperIdle", "%FlopperFly", "FlopperSpawn" }, t) {
     state = SPAWNING;
 }
 void Flopper::SetState(string binaryIn)
@@ -154,6 +154,6 @@ void OtherPlayer::OnInterpolate(DataPoint* data){
     }
     state = playerData->state;
 }
-OtherPlayer::OtherPlayer(int ID, TextureManager* t) : Interpolator(ID), Animatable(*new vector<string>{"Lwalk", "Lrun", "Ldash"}, t) {
+OtherPlayer::OtherPlayer(int ID, TextureManager* t) : Interpolator(ID), Animatable(*new vector<string>{"%walk", "%run", "%dash"}, t) {
     state = *new PlayerState(0 ,0, 0); // default state is direction 0, standing still = 0, and not attacking = 0
 }

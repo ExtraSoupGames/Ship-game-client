@@ -19,7 +19,7 @@ void PlayerController::Attack(MyGame* game){
         }
     }
 }
-PlayerController::PlayerController(TextureManager* t) : Animatable(*new vector<string>{ "Lwalk", "Lrun", "Ldash" }, t) {
+PlayerController::PlayerController(TextureManager* t) : Animatable(*new vector<string>{ "%walk", "%run", "%dash" }, t) {
     //player's values
     attackCooldown = 500;
     //starting position
