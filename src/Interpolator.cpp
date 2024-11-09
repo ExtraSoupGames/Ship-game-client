@@ -1,6 +1,7 @@
-#include "Enemy.h"
+#include "Interpolator.h"
 #include "MyGame.h"
 #include "Data.h"
+#pragma region Interpolator
 void Interpolator::AddToBuffer(DataStream* newData) {
 	incomingDataBuffer.push_back(newData);
 	std::sort(incomingDataBuffer.begin(), incomingDataBuffer.end(), [](DataStream*& a, DataStream*& b) {return a->timestamp < b->timestamp; });
@@ -37,6 +38,8 @@ Interpolator::Interpolator(int pID) {
     x = 0;
     y = 0;
 }
+#pragma endregion Interpolator
+#pragma region Enemy
 int Enemy::GetID() {
     return ID;
 }
@@ -55,10 +58,6 @@ EnemyType Enemy::GetEnemyTypeFromBinary(string binaryIn)
     }
     return FLOPPER;
 }
-Enemy* Enemy::ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*> enemies, TextureManager* t)
-{
-    return nullptr;
-}
 Enemy::Enemy(int ID) : Interpolator(ID) {
     width = 20;
     height = 20;
@@ -69,28 +68,16 @@ void Enemy::OnInterpolate(DataPoint* data)
 Hitbox Enemy::GetHitbox() {
     return *new Hitbox{x, y, width, height};
 }
+#pragma endregion Enemy
+#pragma region Bobleech
 Bobleech::Bobleech(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{"LeechAttack"}, t) {
     Animatable::PlayAnimation(0);
 }
 void Bobleech::Render(SDL_Renderer* renderer) {
     Animatable::Render(renderer, x, y, 20, 20);
 }
-Enemy* Bobleech::ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t)
-{
-    auto it = std::find_if(enemies->begin(), enemies->end(), [&ID](Enemy* e) {return e->HasID(ID); });
-    if (it == enemies->end()) {
-        //if this is a new enemy
-        Bobleech* newEnemy = new Bobleech(ID, t);
-        newEnemy->AddToBuffer(new DataStream{ data });
-        enemies->push_back(newEnemy);
-        return newEnemy;
-    }
-    else {
-        Bobleech* thisEnemy = (Bobleech*)(*it);
-        thisEnemy->AddToBuffer(new DataStream{ data, timestamp });
-        return thisEnemy;
-    }
-}
+#pragma endregion Bobleech
+#pragma region Flopper
 Flopper::Flopper(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{ "%FlopperIdle", "%FlopperFly", "FlopperSpawn" }, t) {
     state = SPAWNING;
 }
@@ -104,24 +91,25 @@ void Flopper::Render(SDL_Renderer* renderer) {
     Animatable::UpdateAnimation();
     Animatable::Render(renderer, x, y, 30, 30);
 }
-
-Enemy* Flopper::ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t)
+#pragma endregion Flopper
+#pragma region Clingabing
+void Clingabing::OnInterpolate(DataPoint* data)
 {
-    auto it = std::find_if(enemies->begin(), enemies->end(), [&ID](Enemy* e) {return e->HasID(ID); });
-    if (it == enemies->end()) {
-        //if this is a new enemy
-        Flopper* newEnemy = new Flopper(ID, t);
-        newEnemy->AddToBuffer(new DataStream{ data });
-        enemies->push_back(newEnemy);
-        return newEnemy;
-    }
-    else {
-        Flopper* thisEnemy = (Flopper*)(*it);
-        thisEnemy->AddToBuffer(new DataStream{ data, timestamp });
-        return thisEnemy;
-    }
 }
 
+Clingabing::Clingabing(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{}, t) // TODO add animation names
+{
+    state = IDLE;
+}
+
+void Clingabing::Render(SDL_Renderer* renderer)
+{
+    //TODO add clingabing frames and animate
+    SDL_Rect* clingabingRect = new SDL_Rect{x, y, 15, 15};
+    SDL_RenderDrawRect(renderer, clingabingRect);
+}
+#pragma endregion Clingabing
+#pragma region OtherPlayer
 void OtherPlayer::Render(SDL_Renderer* renderer) {
     SDL_Rect* playerRect = new SDL_Rect{ x, y, 20, 20 };
     if (state.attackState == 1) {
@@ -144,3 +132,4 @@ void OtherPlayer::OnInterpolate(DataPoint* data){
 OtherPlayer::OtherPlayer(int ID, TextureManager* t) : Interpolator(ID), Animatable(*new vector<string>{"%walk", "%run", "%dash"}, t) {
     state = *new PlayerState(0 ,0, 0); // default state is direction 0, standing still = 0, and not attacking = 0
 }
+#pragma endregion OtherPlayer

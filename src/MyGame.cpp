@@ -43,6 +43,22 @@ MyGame::MyGame(int pClientID, UDPsocket* serverSocket, SDL_Renderer* gameRendere
     number->PlayAnimation(0);
 }
 #pragma region incomingData
+template <typename T> Enemy* MyGame::ProcessEnemy(DataPoint* data, int ID, double timestamp)
+{
+    auto it = std::find_if(enemies->begin(), enemies->end(), [&ID](Enemy* e) {return e->HasID(ID); });
+    if (it == enemies->end()) {
+        //if this is a new enemy
+        Enemy* newEnemy = new T(ID, textureManager);
+        newEnemy->AddToBuffer(new DataStream{ data });
+        enemies->push_back(newEnemy);
+        return newEnemy;
+    }
+    else {
+        Enemy* thisEnemy = (Enemy*)(*it);
+        thisEnemy->AddToBuffer(new DataStream{ data, timestamp });
+        return thisEnemy;
+    }
+}
 void MyGame::HandleEnemyData(string message) {
     int enemyPacketSize = 53;
     if (!((message.size() - 3 - 64) % enemyPacketSize) == 0 && message.size() > 1) { // size should be 3 for header + a multiple of 32 for the ID + 16 for the position per enemy + 64 for timestamp
@@ -59,6 +75,7 @@ void MyGame::HandleEnemyData(string message) {
         return;
     }
     for (int i = 0; i < (enemyData.size() - (enemyPacketSize - 1)); i += enemyPacketSize) { //iterate through each enemies data (each enemy has 48 bits to store position and ID
+        //get the information about the enemy
         EnemyType enemyType = Enemy::GetEnemyTypeFromBinary(enemyData.substr(i, 3));
         int ID = server->IntDecompress(enemyData.substr(i+3, 32));
         int* position = server->PositionDecompress(enemyData.substr(i + 35, 16));
@@ -66,16 +83,16 @@ void MyGame::HandleEnemyData(string message) {
         int Y = *(position + 1);
         string extraData = enemyData.substr(i + 51, 2);
         aliveEnemyIDs.push_back(ID);
-        // find the enemy with the given ID, if there is one
+        //process the data for the enemy, depending on the type of enemy
         switch (enemyType) {
         case LEECH:
-            //no extra data for leech
-            Bobleech::ProcessEnemy(new BobleechData(X, Y), ID, timestamp, enemies, textureManager);
+            ProcessEnemy<Bobleech>(new BobleechData(X, Y), ID, timestamp);
             break;
         case FLOPPER:
-            //process extra 2 bits of information
-            Flopper* f = (Flopper*)Flopper::ProcessEnemy(new FlopperData(X, Y, extraData), ID, timestamp, enemies, textureManager);
+            ProcessEnemy<Flopper>(new FlopperData(X, Y, extraData), ID, timestamp);
             break;
+        case CLINGABING:
+            ProcessEnemy<Clingabing>(new ClingabingData(X, Y, extraData), ID, timestamp);
         }
     }
     //remove any enemies that didnt have any data sent for them as they are dead

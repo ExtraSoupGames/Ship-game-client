@@ -7,7 +7,7 @@
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\MyGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Enemy.cpp">
+    <ClCompile Include="..\src\Interpolator.cpp">
       <Filter>GameFiles</Filter>
     </ClCompile>
     <ClCompile Include="..\src\TextureManager.cpp">
@@ -30,7 +30,7 @@
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MyGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Enemy.h">
+    <ClInclude Include="..\src\Interpolator.h">
       <Filter>GameFiles</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TextureManager.h">

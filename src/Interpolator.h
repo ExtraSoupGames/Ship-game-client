@@ -9,7 +9,8 @@ struct DataPoint;
 struct Hitbox;
 enum EnemyType {
 	LEECH,
-	FLOPPER
+	FLOPPER,
+	CLINGABING
 };
 class Interpolator {
 private:
@@ -38,14 +39,14 @@ public:
 	int GetID();
 	virtual void Render(SDL_Renderer* renderer);
 	static EnemyType GetEnemyTypeFromBinary(string binaryIn);
-	static Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*> enemies, TextureManager* t);
 };
+#pragma region Enemies
 class Bobleech : public Enemy, public Animatable {
 public:
 	Bobleech(int ID, TextureManager* t);
 	void Render(SDL_Renderer* renderer);
-	static Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t);
 };
+
 class Flopper : public Enemy, public Animatable {
 	FlopperStates state;
 protected:
@@ -53,8 +54,18 @@ protected:
 public:
 	Flopper(int ID, TextureManager* t);
 	void Render(SDL_Renderer* renderer);
-	static Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t);
 };
+
+class Clingabing : public Enemy, public Animatable{
+	ClingabingStates state;
+protected:
+	void OnInterpolate(DataPoint* data) override;
+public:
+	Clingabing(int ID, TextureManager* t);
+	void Render(SDL_Renderer* renderer);
+};
+#pragma endregion enemies
+
 class OtherPlayer : public Interpolator, public Animatable
 {
 protected:

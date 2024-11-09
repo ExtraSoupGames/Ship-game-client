@@ -9,7 +9,7 @@
 #include <SDL.h>
 #include <SDL_net.h>
 
-#include "Enemy.h"
+#include "Interpolator.h"
 #include "Collision.h"
 #include "ServerManager.h"
 #include "TextureManager.h"
@@ -42,6 +42,7 @@ class MyGame {
         double broadcastSpacing = 20;
 
         Animatable* number;
+        template <typename T> Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp);
         void HandlePlayerData(string data);
         void HandleEnemyData(string data);
         void HandleBoundaryData(string data);

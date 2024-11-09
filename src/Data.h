@@ -17,6 +17,11 @@ enum FlopperStates {
     AIRBORNE,
     SPAWNING
 };
+enum ClingabingStates {
+    IDLE,
+    DASHING,
+    ATTACHED
+};
 struct DataPoint {
     int X = 0;
     int Y = 0;
@@ -47,6 +52,23 @@ struct FlopperData : public EnemyData {
         }
         else {
             throw new exception("invalid flopper state provided");
+        }
+    }
+};
+struct ClingabingData : public EnemyData {
+    ClingabingStates state;
+    ClingabingData(int x, int y, string binaryIn) : EnemyData(x, y) {
+        if (binaryIn == "00") {
+            state = IDLE;
+        }
+        else if (binaryIn == "01") {
+            state = DASHING;
+        }
+        else if (binaryIn == "10") {
+            state = ATTACHED;
+        }
+        else {
+            throw new exception("invalid clingabing state provided");
         }
     }
 };
