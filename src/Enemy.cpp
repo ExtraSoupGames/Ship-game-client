@@ -94,23 +94,10 @@ Enemy* Bobleech::ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<
 Flopper::Flopper(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{ "%FlopperIdle", "%FlopperFly", "FlopperSpawn" }, t) {
     state = SPAWNING;
 }
-void Flopper::SetState(string binaryIn)
-{
-    if (binaryIn == "00") {
-        state = GROUNDED;
-        Animatable::PlayAnimation(0);
-    }
-    else if (binaryIn == "01") {
-        state = AIRBORNE;
-        Animatable::PlayAnimation(1);
-    }
-    else if (binaryIn == "10") {
-        state = SPAWNING;
-        Animatable::PlayAnimation(2);
-    }
-    else {
-        throw new exception("Unexpected flopper information received");
-    }
+void Flopper::OnInterpolate(DataPoint* data) {
+    FlopperData* flopperData = (FlopperData*)data;
+    state = flopperData->state;
+    PlayAnimation(state);
 }
 void Flopper::Render(SDL_Renderer* renderer) {
     //TODO draw the flopper based on the state

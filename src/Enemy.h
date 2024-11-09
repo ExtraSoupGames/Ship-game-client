@@ -46,16 +46,12 @@ public:
 	void Render(SDL_Renderer* renderer);
 	static Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t);
 };
-enum FlopperStates {
-	GROUNDED,
-	AIRBORNE,
-	SPAWNING
-};
 class Flopper : public Enemy, public Animatable {
 	FlopperStates state;
+protected:
+	void OnInterpolate(DataPoint* data) override;
 public:
 	Flopper(int ID, TextureManager* t);
-	void SetState(string binaryIn);
 	void Render(SDL_Renderer* renderer);
 	static Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp, vector<Enemy*>* enemies, TextureManager* t);
 };

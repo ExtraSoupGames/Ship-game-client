@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+using namespace std;
 struct PlayerState {
     int direction;
     int movementState;
@@ -10,18 +12,48 @@ struct PlayerState {
         attackState = 0;
     }
 };
+enum FlopperStates {
+    GROUNDED,
+    AIRBORNE,
+    SPAWNING
+};
 struct DataPoint {
     int X = 0;
     int Y = 0;
+    DataPoint(int x, int y) {
+        X = x;
+        Y = y;
+    }
 };
 struct EnemyData : public DataPoint {
+    EnemyData(int x, int y) : DataPoint(x, y) {
+    }
+};
+struct BobleechData : public EnemyData {
+    BobleechData(int x, int y) : EnemyData(x, y){
+    }
+};
+struct FlopperData : public EnemyData {
+    FlopperStates state;
+    FlopperData(int x, int y, string binaryIn) : EnemyData(x, y) {
+        if (binaryIn == "00") {
+            state = GROUNDED;
+        }
+        else if (binaryIn == "01") {
+            state = AIRBORNE;
+        }
+        else if (binaryIn == "10") {
+            state = SPAWNING;
+        }
+        else {
+            throw new exception("invalid flopper state provided");
+        }
+    }
 };
 struct PlayerData : public DataPoint {
     PlayerState state;
-    PlayerData(int x, int y, PlayerState playerState) {
+    PlayerData(int x, int y, PlayerState playerState) : DataPoint(x, y) {
         state = playerState;
-        X = x;
-        Y = y;
     }
 };
 

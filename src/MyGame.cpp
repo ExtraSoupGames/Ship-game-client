@@ -64,18 +64,17 @@ void MyGame::HandleEnemyData(string message) {
         int* position = server->PositionDecompress(enemyData.substr(i + 35, 16));
         int X = *position;
         int Y = *(position + 1);
-        string ExtraData = enemyData.substr(i + 51, 2);
+        string extraData = enemyData.substr(i + 51, 2);
         aliveEnemyIDs.push_back(ID);
         // find the enemy with the given ID, if there is one
         switch (enemyType) {
         case LEECH:
             //no extra data for leech
-            Bobleech::ProcessEnemy(new DataPoint{X, Y}, ID, timestamp, enemies, textureManager);
+            Bobleech::ProcessEnemy(new BobleechData(X, Y), ID, timestamp, enemies, textureManager);
             break;
         case FLOPPER:
             //process extra 2 bits of information
-            Flopper* f = (Flopper*)Flopper::ProcessEnemy(new DataPoint{ X, Y }, ID, timestamp, enemies, textureManager);
-            f->SetState(ExtraData);
+            Flopper* f = (Flopper*)Flopper::ProcessEnemy(new FlopperData(X, Y, extraData), ID, timestamp, enemies, textureManager);
             break;
         }
     }

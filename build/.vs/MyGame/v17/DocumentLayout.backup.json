@@ -3,16 +3,13 @@
   "WorkspaceRootPath": "C:\\Users\\jonny\\Desktop\\CI628\\build\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{80D75639-42F2-3DC7-A7B4-603E8519E1EB}|MyGame.vcxproj|C:\\Users\\jonny\\Desktop\\CI628\\src\\Enemy.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{80D75639-42F2-3DC7-A7B4-603E8519E1EB}|MyGame.vcxproj|C:\\Users\\jonny\\Desktop\\CI628\\src\\Data.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{80D75639-42F2-3DC7-A7B4-603E8519E1EB}|MyGame.vcxproj|C:\\Users\\jonny\\Desktop\\CI628\\src\\Enemy.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{80D75639-42F2-3DC7-A7B4-603E8519E1EB}|MyGame.vcxproj|C:\\Users\\jonny\\Desktop\\CI628\\src\\Animation.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{80D75639-42F2-3DC7-A7B4-603E8519E1EB}|MyGame.vcxproj|C:\\Users\\jonny\\Desktop\\CI628\\src\\TextureManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{80D75639-42F2-3DC7-A7B4-603E8519E1EB}|MyGame.vcxproj|C:\\Users\\jonny\\Desktop\\CI628\\src\\Enemy.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{80D75639-42F2-3DC7-A7B4-603E8519E1EB}|MyGame.vcxproj|C:\\Users\\jonny\\Desktop\\CI628\\src\\MyGame.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
@@ -25,17 +22,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Enemy.h",
               "DocumentMoniker": "C:\\Users\\jonny\\Desktop\\CI628\\src\\Enemy.h",
               "RelativeDocumentMoniker": "..\\src\\Enemy.h",
               "ToolTip": "C:\\Users\\jonny\\Desktop\\CI628\\src\\Enemy.h",
               "RelativeToolTip": "..\\src\\Enemy.h",
-              "ViewState": "AgIAABUAAAAAAAAAAAAUwCoAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAADMAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-11-08T22:19:57.533Z",
               "IsPinned": true,
@@ -49,7 +46,7 @@
               "RelativeDocumentMoniker": "..\\src\\Enemy.cpp",
               "ToolTip": "C:\\Users\\jonny\\Desktop\\CI628\\src\\Enemy.cpp",
               "RelativeToolTip": "..\\src\\Enemy.cpp",
-              "ViewState": "AgIAADgAAAAAAAAAAAAUwEoAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAAFgAAAAAAAAAAAAkwGMAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-11-05T21:04:27.89Z",
               "IsPinned": true,
@@ -57,13 +54,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "MyGame.cpp",
               "DocumentMoniker": "C:\\Users\\jonny\\Desktop\\CI628\\src\\MyGame.cpp",
               "RelativeDocumentMoniker": "..\\src\\MyGame.cpp",
               "ToolTip": "C:\\Users\\jonny\\Desktop\\CI628\\src\\MyGame.cpp",
               "RelativeToolTip": "..\\src\\MyGame.cpp",
-              "ViewState": "AgIAANAAAAAAAAAAAAAUwFAAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAAEIAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-11-08T22:17:09.109Z",
               "IsPinned": true,
@@ -71,28 +68,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Animation.cpp",
-              "DocumentMoniker": "C:\\Users\\jonny\\Desktop\\CI628\\src\\Animation.cpp",
-              "RelativeDocumentMoniker": "..\\src\\Animation.cpp",
-              "ToolTip": "C:\\Users\\jonny\\Desktop\\CI628\\src\\Animation.cpp",
-              "RelativeToolTip": "..\\src\\Animation.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-11-09T09:37:40.78Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "TextureManager.cpp",
-              "DocumentMoniker": "C:\\Users\\jonny\\Desktop\\CI628\\src\\TextureManager.cpp",
-              "RelativeDocumentMoniker": "..\\src\\TextureManager.cpp",
-              "ToolTip": "C:\\Users\\jonny\\Desktop\\CI628\\src\\TextureManager.cpp",
-              "RelativeToolTip": "..\\src\\TextureManager.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-11-09T09:37:13.959Z",
+              "DocumentIndex": 0,
+              "Title": "Data.h",
+              "DocumentMoniker": "C:\\Users\\jonny\\Desktop\\CI628\\src\\Data.h",
+              "RelativeDocumentMoniker": "..\\src\\Data.h",
+              "ToolTip": "C:\\Users\\jonny\\Desktop\\CI628\\src\\Data.h",
+              "RelativeToolTip": "..\\src\\Data.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-11-09T09:51:37.062Z",
               "EditorCaption": ""
             }
           ]
