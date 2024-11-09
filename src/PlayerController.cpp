@@ -38,7 +38,7 @@ PlayerState PlayerController::GetState() {
     return *new PlayerState(direction, movementState, attackState);
 }
 void PlayerController::HandleInput(SDL_Event& event, MyGame* game){
-    int speed = 1;
+    double speed = 0.3;
     switch (event.key.keysym.sym) {
     case SDLK_w:
         if (event.type == SDL_KEYUP) {
