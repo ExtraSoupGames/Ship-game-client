@@ -9,30 +9,7 @@
 #include <random>;
 
 #include "MyGame.h"
-
-void SendMessage(UDPsocket* socket, int message) {
-    IPaddress ip;
-    SDLNet_ResolveHost(&ip, "127.0.0.1", 55555); // Connect to the server
-
-    // Prepare the packet to send
-    UDPpacket* packet = SDLNet_AllocPacket(512);
-    if (!packet) {
-        std::cerr << "SDLNet_AllocPacket: " << SDLNet_GetError() << std::endl;
-        SDLNet_UDP_Close(*socket);
-        SDLNet_Quit();
-        SDL_Quit();
-    }
-
-    // Add the data to the packet
-    memcpy(packet->data, &message, sizeof(int));
-    packet->len = sizeof(int) + 1; // Include null terminator
-    packet->address = ip;
-
-    // Send the packet
-    if (SDLNet_UDP_Send(*socket, -1, packet) == 0) {
-        std::cerr << "SDLNet_UDP_Send: " << SDLNet_GetError() << std::endl;
-    }
-}
+#include "Discovery.h"
 
 int getRandomID() {
     //gets called once at the start to generate an ID for this client so that the server knows which data is from which client
@@ -75,7 +52,8 @@ int main(int argc, char* argv[]) {
         SDL_WINDOW_SHOWN
     );
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    MyGame* game = new MyGame(clientID, &socket, renderer);
+    ServerManager* serverManager = new ServerManager(&socket);
+    MyGame* game = new MyGame(clientID, serverManager, renderer);
 
 
     //prepare packet for receiving data
@@ -88,29 +66,53 @@ int main(int argc, char* argv[]) {
     }
     bool is_running = true;
 #pragma endregion initialization
+#pragma region serverDiscovery
+    bool serverFound = false;
+    ServerHost* host = nullptr;
+    DiscoveryScreen *discovering = new DiscoveryScreen();
+    bool exiting = false;
+    while (!serverFound && !exiting) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                exiting = true;
+            }
+            discovering->Input(event);
+        }
+        int packets = SDLNet_UDP_Recv(socket, packet);
+        if (packets) {
+            char* inData = ((char*)packet->data);
+            discovering->OnReceive(inData, packet->len);
+        }
+        host = discovering->ShowDiscoveryScreen(renderer, serverManager);
+        serverFound = !(host == nullptr);
+    }
+    if (!exiting) {
+        serverManager->SetHost(host->host, host->port);
+    }
+#pragma endregion serverDiscovery
 #pragma region mainLoop
 
     Uint64 currentTime = SDL_GetPerformanceCounter();
     Uint64 lastFrameTime = 0;
     double deltaTime = 0;
-    while (is_running) {
+    while (is_running && !exiting) {
         lastFrameTime = currentTime;
         currentTime = SDL_GetPerformanceCounter();
         deltaTime = (double)((currentTime - lastFrameTime) * 1000 / (double)SDL_GetPerformanceFrequency());
 
-        game->update(deltaTime);
+        game->Update(deltaTime);
 
 #pragma region receivePackets
         int packets = SDLNet_UDP_Recv(socket, packet);
         if (packets) {
             char* inData = ((char*)packet->data);
-            game->on_receive(inData, packet->len);
+            game->OnReceive(inData, packet->len);
         }
 #pragma endregion receivePackets
 
         while (SDL_PollEvent(&event)) {
             if ((event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) && event.key.repeat == 0) {
-                game->input(event);
+                game->Input(event);
 
                 switch (event.key.keysym.sym) {
                 case SDLK_ESCAPE:
@@ -127,7 +129,7 @@ int main(int argc, char* argv[]) {
                 is_running = false;
             }
         }
-        game->render(renderer);
+        game->Render(renderer);
     }
 #pragma endregion mainLoop
 

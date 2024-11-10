@@ -20,12 +20,12 @@ bool Hitbox::Collides(Hitbox& other) {
     return true;
 }
 
-MyGame::MyGame(int pClientID, UDPsocket* serverSocket, SDL_Renderer* gameRenderer) {
+MyGame::MyGame(int pClientID, ServerManager* serverManager, SDL_Renderer* gameRenderer) {
     clientConnectTime = 0;
     serverStartTime = 0;
     broadcastTimer = 0;
     clientID = pClientID;
-    server = new ServerManager(serverSocket);
+    server = serverManager;
     renderer = gameRenderer;
     textureManager = new TextureManager(renderer);
     collisions = new CollisionManager();
@@ -61,14 +61,14 @@ template <typename T> Enemy* MyGame::ProcessEnemy(DataPoint* data, int ID, doubl
 }
 void MyGame::HandleEnemyData(string message) {
     int enemyPacketSize = 53;
-    if (!((message.size() - 3 - 64) % enemyPacketSize) == 0 && message.size() > 1) { // size should be 3 for header + a multiple of 32 for the ID + 16 for the position per enemy + 64 for timestamp
-        int padding = (message.size() - 3 - 64) % enemyPacketSize;
+    if (!((message.size() - 64) % enemyPacketSize) == 0 && message.size() > 1) { // size should be 3 for header + a multiple of 32 for the ID + 16 for the position per enemy + 64 for timestamp
+        int padding = (message.size() - 64) % enemyPacketSize;
         message = message.substr(0, message.size() - padding); // remove the padding
     }
 
     double timestamp = server->TimestampDecompress(message.substr(message.size() - 64, 64)); // the timestamp is the final piece of data
 
-    string enemyData = message.substr(3, message.size() - 67);
+    string enemyData = message.substr(0, message.size() - 64);
     vector<int> aliveEnemyIDs = *new vector<int>();
     if (enemyData.size() == 0) { // packet contains only header and timestamp - all enemies are deas
         enemies = new vector<Enemy*>;
@@ -107,8 +107,8 @@ void MyGame::HandleEnemyData(string message) {
     }
 }
 void MyGame::HandlePlayerData(string message) {
-    if (!((message.size() - 3 - 64) % 55) == 0 && message.size() > 1) { // size should be 3 for header + a multiple of 32 for the ID + 16 for the position + 7 for the state per player + 64 for timestamp
-        int padding = (message.size() - 3 - 64) % 55;
+    if (!((message.size() - 64) % 55) == 0 && message.size() > 1) { // size should be 3 for header + a multiple of 32 for the ID + 16 for the position + 7 for the state per player + 64 for timestamp
+        int padding = (message.size() - 64) % 55;
         message = message.substr(0, message.size() - padding); // remove the padding
     }
     double timestamp = server->TimestampDecompress(message.substr(message.size() - 64, 64)); // the timestamp is the final piece of data
@@ -118,7 +118,7 @@ void MyGame::HandlePlayerData(string message) {
         serverStartTime = timestamp;
         clientConnectTime = SDL_GetTicks();
     }
-    string playerData = message.substr(3, (message.size() - 3 - 64));
+    string playerData = message.substr(0, (message.size() - 64));
     for (int i = 0; i < (playerData.size() - 54); i += 55) { //iterate through each player data (each player has 3 args: ID, X, Y)
         int ID = server->IntDecompress(playerData.substr(i, 32));
         if (ID == clientID) {
@@ -152,14 +152,14 @@ void MyGame::HandleBoundaryData(string message) {
         //only needed once to initialize game boundaries
         return;
     }
-    if ((message.size() - 3 - 64) % 192 != 0 || message.size() < 1) {
-        // size should be 3 for header, then a multiple of 6x32 = 192 for 6 32 bit integers, and 64 for the timestamp
+    if ((message.size() - 64) % 192 != 0 || message.size() < 1) {
+        // size should be a multiple of 6x32 = 192 for 6 32 bit integers, and 64 for the timestamp
         cout << "unexpected boundary data received" << endl;
         cout << "boundary data size: " << message.size();
-        return;
+        message = message.substr(0, message.size() - (message.size()) % 7); // trim the padding
     }
-    int messageDataLength = message.size() - 3 - 64;
-    for (int i = 3; i < messageDataLength - 5 * 32; i += 6 * 32) {
+    int messageDataLength = message.size() - 64;
+    for (int i = 0; i < messageDataLength - 5 * 32; i += 6 * 32) {
         double p1x = server->IntDecompress(message.substr(i, 32));
         double p1y = server->IntDecompress(message.substr(i + 32, 32));
         double p2x = server->IntDecompress(message.substr(i + 64, 32));
@@ -169,31 +169,32 @@ void MyGame::HandleBoundaryData(string message) {
         collisions->AddBoundary(*new CollisionBoundary(p1x, p1y, p2x, p2y, ofx, ofy));
     }
 }
-void MyGame::on_receive(char* data, int messagelength) {
+void MyGame::OnReceive(char* data, int messagelength) {
     string message = server->CharToBinary(data, messagelength);
-    string messageType = message.substr(0, 3); // first 3 bits denote type of data in packet
-    if (messageType == "100") { // enemy positions code
+    string messageType = message.substr(0, 4); // first 3 bits denote type of data in packet
+    message = message.substr(4);
+    if (messageType == "1000") { // enemy positions code
         HandleEnemyData(message);
     }
-    if (messageType == "011") { // player data code
+    if (messageType == "0101") { // player data code
         HandlePlayerData(message);
     }
-    if (messageType == "001") { // boundary data code
+    if (messageType == "0011") { // boundary data code
         HandleBoundaryData(message);
         cout << "Game Initiated!" << endl;
     }
 }
 #pragma endregion incomingData
 
-void MyGame::input(SDL_Event& event) {
+void MyGame::Input(SDL_Event& event) {
     playerController->HandleInput(event, this);
 }
 
-void MyGame::update(double deltaTime) {
+void MyGame::Update(double deltaTime) {
 #pragma region boundaryRequests
     if (collisions->IsEmpty()) {
         stringstream binaryText;
-        binaryText << "000"; // this is a network join request code
+        binaryText << "0010"; // this is a network join request code
         server->SendMessage(binaryText.str()); // this means the header (first 3 bits) will be 000 which corresponds to the boundary request code
         return;
     }
@@ -204,7 +205,7 @@ void MyGame::update(double deltaTime) {
         broadcastTimer -= broadcastSpacing;
         // Prepare player data
         stringstream binaryText;
-        binaryText << "010" << 
+        binaryText << "0100" << 
             server->IntCompress(clientID) <<
             server->PositionCompress((int)playerController->xPos, (int)playerController->yPos) << 
             server->PlayerStateCompress(playerController->GetState());
@@ -228,7 +229,7 @@ void MyGame::update(double deltaTime) {
 #pragma endregion animationProcessing
 }
 
-void MyGame::render(SDL_Renderer* renderer) {
+void MyGame::Render(SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
     SDL_RenderClear(renderer);
 
@@ -259,7 +260,7 @@ vector<Enemy*> MyGame::GetCollidingEnemies(Hitbox area)
 void MyGame::SendEnemyDamageMessage(Enemy* enemyDamaged, int damage) {
     stringstream binaryText;
     int knockback = 0;
-    binaryText << "101" << server->IntCompress(enemyDamaged->GetID()) << server->IntCompress(damage) << server->IntCompress(knockback);
+    binaryText << "0110" << server->IntCompress(enemyDamaged->GetID()) << server->IntCompress(damage) << server->IntCompress(knockback);
     // Send hit data
     server->SendMessage(binaryText.str());
 }

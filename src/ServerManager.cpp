@@ -8,10 +8,16 @@ PlayerState::PlayerState(int pDirection, int pMovementState, int pAttackState) {
 
 ServerManager::ServerManager(UDPsocket* serverSocket) {
 	socket = serverSocket;
+    host = "255.255.255.255";
+    port = 55555;
+}
+void ServerManager::SetHost(string pHost, int pPort) {
+    host = pHost;
+    port = pPort;
 }
 void ServerManager::SendMessage(string messageBinary) {
     IPaddress ip;
-    SDLNet_ResolveHost(&ip, "127.0.0.1", 55555); // Connect to the server
+    SDLNet_ResolveHost(&ip, host.c_str(), port); // Connect to the server
     //pad the message to a byte (only first 7 bits used of each byte)
     while ((messageBinary.size() % 7) != 0) {
         messageBinary.append("0");
@@ -95,7 +101,6 @@ __int64 ServerManager::TimestampDecompress(string binaryIn) {
     __int64 out = (__int64)strtoull(bits.to_string<char,char_traits<char>,allocator<char> >().c_str(), NULL, 2);
     return out;
 }
-
 PlayerState ServerManager::PlayerStateDecompress(string binaryIn)
 {
     if (binaryIn.size() != 7) {
@@ -106,12 +111,20 @@ PlayerState ServerManager::PlayerStateDecompress(string binaryIn)
     int attackState = IntDecompress(binaryIn.substr(5, 7));
     return PlayerState(direction,  movementState, attackState);
 }
-
 string ServerManager::PlayerStateCompress(PlayerState state)
 {
     bitset<3> dirBits(state.direction);
     bitset<2> movBits(state.movementState);
     bitset<2> atkBits(state.attackState);
     string out = dirBits.to_string().append(movBits.to_string().append(atkBits.to_string()));
+    return out;
+}
+string ServerManager::DecompressHost(string binaryIn)
+{
+    string out = "";
+    for (int i = 0; i < binaryIn.size() - 7; i += 8) {
+        char newChar = (char)stoi(binaryIn.substr(i, 8), nullptr, 2);
+        out = out + newChar;
+    }
     return out;
 }

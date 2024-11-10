@@ -47,14 +47,14 @@ class MyGame {
         void HandleEnemyData(string data);
         void HandleBoundaryData(string data);
     public:
-        MyGame(int pClientID, UDPsocket* serverSocket, SDL_Renderer* renderer);
+        MyGame(int pClientID, ServerManager* serverManager, SDL_Renderer* renderer);
         std::vector<std::string> messages;
 
 
-        void on_receive(char* message, int messageLength);
-        void input(SDL_Event& event);
-        void update(double deltaTime);
-        void render(SDL_Renderer* renderer);
+        void OnReceive(char* message, int messageLength);
+        void Input(SDL_Event& event);
+        void Update(double deltaTime);
+        void Render(SDL_Renderer* renderer);
         double thisPlayerX = 0;
         double thisPlayerY = 0;
         vector<Enemy*> GetCollidingEnemies(Hitbox area);
