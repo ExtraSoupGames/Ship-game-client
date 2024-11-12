@@ -53,8 +53,6 @@ int main(int argc, char* argv[]) {
     );
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     ServerManager* serverManager = new ServerManager(&socket);
-    MyGame* game = new MyGame(clientID, serverManager, renderer);
-
 
     //prepare packet for receiving data
     UDPpacket* packet = SDLNet_AllocPacket(512);
@@ -90,6 +88,11 @@ int main(int argc, char* argv[]) {
         serverManager->SetHost(host->host, host->port);
     }
 #pragma endregion serverDiscovery
+
+    MyGame* game = new MyGame(clientID, serverManager, renderer);
+
+
+
 #pragma region mainLoop
 
     Uint64 currentTime = SDL_GetPerformanceCounter();

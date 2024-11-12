@@ -30,8 +30,8 @@ class MyGame {
     private:
         vector<Enemy*>* enemies;
         vector<OtherPlayer*>* players;
+        double clientServerTimeDiff;
         double serverStartTime;
-        double clientConnectTime;
         int clientID = 0;
         CollisionManager* collisions;
         ServerManager* server;

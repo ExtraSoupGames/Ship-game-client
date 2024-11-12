@@ -34,6 +34,7 @@ void DiscoveryScreen::OnReceive(char* inData, int dataLength) {
         if (!ServerExists(host, port)) {
             ServerHost* newServer = new ServerHost(host, port);
             servers.push_back(newServer);
+            //selecting = true; - just for testing
         }
     }
 }

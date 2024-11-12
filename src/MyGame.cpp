@@ -21,8 +21,8 @@ bool Hitbox::Collides(Hitbox& other) {
 }
 
 MyGame::MyGame(int pClientID, ServerManager* serverManager, SDL_Renderer* gameRenderer) {
-    clientConnectTime = 0;
     serverStartTime = 0;
+    clientServerTimeDiff = 0;
     broadcastTimer = 0;
     clientID = pClientID;
     server = serverManager;
@@ -116,7 +116,7 @@ void MyGame::HandlePlayerData(string message) {
     //the first packet that comes from the server will be the base start time offset for all other packets
     if (serverStartTime < 100) {
         serverStartTime = timestamp;
-        clientConnectTime = SDL_GetTicks();
+        clientServerTimeDiff = serverStartTime - SDL_GetTicks();
     }
     string playerData = message.substr(0, (message.size() - 64));
     for (int i = 0; i < (playerData.size() - 54); i += 55) { //iterate through each player data (each player has 3 args: ID, X, Y)
@@ -194,8 +194,8 @@ void MyGame::Update(double deltaTime) {
 #pragma region boundaryRequests
     if (collisions->IsEmpty()) {
         stringstream binaryText;
-        binaryText << "0010"; // this is a network join request code
-        server->SendMessage(binaryText.str()); // this means the header (first 3 bits) will be 000 which corresponds to the boundary request code
+        binaryText << "0010"; // this is a boundary data request code
+        server->SendMessage(binaryText.str());
         return;
     }
 #pragma endregion boundaryRequests
@@ -216,7 +216,9 @@ void MyGame::Update(double deltaTime) {
 #pragma region playerProcessing
     playerController->UpdateMove(collisions, deltaTime);
     double delay = 100;  //snapshot buffer should be 3-4x base rate of packets - this way we can lose 2 packets and not experience jittering
-    double timern = serverStartTime + SDL_GetTicks() - delay - clientConnectTime;
+    double timern = clientServerTimeDiff + SDL_GetTicks() - delay;
+    //cout << "ClientServerDiff: " << clientServerTimeDiff << endl;
+    //cout << "Time right now: " << timern << endl;
     for (Enemy* e : *enemies) {
         e->Interpolate(timern);
     }
