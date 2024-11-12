@@ -30,10 +30,8 @@ void PlayerController::Dash()
     lastDashTimestamp = SDL_GetTicks();
     dashStartPoint = *new Vector2{ xPos, yPos };
     Vector2 dashDirection = GetDirectionVector();
-    cout << "Dash direction: " << dashDirection.x << ", " << dashDirection.y << endl;
     Vector2 dashMovement = dashDirection.Multiply(dashLength);
     dashEndPoint = dashStartPoint.Add(dashMovement);
-    cout << "dashing from: " << dashStartPoint.x << ", " << dashStartPoint.y << " to " << dashEndPoint.x << ", " << dashEndPoint.y << endl;
 }
 Vector2 PlayerController::GetDirectionVector()
 {

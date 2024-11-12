@@ -12,7 +12,6 @@ ServerManager::ServerManager(UDPsocket* serverSocket, int pClientID) {
     port = 55555;
     clientID = pClientID;
     importantMessages = *new vector<ImportantMessage*>();
-    SDLNet_UDP_SetPacketLoss(*socket, 50); //for testing for important messages
 }
 void ServerManager::SetHost(string pHost, int pPort) {
     host = pHost;
@@ -81,6 +80,11 @@ void ServerManager::ReceiveImportantMessageConfirmation(string binaryIn) {
         importantMessages.erase(remove(importantMessages.begin(), importantMessages.end(), im));
         return;
     }
+}
+void ServerManager::SendImportantMessageConfirmation(string messageIn) {
+    string returnHeader = "1011"; // this is the header code for all confirmation messages from client to server
+    string messageID = messageIn.substr(0, 32);
+    SendMessage(returnHeader.append(messageID));
 }
 string ServerManager::CharToBinary(char* inData, int dataLength) {
     string data = inData;

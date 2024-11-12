@@ -177,6 +177,9 @@ void MyGame::OnReceive(char* data, int messagelength) {
     if (messageType == "1010") {
         server->ReceiveImportantMessageConfirmation(message);
     }
+    if (messageType == "1100") {
+        server->SendImportantMessageConfirmation(message);
+    }
 }
 #pragma endregion incomingData
 

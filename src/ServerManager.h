@@ -28,6 +28,8 @@ public:
 	void SendAllImportantMessages();
 	//called when a packet is received that has a confirmation header code
 	void ReceiveImportantMessageConfirmation(string binaryIn);
+	//confirm that an important message from the server has been received
+	void SendImportantMessageConfirmation(string messageIn);
 #pragma region compression
 	//turn incoming string data into a string of 1s and 0s
 	static string CharToBinary(char* inData, int dataLength);
