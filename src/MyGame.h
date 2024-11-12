@@ -40,6 +40,8 @@ class MyGame {
         PlayerController* playerController;
         double broadcastTimer;
         double broadcastSpacing = 20;
+        double serverBroadcastTimer = 0;
+        double serverBroadcastDelay = 500;//adjust this to change how quickly important messages are resent - could affect performance if too low
 
         Animatable* number;
         template <typename T> Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp);

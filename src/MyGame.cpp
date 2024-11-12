@@ -32,6 +32,7 @@ MyGame::MyGame(int pClientID, ServerManager* serverManager, SDL_Renderer* gameRe
     number->PlayAnimation(0);
 }
 #pragma region incomingData
+#pragma region incomingDataProcessing
 template <typename T> Enemy* MyGame::ProcessEnemy(DataPoint* data, int ID, double timestamp)
 {
     auto it = std::find_if(enemies->begin(), enemies->end(), [&ID](Enemy* e) {return e->HasID(ID); });
@@ -158,9 +159,10 @@ void MyGame::HandleBoundaryData(string message) {
         collisions->AddBoundary(*new CollisionBoundary(p1x, p1y, p2x, p2y, ofx, ofy));
     }
 }
+#pragma endregion incomingDataProcessing
 void MyGame::OnReceive(char* data, int messagelength) {
     string message = server->CharToBinary(data, messagelength);
-    string messageType = message.substr(0, 4); // first 3 bits denote type of data in packet
+    string messageType = message.substr(0, 4); // first 4 bits denote type of data in packet
     message = message.substr(4);
     if (messageType == "1000") { // enemy positions code
         HandleEnemyData(message);
@@ -171,6 +173,9 @@ void MyGame::OnReceive(char* data, int messagelength) {
     if (messageType == "0011") { // boundary data code
         HandleBoundaryData(message);
         cout << "Game Initiated!" << endl;
+    }
+    if (messageType == "1010") {
+        server->ReceiveImportantMessageConfirmation(message);
     }
 }
 #pragma endregion incomingData
@@ -218,6 +223,18 @@ void MyGame::Update(double deltaTime) {
 #pragma region animationProcessing
     number->UpdateAnimation();
 #pragma endregion animationProcessing
+#pragma region serverUpdates
+    serverBroadcastTimer += deltaTime;
+    if (serverBroadcastTimer > serverBroadcastDelay) {
+        serverBroadcastTimer -= serverBroadcastDelay;
+        server->SendAllImportantMessages();
+        //for testing:
+        string outTest = "1001";
+        outTest.append("11111111111");
+        server->SendImportantMessage(outTest);
+        cout << "sending important message" << endl;;
+    }
+#pragma endregion serverUpdates
 }
 
 void MyGame::Render(SDL_Renderer* renderer) {

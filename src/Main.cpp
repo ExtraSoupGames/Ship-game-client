@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
         SDL_WINDOW_SHOWN
     );
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    ServerManager* serverManager = new ServerManager(&socket);
+    ServerManager* serverManager = new ServerManager(&socket, clientID);
 
     //prepare packet for receiving data
     UDPpacket* packet = SDLNet_AllocPacket(512);
