@@ -1,8 +1,18 @@
 #include "Discovery.h"
+DiscoveryScreen::DiscoveryScreen()
+{
+    selectedServer = 0;
+    discoverDelay = 500;
+    discoverTimer = 0;
+}
 ServerHost* DiscoveryScreen::ShowDiscoveryScreen(SDL_Renderer* renderer, ServerManager* serverManager) {
-    //send requests
-    string discoverRequest = "0000";
-    serverManager->SendMessage(discoverRequest);
+    discoverTimer++; //normally would use SDL_GetTicks(), but accuracy is not important so this innaccurate way is fine
+    if (discoverTimer > discoverDelay) {
+        discoverTimer -= discoverDelay;
+        //send requests
+        string discoverRequest = "0000";
+        serverManager->SendMessage(discoverRequest);
+    }
     //display
     SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
     SDL_RenderClear(renderer);
@@ -34,7 +44,6 @@ void DiscoveryScreen::OnReceive(char* inData, int dataLength) {
         if (!ServerExists(host, port)) {
             ServerHost* newServer = new ServerHost(host, port);
             servers.push_back(newServer);
-            //selecting = true; - just for testing
         }
     }
 }

@@ -1,15 +1,4 @@
 #include "MyGame.h"
-
-
-void DebugMessages(double t, vector<DataStream*> d, double n, double o) {
-    std::cout << "timern: " << t << std::endl;
-    for (DataStream* da : d) {
-        std::cout << da->timestamp << " - ";
-    }
-    std::cout << std::endl;
-    std::cout << "oldTimestamp" << o << " newTimestamp: " << n << std::endl;
-    std::cout << std::endl << std::endl;
-}
 bool Hitbox::Collides(Hitbox& other) {
     if (other.x + other.w < x || x + w < other.x) {
         return false;
@@ -259,6 +248,7 @@ vector<Enemy*> MyGame::GetCollidingEnemies(Hitbox area)
     }
     return collidingEnemies;
 }
+
 void MyGame::SendEnemyDamageMessage(Enemy* enemyDamaged, int damage) {
     stringstream binaryText;
     int knockback = 0;

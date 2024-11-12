@@ -64,6 +64,7 @@ int main(int argc, char* argv[]) {
     }
     bool is_running = true;
 #pragma endregion initialization
+
 #pragma region serverDiscovery
     bool serverFound = false;
     ServerHost* host = nullptr;
@@ -91,8 +92,6 @@ int main(int argc, char* argv[]) {
 
     MyGame* game = new MyGame(clientID, serverManager, renderer);
 
-
-
 #pragma region mainLoop
 
     Uint64 currentTime = SDL_GetPerformanceCounter();
@@ -113,6 +112,7 @@ int main(int argc, char* argv[]) {
         }
 #pragma endregion receivePackets
 
+#pragma region input
         while (SDL_PollEvent(&event)) {
             if ((event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) && event.key.repeat == 0) {
                 game->Input(event);
@@ -132,6 +132,8 @@ int main(int argc, char* argv[]) {
                 is_running = false;
             }
         }
+#pragma endregion input
+
         game->Render(renderer);
     }
 #pragma endregion mainLoop

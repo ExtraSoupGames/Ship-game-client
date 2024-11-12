@@ -17,7 +17,10 @@ class DiscoveryScreen {
 	vector<ServerHost*> servers;
 	bool ServerExists(string host, int port);
 	bool selecting = false;
+	double discoverDelay; // dont spam packets as this is unneccesary load on network
+	double discoverTimer;
 public:
+	DiscoveryScreen();
 	ServerHost* ShowDiscoveryScreen(SDL_Renderer* renderer, ServerManager* serverManager);
 	void OnReceive(char* inData, int dataLength);
 	void Input(SDL_Event& event);
