@@ -66,6 +66,10 @@ void DiscoveryScreen::Input(SDL_Event& event) {
     }
     if (event.key.keysym.sym == SDLK_SPACE) {
         if (event.type == SDL_KEYUP) {
+            if (servers.size() <= 0) {
+                //prevent out of bounds errors by not allowing server to be selected until servers have been found
+                return;
+            }
             selecting = true;
         }
     }
