@@ -3,9 +3,37 @@
 #include <iostream>
 #include "SDL.h"
 using namespace std;
-struct Vector2 {
-	double x = 0;
-	double y = 0;
+class Vector2 {
+public:
+    double x;
+    double y;
+    Vector2() : Vector2(0, 0) {
+
+    }
+    Vector2(double pX, double pY) {
+        x = pX;
+        y = pY;
+    }
+    Vector2 Add(Vector2 other) {
+        return *new Vector2(x + other.x, y + other.y);
+    }
+    //use pythagoras theorem to find distance to another vector
+    double FindDistance(Vector2 other) {
+        return this->Subtract(other).Magnitude();
+    }
+    Vector2 Subtract(Vector2 other) {
+        return *new Vector2(x - other.x, y - other.y);
+    }
+    Vector2 Normalise() {
+        double magnitude = this->FindDistance(*new Vector2(0, 0));
+        return *new Vector2(x / magnitude, y / magnitude);
+    }
+    Vector2 Multiply(double factor) {
+        return *new Vector2(x * factor, y * factor);
+    }
+    double Magnitude() {
+        return sqrt(pow(x, 2) + pow(y, 2));
+    }
 };
 class CollisionBoundary {
 private:

@@ -63,27 +63,22 @@ void ServerManager::SendAllImportantMessages()
 {
     for (ImportantMessage* im : importantMessages) {
         SendMessage(im->GetMessage());
-        cout << "attempting message send" << endl;
     }
 }
 void ServerManager::ReceiveImportantMessageConfirmation(string binaryIn) {
     int messageID = IntDecompress(binaryIn.substr(0, 32));
     int intendedClient = IntDecompress(binaryIn.substr(32, 32));
-    cout << "received a confirmation!" << endl;
     if (intendedClient != clientID) {
         //this message was intended for a different client, ignore
-        cout << "client id was wrong" << endl;
         return;
     }
     for (ImportantMessage* im : importantMessages) {
         if (messageID != im->messageID) {
-            //cout << "message id was wrong" << endl;
             //dont remove any messages that arent the one that we just received confirmation for
             continue;
         }
         //find the correct message and remove it as we dont need to send it anymore
         importantMessages.erase(remove(importantMessages.begin(), importantMessages.end(), im));
-        cout << "message was sent successfully" << endl;
         return;
     }
 }
