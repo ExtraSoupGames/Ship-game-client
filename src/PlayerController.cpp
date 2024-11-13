@@ -29,13 +29,9 @@ void PlayerController::Dash()
     movementState = 2;
     lastDashTimestamp = SDL_GetTicks();
     dashStartPoint = *new Vector2{ xPos, yPos };
-    Vector2 dashDirection = GetDirectionVector();
+    Vector2 dashDirection = inputs->GetCurrentDirection();
     Vector2 dashMovement = dashDirection.Multiply(dashLength);
     dashEndPoint = dashStartPoint.Add(dashMovement);
-}
-Vector2 PlayerController::GetDirectionVector()
-{
-    return Vector2(xVelo, yVelo).Normalise();
 }
 PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisionManager) : Animatable(*new vector<string>{ "%walk", "%run", "%dash" }, t) {
     //player's values
@@ -48,8 +44,6 @@ PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisi
     xPos = 50;
     yPos = 50;
     //used later
-    xVelo = 0;
-    yVelo = 0;
     lastAttackTimestamp = 0;
     lastDashTimestamp = 0;
     attackBox = new Hitbox();
@@ -59,58 +53,50 @@ PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisi
     collisionManager = pCollisionManager;
     dashStartPoint = *new Vector2{ 0,0 };
     dashEndPoint = *new Vector2{ 0,0 };
+    inputs = new InputMapping();
 }
 PlayerState PlayerController::GetState() {
     return *new PlayerState(direction, movementState, attackState);
 }
 void PlayerController::HandleInput(SDL_Event& event, MyGame* game){
-    double speed = 0.3;
     switch (event.key.keysym.sym) {
+#pragma region directional keys
     case SDLK_w:
         if (event.type == SDL_KEYUP) {
-            yVelo += speed;
+            inputs->upPressed = false;
         }
         else if (event.type == SDL_KEYDOWN) {
-            yVelo -= speed;
+            inputs->upPressed = true;
         }
         break;
     case SDLK_s:
         if (event.type == SDL_KEYUP) {
-            yVelo -= speed;
+            inputs->downPressed = false;
         }
         else if (event.type == SDL_KEYDOWN) {
-            yVelo += speed;
+            inputs->downPressed = true;
         }
         break;
     case SDLK_d:
         if (event.type == SDL_KEYUP) {
-            xVelo -= speed;
+            inputs->rightPressed = false;
         }
         else if (event.type == SDL_KEYDOWN) {
-            xVelo += speed;
+            inputs->rightPressed = true;
         }
         break;
     case SDLK_a:
         if (event.type == SDL_KEYUP) {
-            xVelo += speed;
+            inputs->leftPressed = false;
         }
         else if (event.type == SDL_KEYDOWN) {
-            xVelo -= speed;
+            inputs->leftPressed = true;
         }
         break;
+#pragma endregion directionalKeys
     case SDLK_LSHIFT:
         if (event.type == SDL_KEYDOWN) {
             Dash();
-        }
-        break;
-    case SDLK_RSHIFT:
-        if (event.type == SDL_KEYDOWN) {
-            movementState = 1;
-        }
-        break;
-    case SDLK_0:
-        if (event.type == SDL_KEYDOWN) {
-            movementState = 0;
         }
         break;
     case SDLK_SPACE:
@@ -119,15 +105,37 @@ void PlayerController::HandleInput(SDL_Event& event, MyGame* game){
         }
         break;
     }
+    //update movement state to reflect players movement, unless they are in a special state (dashing ect)
 }
 
 void PlayerController::UpdateMove(double deltaTime){
+    double speed = 0.3f;
+#pragma region stateUpdate
+    if (inputs->IsStill()) {
+        if (movementState == 1) {
+            movementState = 0;
+        }
+    }
+    else {
+        if (movementState == 0) {
+            movementState = 1;
+        }
+    }
+
+    direction = inputs->GetDirectionState();
+#pragma endregion stateUpdate
     Vector2 currentPos = *new Vector2{ xPos, yPos };
     Vector2 endPos;
     Vector2 finalPos;
+    Vector2 currentDir = inputs->GetCurrentDirection();
+    double xVelo = currentDir.x * speed;
+    double yVelo = currentDir.y * speed;
     switch (movementState) {
     case 0:
-        movementState = 1;
+        endPos = *new Vector2{ (xPos + (xVelo * deltaTime)), (yPos + (yVelo * deltaTime)) };
+        finalPos = collisionManager->ApplyCollision(currentPos, endPos);
+        xPos = finalPos.x;
+        yPos = finalPos.y;
         break;
     case 1:
         endPos = *new Vector2{ (xPos + (xVelo * deltaTime)), (yPos + (yVelo * deltaTime)) };

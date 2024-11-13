@@ -51,7 +51,7 @@ template <typename T> Enemy* MyGame::ProcessEnemy(DataPoint* data, int ID, doubl
 }
 void MyGame::HandleEnemyData(string message) {
     int enemyPacketSize = 53;
-    if (!((message.size() - 64) % enemyPacketSize) == 0 && message.size() > 1) { // size should be 3 for header + a multiple of 32 for the ID + 16 for the position per enemy + 64 for timestamp
+    if (!((message.size() - 64) % enemyPacketSize) == 0 && message.size() > 1) { // size should be a multiple of 32 for the ID + 16 for the position per enemy + 64 for timestamp
         int padding = (message.size() - 64) % enemyPacketSize;
         message = message.substr(0, message.size() - padding); // remove the padding
     }
@@ -97,7 +97,7 @@ void MyGame::HandleEnemyData(string message) {
     }
 }
 void MyGame::HandlePlayerData(string message) {
-    if (!((message.size() - 64) % 55) == 0 && message.size() > 1) { // size should be 3 for header + a multiple of 32 for the ID + 16 for the position + 7 for the state per player + 64 for timestamp
+    if (!((message.size() - 64) % 55) == 0 && message.size() > 1) { // size shoule be a multiple of 32 for the ID + 16 for the position + 7 for the state per player + 64 for timestamp
         int padding = (message.size() - 64) % 55;
         message = message.substr(0, message.size() - padding); // remove the padding
     }
@@ -174,10 +174,10 @@ void MyGame::OnReceive(char* data, int messagelength) {
         HandleBoundaryData(message);
         cout << "Game Initiated!" << endl;
     }
-    if (messageType == "1010") {
+    if (messageType == "1010") { // important message confirmation from server code
         server->ReceiveImportantMessageConfirmation(message);
     }
-    if (messageType == "1100") {
+    if (messageType == "1100") { // impotant message received from server, send confirmation, just for testing
         server->SendImportantMessageConfirmation(message, clientID);
     }
 }
