@@ -78,13 +78,15 @@ void ServerManager::ReceiveImportantMessageConfirmation(string binaryIn) {
         }
         //find the correct message and remove it as we dont need to send it anymore
         importantMessages.erase(remove(importantMessages.begin(), importantMessages.end(), im));
+        cout << "successful hit fully processed" << endl;
         return;
     }
 }
-void ServerManager::SendImportantMessageConfirmation(string messageIn) {
+void ServerManager::SendImportantMessageConfirmation(string messageIn, int clientID) {
     string returnHeader = "1011"; // this is the header code for all confirmation messages from client to server
     string messageID = messageIn.substr(0, 32);
-    SendMessage(returnHeader.append(messageID));
+    string clntID = IntCompress(clientID);
+    SendMessage(returnHeader.append(messageID.append(clntID)));
 }
 string ServerManager::CharToBinary(char* inData, int dataLength) {
     string data = inData;
