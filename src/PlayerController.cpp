@@ -6,11 +6,15 @@ void PlayerController::Attack(MyGame* game){
         return;
     }
     lastAttackTimestamp = SDL_GetTicks();
-    //GetCollidingEnemies
-    attackBox->x = xPos;
-    attackBox->y = yPos;
-    attackBox->w = 50;
-    attackBox->h = 50;
+    //get all enemies colliding with players
+    Vector2 currentDirection = inputs->GetCurrentDirection();
+    Vector2 middle = GetMiddle();
+    int attackSize = 40;
+    attackBox->x = middle.x + (currentDirection.x * attackSize) - attackSize;
+    attackBox->y = middle.y + (currentDirection.y * 10) - attackSize;
+    attackBox->w = attackSize * 2;
+    attackBox->h = attackSize * 2;
+    cout << "attacking at x:" << attackBox->x << ", y:" << attackBox->y << endl;
     vector<Enemy*> enemiesHit = game->GetCollidingEnemies(*attackBox);
     if (enemiesHit.size() > 0) {
         cout << "Hit something!!!!" << endl;
@@ -33,6 +37,12 @@ void PlayerController::Dash()
     Vector2 dashMovement = dashDirection.Multiply(dashLength);
     dashEndPoint = dashStartPoint.Add(dashMovement);
 }
+Vector2 PlayerController::GetMiddle()
+{
+    double xMid = xPos + (width / 2);
+    double yMid = yPos + (height / 2);
+    return Vector2(xMid, yMid);
+}
 PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisionManager) : Animatable(*new vector<string>{ "%walk", "%run", "%dash" }, t) {
     //player's values
     attackCooldown = 500;
@@ -43,6 +53,8 @@ PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisi
     //starting position
     xPos = 50;
     yPos = 50;
+    width = 20;
+    height = 20;
     //used later
     lastAttackTimestamp = 0;
     lastDashTimestamp = 0;
@@ -57,6 +69,14 @@ PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisi
 }
 PlayerState PlayerController::GetState() {
     return *new PlayerState(direction, movementState, attackState);
+}
+int PlayerController::GetXForServer()
+{
+    return (int)xPos;
+}
+int PlayerController::GetYForServer()
+{
+    return (int)yPos;
 }
 void PlayerController::HandleInput(SDL_Event& event, MyGame* game){
     switch (event.key.keysym.sym) {
@@ -121,8 +141,10 @@ void PlayerController::UpdateMove(double deltaTime){
             movementState = 1;
         }
     }
-
-    direction = inputs->GetDirectionState();
+    int nextDirState = inputs->GetDirectionState();
+    if (nextDirState >= 0) {
+        direction = nextDirState;
+    }
 #pragma endregion stateUpdate
     Vector2 currentPos = *new Vector2{ xPos, yPos };
     Vector2 endPos;

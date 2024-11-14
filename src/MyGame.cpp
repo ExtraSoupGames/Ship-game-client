@@ -204,7 +204,7 @@ void MyGame::Update(double deltaTime) {
         stringstream binaryText;
         binaryText << "0100" << 
             server->IntCompress(clientID) <<
-            server->PositionCompress((int)playerController->xPos, (int)playerController->yPos) << 
+            server->PositionCompress(playerController->GetXForServer(), playerController->GetYForServer()) <<
             server->PlayerStateCompress(playerController->GetState());
         // Send player data
         server->SendMessage(binaryText.str());

@@ -25,7 +25,7 @@ struct InputMapping {
             if (leftPressed) {
                 if (rightPressed) {
                     if (downPressed) {
-                        return 0; // still - return value does not matter
+                        return -1; // still - return value does not matter
                     }
                     else {
                         return 0;
@@ -51,7 +51,7 @@ struct InputMapping {
                 }
                 else {
                     if (downPressed) {
-                        return 0; //still - return value does not matter
+                        return -1; //still - return value does not matter
                     }
                     else {
                         return 0;
@@ -66,7 +66,7 @@ struct InputMapping {
                         return 4;
                     }
                     else {
-                        return 0; //still - return value does not matter
+                        return -1; //still - return value does not matter
                     }
                 }
                 else {
@@ -92,7 +92,7 @@ struct InputMapping {
                         return 4;
                     }
                     else {
-                        return 0; //still - return value does not matter
+                        return -1; //still - return value does not matter
                     }
                 }
             }
@@ -104,7 +104,15 @@ class PlayerController : public Animatable {
 private:
     void Attack(MyGame* game);
     void Dash();
+    
+    //hitboxes, collision, ect
     Hitbox* attackBox;
+    Vector2 GetMiddle();
+    double width;
+    double height;
+    double xPos;
+    double yPos;
+
     //states
     int direction;
     int movementState; // 0 = still, 1 = walking, 2 = dashing
@@ -126,9 +134,11 @@ private:
     CollisionManager* collisionManager;
     InputMapping* inputs;
 public:
-    double xPos;
-    double yPos;
+    //getters
     PlayerState GetState();
+    int GetXForServer();
+    int GetYForServer();
+
     PlayerController(TextureManager* t, CollisionManager* pCollisionManager);
     void HandleInput(SDL_Event& event, MyGame* game);
     void UpdateMove(double deltaTime);
