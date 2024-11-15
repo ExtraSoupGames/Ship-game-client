@@ -7,11 +7,15 @@ void PlayerController::Attack(MyGame* game){
     }
     lastAttackTimestamp = SDL_GetTicks();
     //get all enemies colliding with players
-    Vector2 currentDirection = inputs->GetCurrentDirection();
+    double playerAngle = (direction * M_PI) / 4.0f;
+    //playerAngle += (M_PI);
+    double xDir = sin(playerAngle);
+    double yDir = -(cos(playerAngle));
+    Vector2 currentDirection = Vector2(xDir, yDir).Normalise();
     Vector2 middle = GetMiddle();
     int attackSize = 40;
     attackBox->x = middle.x + (currentDirection.x * attackSize) - attackSize;
-    attackBox->y = middle.y + (currentDirection.y * 10) - attackSize;
+    attackBox->y = middle.y + (currentDirection.y * attackSize) - attackSize;
     attackBox->w = attackSize * 2;
     attackBox->h = attackSize * 2;
     cout << "attacking at x:" << attackBox->x << ", y:" << attackBox->y << endl;
@@ -144,6 +148,7 @@ void PlayerController::UpdateMove(double deltaTime){
     int nextDirState = inputs->GetDirectionState();
     if (nextDirState >= 0) {
         direction = nextDirState;
+        //cout << "direction: " << direction << endl;
     }
 #pragma endregion stateUpdate
     Vector2 currentPos = *new Vector2{ xPos, yPos };
