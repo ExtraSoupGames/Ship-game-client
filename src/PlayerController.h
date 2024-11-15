@@ -18,86 +18,14 @@ struct InputMapping {
         return !(upPressed || downPressed || rightPressed || leftPressed);
     }
     int GetDirectionState() {
-        int returnState = 0;
-        //TODO fix this mess
-#pragma region GettingDirectionState
-        if (upPressed) {
-            if (leftPressed) {
-                if (rightPressed) {
-                    if (downPressed) {
-                        return -1; // still - return value does not matter
-                    }
-                    else {
-                        return 0;
-                    }
-                }
-                else {
-                    if (downPressed) {
-                        return 6;
-                    }
-                    else {
-                        return 7;
-                    }
-                }
-            }
-            else {
-                if (rightPressed) {
-                    if (downPressed) {
-                        return 2;
-                    }
-                    else {
-                        return 1;
-                    }
-                }
-                else {
-                    if (downPressed) {
-                        return -1; //still - return value does not matter
-                    }
-                    else {
-                        return 0;
-                    }
-                }
-            }
+        Vector2 directionVec = GetCurrentDirection().Normalise();
+        double angle = atan2(directionVec.x, directionVec.y);
+        //atan2 returns in range [-pi - pi] so convert to [0 - 2pi]
+        if (angle < 0) {
+            angle += M_PI * 2;
         }
-        else {
-            if (leftPressed) {
-                if (rightPressed) {
-                    if (downPressed) {
-                        return 4;
-                    }
-                    else {
-                        return -1; //still - return value does not matter
-                    }
-                }
-                else {
-                    if (downPressed) {
-                        return 5;
-                    }
-                    else {
-                        return 6;
-                    }
-                }
-            }
-            else {
-                if (rightPressed) {
-                    if (downPressed) {
-                        return 3;
-                    }
-                    else {
-                        return 2;
-                    }
-                }
-                else {
-                    if (downPressed) {
-                        return 4;
-                    }
-                    else {
-                        return -1; //still - return value does not matter
-                    }
-                }
-            }
-        }
-#pragma endregion GettingDirectionState
+        int returnState = static_cast<int>((angle + (M_PI / 8.0f)) / (M_PI / 4.0f)) % 8;
+        return returnState;
     }
 };
 class PlayerController : public Animatable {
@@ -107,6 +35,7 @@ private:
     
     //hitboxes, collision, ect
     Hitbox* attackBox;
+    Vector2 attackBoxOffset;
     Vector2 GetMiddle();
     double width;
     double height;

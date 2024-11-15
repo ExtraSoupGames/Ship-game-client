@@ -7,18 +7,15 @@ void PlayerController::Attack(MyGame* game){
     }
     lastAttackTimestamp = SDL_GetTicks();
     //get all enemies colliding with players
-    double playerAngle = (direction * M_PI) / 4.0f;
-    //playerAngle += (M_PI);
-    double xDir = sin(playerAngle);
-    double yDir = -(cos(playerAngle));
-    Vector2 currentDirection = Vector2(xDir, yDir).Normalise();
+    Vector2 currentDirection = inputs->GetCurrentDirection();
     Vector2 middle = GetMiddle();
     int attackSize = 40;
-    attackBox->x = middle.x + (currentDirection.x * attackSize) - attackSize;
-    attackBox->y = middle.y + (currentDirection.y * attackSize) - attackSize;
+    attackBoxOffset.x = (currentDirection.x * attackSize) - attackSize;
+    attackBoxOffset.y = (currentDirection.y * attackSize) - attackSize;
     attackBox->w = attackSize * 2;
     attackBox->h = attackSize * 2;
-    cout << "attacking at x:" << attackBox->x << ", y:" << attackBox->y << endl;
+    attackBox->x = attackBoxOffset.x + middle.x;
+    attackBox->y = attackBoxOffset.y + middle.y;
     vector<Enemy*> enemiesHit = game->GetCollidingEnemies(*attackBox);
     if (enemiesHit.size() > 0) {
         cout << "Hit something!!!!" << endl;
@@ -63,6 +60,7 @@ PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisi
     lastAttackTimestamp = 0;
     lastDashTimestamp = 0;
     attackBox = new Hitbox();
+    attackBoxOffset = Vector2(0, 0);
     direction = 0;
     movementState = 0;
     attackState = 0;
@@ -202,7 +200,9 @@ void PlayerController::Render(SDL_Renderer* renderer) {
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     }
     SDL_RenderDrawRect(renderer, playerRect);
-
+    Vector2 middle = GetMiddle();
+    attackBox->x = attackBoxOffset.x + middle.x;
+    attackBox->y = attackBoxOffset.y + middle.y;
     SDL_Rect* DebugAttackBoxRect = new SDL_Rect{ attackBox->x, attackBox->y, attackBox->w, attackBox->h};
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderDrawRect(renderer, DebugAttackBoxRect);
