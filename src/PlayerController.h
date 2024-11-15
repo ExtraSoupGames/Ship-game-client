@@ -30,9 +30,15 @@ struct InputMapping {
 };
 class PlayerController : public Animatable {
 private:
+    //player actions
     void Attack(MyGame* game);
     void Dash();
-    
+    void Stun();
+
+    //update player movement
+    void UpdateBasicMovement(double deltaTime);
+    void UpdateDashMovement();
+    void UpdateStun();
     //hitboxes, collision, ect
     Hitbox* attackBox;
     Vector2 attackBoxOffset;
@@ -58,6 +64,10 @@ private:
     double dashLength;
     Vector2 dashStartPoint;
     Vector2 dashEndPoint;
+
+    //stun values
+    double lastStunTimestamp;
+    double stunDuration; //player gets stunned if they dash into a wall
 
     //references
     CollisionManager* collisionManager;
