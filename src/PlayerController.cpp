@@ -1,5 +1,33 @@
 #include "PlayerController.h"
 #include "MyGame.h"
+#pragma region InputMapping
+Vector2 InputMapping::GetDirectionFacing(Vector2 playerPos) {
+    Vector2 facing = mousePos - playerPos;
+    double playerFacingAngle = SDL_atan2(facing.y, facing.x);
+    playerFacingAngle = (playerFacingAngle * 4) / M_PI;
+    playerFacingAngle = round(playerFacingAngle);
+    playerFacingAngle = (playerFacingAngle * M_PI) / 4;
+    Vector2 directionVector = Vector2(cos(playerFacingAngle), sin(playerFacingAngle));
+    return directionVector;
+}
+Vector2 InputMapping::GetDirectionMoving() {
+    return Vector2(rightPressed - leftPressed, downPressed - upPressed);
+}
+bool InputMapping::IsStill() {
+    return !(upPressed || downPressed || rightPressed || leftPressed);
+}
+int InputMapping::GetDirectionState(Vector2 playerPos) {
+    Vector2 directionVec = GetDirectionFacing(playerPos).Normalise();
+    double angle = atan2(directionVec.x, directionVec.y);
+    //atan2 returns in range [-pi - pi] so convert to [0 - 2pi]
+    if (angle < 0) {
+        angle += M_PI * 2;
+    }
+    int returnState = static_cast<int>((angle + (M_PI / 8.0f)) / (M_PI / 4.0f)) % 8;
+    return returnState;
+}
+#pragma endregion InputMapping
+#pragma region PlayerController
 PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisionManager) : Animatable(*new vector<string>{ "%walk", "%run", "%dash" }, t) {
     //player's values
     attackCooldown = 500;
@@ -94,7 +122,11 @@ void PlayerController::HandleInput(SDL_Event& event, MyGame* game){
         }
         break;
     }
-    //update movement state to reflect players movement, unless they are in a special state (dashing ect)
+    int mouseX;
+    int mouseY;
+    SDL_GetMouseState(&mouseX, &mouseY);
+    inputs->mousePos = Vector2(mouseX, mouseY);
+
 }
 #pragma region UpdateMovement
 void PlayerController::UpdateMove(double deltaTime){
@@ -109,7 +141,7 @@ void PlayerController::UpdateMove(double deltaTime){
             movementState = 1;
         }
     }
-    int nextDirState = inputs->GetDirectionState();
+    int nextDirState = inputs->GetDirectionState(Vector2(xPos, yPos));
     if (nextDirState >= 0) {
         direction = nextDirState;
         //cout << "direction: " << direction << endl;
@@ -137,7 +169,7 @@ void PlayerController::UpdateBasicMovement(double deltaTime)
     Vector2 currentPos = *new Vector2{ xPos, yPos };
     Vector2 endPos;
     Vector2 finalPos;
-    Vector2 currentDir = inputs->GetCurrentDirection();
+    Vector2 currentDir = inputs->GetDirectionMoving();
     double xVelo = currentDir.x * speed;
     double yVelo = currentDir.y * speed;
     endPos = *new Vector2{ (xPos + (xVelo * deltaTime)), (yPos + (yVelo * deltaTime)) };
@@ -180,7 +212,7 @@ void PlayerController::Attack(MyGame* game) {
     }
     lastAttackTimestamp = SDL_GetTicks();
     //update attack hitbox offset
-    Vector2 currentDirection = inputs->GetCurrentDirection();
+    Vector2 currentDirection = inputs->GetDirectionFacing(Vector2(xPos,yPos));
     Vector2 middle = GetMiddle();
     int attackSize = 40;
     attackBoxOffset.x = (currentDirection.x * attackSize) - attackSize;
@@ -210,7 +242,7 @@ void PlayerController::Dash()
     movementState = 2;
     lastDashTimestamp = SDL_GetTicks();
     dashStartPoint = *new Vector2{ xPos, yPos };
-    Vector2 dashDirection = inputs->GetCurrentDirection();
+    Vector2 dashDirection = inputs->GetDirectionFacing(Vector2(xPos,yPos));
     Vector2 dashMovement = dashDirection*(dashLength);
     dashEndPoint = dashStartPoint.Add(dashMovement);
 }
@@ -238,3 +270,4 @@ void PlayerController::Render(SDL_Renderer* renderer) {
     Animatable::UpdateAnimation();
     Animatable::Render(renderer, xPos, yPos, 30, 30);
 }
+#pragma endregion PlayerController

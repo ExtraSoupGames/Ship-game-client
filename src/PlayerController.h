@@ -11,22 +11,11 @@ struct InputMapping {
     bool downPressed;
     bool rightPressed;
     bool leftPressed;
-    Vector2 GetCurrentDirection() {
-        return *new Vector2(rightPressed - leftPressed, downPressed - upPressed);
-    }
-    bool IsStill() {
-        return !(upPressed || downPressed || rightPressed || leftPressed);
-    }
-    int GetDirectionState() {
-        Vector2 directionVec = GetCurrentDirection().Normalise();
-        double angle = atan2(directionVec.x, directionVec.y);
-        //atan2 returns in range [-pi - pi] so convert to [0 - 2pi]
-        if (angle < 0) {
-            angle += M_PI * 2;
-        }
-        int returnState = static_cast<int>((angle + (M_PI / 8.0f)) / (M_PI / 4.0f)) % 8;
-        return returnState;
-    }
+    Vector2 mousePos;
+    Vector2 GetDirectionFacing(Vector2 playerPos);
+    Vector2 GetDirectionMoving();
+    bool IsStill();
+    int GetDirectionState(Vector2 playerState);
 };
 class PlayerController : public Animatable {
 private:
