@@ -320,6 +320,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\src\PlayerController.cpp" />
     <ClCompile Include="..\src\ServerManager.cpp" />
     <ClCompile Include="..\src\TextureManager.cpp" />
+    <ClCompile Include="..\src\Vector2.cpp" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Main.cpp" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\MyGame.cpp" />
     <ClInclude Include="..\src\Animation.h" />
@@ -330,6 +331,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\src\PlayerController.h" />
     <ClInclude Include="..\src\ServerManager.h" />
     <ClInclude Include="..\src\TextureManager.h" />
+    <ClInclude Include="..\src\Vector2.h" />
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MyGame.h" />
   </ItemGroup>
   <ItemGroup>

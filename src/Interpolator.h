@@ -46,7 +46,6 @@ public:
 	Bobleech(int ID, TextureManager* t);
 	void Render(SDL_Renderer* renderer);
 };
-
 class Flopper : public Enemy, public Animatable {
 	FlopperStates state;
 protected:
@@ -55,7 +54,6 @@ public:
 	Flopper(int ID, TextureManager* t);
 	void Render(SDL_Renderer* renderer);
 };
-
 class Clingabing : public Enemy, public Animatable{
 	ClingabingStates state;
 protected:
@@ -65,7 +63,6 @@ public:
 	void Render(SDL_Renderer* renderer);
 };
 #pragma endregion enemies
-
 class OtherPlayer : public Interpolator, public Animatable
 {
 protected:

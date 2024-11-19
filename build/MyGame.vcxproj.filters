@@ -28,6 +28,9 @@
     <ClCompile Include="..\src\TextureManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Vector2.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MyGame.h">
@@ -55,7 +58,10 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Data.h">
-      <Filter>GameFiles</Filter>
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Vector2.h">
+      <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +79,9 @@
     </Filter>
     <Filter Include="Managers">
       <UniqueIdentifier>{2d12b41e-687c-4e95-ba90-c56aede655c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{b2ab4d05-ddde-4434-8f07-1cdaab8703dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -151,7 +151,7 @@ void PlayerController::UpdateDashMovement()
     //calculate this movement step between dash start and end
     double timeSinceDash = SDL_GetTicks() - lastDashTimestamp;
     double dashProgress = timeSinceDash / dashDuration;
-    Vector2 stepEndPoint = dashStartPoint.Add(((dashEndPoint.Subtract(dashStartPoint)).Multiply(dashProgress)));
+    Vector2 stepEndPoint = dashStartPoint.Add(((dashEndPoint-(dashStartPoint))*(dashProgress)));
     //apply the collision
     Vector2 actualEnd = collisionManager->ApplyCollision(currentPos, stepEndPoint);
     if (actualEnd.FindDistance(stepEndPoint) > 0.5f) {
@@ -211,7 +211,7 @@ void PlayerController::Dash()
     lastDashTimestamp = SDL_GetTicks();
     dashStartPoint = *new Vector2{ xPos, yPos };
     Vector2 dashDirection = inputs->GetCurrentDirection();
-    Vector2 dashMovement = dashDirection.Multiply(dashLength);
+    Vector2 dashMovement = dashDirection*(dashLength);
     dashEndPoint = dashStartPoint.Add(dashMovement);
 }
 void PlayerController::Stun()
