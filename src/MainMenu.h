@@ -5,6 +5,7 @@ using namespace std;
 class MainMenu : public GameState {
 private:
 public:
+	MainMenu(GameStateMachine* pMachine);
 	void Update(double deltaTime);
 	void Render(SDL_Renderer* renderer);
 	void OnEnter();

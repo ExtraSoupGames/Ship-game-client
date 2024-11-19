@@ -1,4 +1,5 @@
 #include "MyGame.h"
+#include "MainMenu.h"
 bool Hitbox::Collides(Hitbox& other) {
     if (other.x + other.w < x || x + w < other.x) {
         return false;
@@ -9,7 +10,7 @@ bool Hitbox::Collides(Hitbox& other) {
     return true;
 }
 
-MyGame::MyGame(int pClientID, ServerManager* serverManager, SDL_Renderer* gameRenderer) {
+MyGame::MyGame(int pClientID, ServerManager* serverManager, SDL_Renderer* gameRenderer, GameStateMachine* pMachine) : GameState(pMachine){
     serverStartTime = 0;
     clientServerTimeDiff = 0;
     broadcastTimer = 0;
@@ -23,6 +24,8 @@ MyGame::MyGame(int pClientID, ServerManager* serverManager, SDL_Renderer* gameRe
 
     enemies = new vector<Enemy*>();
     players = new vector<OtherPlayer*>();
+
+    pMachine = machine;
 
 
     //test animations
@@ -185,6 +188,11 @@ void MyGame::OnReceive(char* data, int messagelength) {
 
 void MyGame::Input(SDL_Event& event) {
     playerController->HandleInput(event, this);
+    if (event.type == SDL_KEYDOWN) {
+        if (event.key.keysym.sym == SDLK_p) {
+            machine->SwitchState(new MainMenu(machine));
+        }
+    }
 }
 void MyGame::Update(double deltaTime) {
 #pragma region boundaryRequests

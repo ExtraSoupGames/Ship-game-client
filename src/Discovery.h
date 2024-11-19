@@ -21,7 +21,7 @@ class DiscoveryScreen : public GameState{
 	double discoverDelay; // dont spam packets as this is unneccesary load on network
 	double discoverTimer;
 public:
-	DiscoveryScreen();
+	DiscoveryScreen(GameStateMachine* machine);
 	ServerHost* ShowDiscoveryScreen(ServerManager* serverManager);
 	void Render(SDL_Renderer* renderer) override;
 	void OnReceive(char* inData, int dataLength) override;

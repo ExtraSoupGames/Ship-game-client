@@ -1,5 +1,5 @@
 #include "Discovery.h"
-DiscoveryScreen::DiscoveryScreen()
+DiscoveryScreen::DiscoveryScreen(GameStateMachine* machine) : GameState(machine)
 {
     selectedServer = 0;
     discoverDelay = 500;

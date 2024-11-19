@@ -68,7 +68,8 @@ int main(int argc, char* argv[]) {
 #pragma region serverDiscovery
     bool serverFound = false;
     ServerHost* host = nullptr;
-    DiscoveryScreen *discovering = new DiscoveryScreen();
+    DiscoveryScreen *discovering = new DiscoveryScreen(nullptr); // using gamestates before game state machine initiated 
+    //TODO change this to allow discovery screen to work as part of main game loop
     bool exiting = false;
     while (!serverFound && !exiting) {
         while (SDL_PollEvent(&event)) {
@@ -91,55 +92,12 @@ int main(int argc, char* argv[]) {
     }
 #pragma endregion serverDiscovery
 
-    MyGame* game = new MyGame(clientID, serverManager, renderer);
-
-#pragma region mainLoop
-
-    Uint64 currentTime = SDL_GetPerformanceCounter();
-    Uint64 lastFrameTime = 0;
-    double deltaTime = 0;
-    while (is_running && !exiting) {
-        lastFrameTime = currentTime;
-        currentTime = SDL_GetPerformanceCounter();
-        deltaTime = (double)((currentTime - lastFrameTime) * 1000 / (double)SDL_GetPerformanceFrequency());
-
-        game->Update(deltaTime);
-
-#pragma region receivePackets
-        int packets = SDLNet_UDP_Recv(socket, packet);
-        if (packets) {
-            char* inData = ((char*)packet->data);
-            game->OnReceive(inData, packet->len);
-        }
-#pragma endregion receivePackets
-
-#pragma region input
-        while (SDL_PollEvent(&event)) {
-            if ((event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) && event.key.repeat == 0) {
-                game->Input(event);
-
-                switch (event.key.keysym.sym) {
-                case SDLK_ESCAPE:
-                    is_running = false;
-                    break;
-                case SDLK_p:
-                    cout << "P PRESSED" << endl;
-                default:
-                    break;
-                }
-            }
-
-            if (event.type == SDL_QUIT) {
-                is_running = false;
-            }
-        }
-#pragma endregion input
-
-        game->Render(renderer);
-    }
-#pragma endregion mainLoop
+    GameStateMachine game = GameStateMachine();
+    MyGame* gameState = new MyGame(clientID, serverManager, renderer, &game);
+    game.SwitchState(gameState);
 
 
+    game.Run(&socket, packet, renderer);
     // Clean up
     SDLNet_UDP_Close(socket);
     SDLNet_Quit();

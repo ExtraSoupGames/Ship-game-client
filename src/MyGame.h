@@ -50,7 +50,7 @@ class MyGame : public GameState{
         void HandleEnemyData(string data);
         void HandleBoundaryData(string data);
     public:
-        MyGame(int pClientID, ServerManager* serverManager, SDL_Renderer* renderer);
+        MyGame(int pClientID, ServerManager* serverManager, SDL_Renderer* renderer, GameStateMachine* pMachine);
         std::vector<std::string> messages;
 
 
