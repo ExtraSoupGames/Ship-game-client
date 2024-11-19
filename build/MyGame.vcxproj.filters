@@ -34,6 +34,9 @@
     <ClCompile Include="..\src\Discovery.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\MainMenu.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Interpolator.h">
@@ -67,6 +70,9 @@
       <Filter>GameStates</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Discovery.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\MainMenu.h">
       <Filter>GameStates</Filter>
     </ClInclude>
   </ItemGroup>
