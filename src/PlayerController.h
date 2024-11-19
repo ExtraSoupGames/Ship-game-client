@@ -19,6 +19,8 @@ struct InputMapping {
 };
 class PlayerController : public Animatable {
 private:
+    //player values
+    int playerHealth;
     //player actions
     void Attack(MyGame* game);
     void Dash();
@@ -37,6 +39,7 @@ private:
     double height;
     double xPos;
     double yPos;
+    Hitbox GetPlayerBox();
 
     //states
     int direction; //0-7, representing cardinal directions starting from 0 = north (directly up)
@@ -71,5 +74,6 @@ public:
     PlayerController(TextureManager* t, CollisionManager* pCollisionManager);
     void HandleInput(SDL_Event& event, MyGame* game);
     void UpdateMove(double deltaTime);
+    void UpdateEnemyAttacks(MyGame* game);
     void Render(SDL_Renderer* renderer);
 };

@@ -7,6 +7,18 @@ using namespace std;
 struct DataStream;
 struct DataPoint;
 struct Hitbox;
+struct EnemyAttackData {
+	int enemyMiddleX;
+	int enemyMiddleY;
+	int attackDamage;
+	int knockbackModifier;
+	EnemyAttackData(int enemyX, int enemyY, int damage, int kb) {
+		enemyMiddleX = enemyX;
+		enemyMiddleY = enemyY;
+		attackDamage = damage;
+		knockbackModifier = kb;
+	}
+};
 enum EnemyType {
 	LEECH,
 	FLOPPER,
@@ -32,19 +44,25 @@ private:
 protected:
 	int width;
 	int height;
+	double lastAttackTimestamp;
 	void OnInterpolate(DataPoint* data) override;
 public:
 	Hitbox GetHitbox();
 	Enemy(int ID);
 	int GetID();
 	virtual void Render(SDL_Renderer* renderer);
+	virtual bool IsAttacking() = 0; // does the player get damaged if they overlap
+	virtual EnemyAttackData GetAttackData() = 0;
+	void ResetAttackTimestamp(); // called by the player when the player is attacked
 	static EnemyType GetEnemyTypeFromBinary(string binaryIn);
 };
 #pragma region Enemies
 class Bobleech : public Enemy, public Animatable {
 public:
 	Bobleech(int ID, TextureManager* t);
-	void Render(SDL_Renderer* renderer);
+	void Render(SDL_Renderer* renderer) override;
+	bool IsAttacking() override;
+	virtual EnemyAttackData GetAttackData() override;
 };
 class Flopper : public Enemy, public Animatable {
 	FlopperStates state;
@@ -52,7 +70,9 @@ protected:
 	void OnInterpolate(DataPoint* data) override;
 public:
 	Flopper(int ID, TextureManager* t);
-	void Render(SDL_Renderer* renderer);
+	void Render(SDL_Renderer* renderer) override;
+	bool IsAttacking() override;
+	virtual EnemyAttackData GetAttackData() override;
 };
 class Clingabing : public Enemy, public Animatable{
 	ClingabingStates state;
@@ -60,7 +80,9 @@ protected:
 	void OnInterpolate(DataPoint* data) override;
 public:
 	Clingabing(int ID, TextureManager* t);
-	void Render(SDL_Renderer* renderer);
+	void Render(SDL_Renderer* renderer) override;
+	bool IsAttacking() override;
+	virtual EnemyAttackData GetAttackData() override;
 };
 #pragma endregion enemies
 class OtherPlayer : public Interpolator, public Animatable

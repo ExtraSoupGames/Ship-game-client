@@ -186,7 +186,6 @@ void MyGame::OnReceive(char* data, int messagelength) {
 void MyGame::Input(SDL_Event& event) {
     playerController->HandleInput(event, this);
 }
-
 void MyGame::Update(double deltaTime) {
 #pragma region boundaryRequests
     if (collisions->IsEmpty()) {
@@ -212,6 +211,7 @@ void MyGame::Update(double deltaTime) {
 #pragma endregion playerDataOut
 #pragma region playerProcessing
     playerController->UpdateMove(deltaTime);
+    playerController->UpdateEnemyAttacks(this);
     double delay = 100;  //snapshot buffer should be 3-4x base rate of packets - this way we can lose 2 packets and not experience jittering
     double timern = clientServerTimeDiff + SDL_GetTicks() - delay;
     //cout << "ClientServerDiff: " << clientServerTimeDiff << endl;
@@ -234,7 +234,6 @@ void MyGame::Update(double deltaTime) {
     }
 #pragma endregion serverUpdates
 }
-
 void MyGame::Render(SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
     SDL_RenderClear(renderer);
@@ -252,11 +251,9 @@ void MyGame::Render(SDL_Renderer* renderer) {
     collisions->DrawDebug(renderer);
     SDL_RenderPresent(renderer);
 }
-
 void MyGame::OnEnter()
 {
 }
-
 void MyGame::OnExit()
 {
 }

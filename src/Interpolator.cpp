@@ -48,6 +48,10 @@ void Enemy::Render(SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
     SDL_RenderDrawRect(renderer, enemyRect);
 }
+void Enemy::ResetAttackTimestamp()
+{
+    lastAttackTimestamp = SDL_GetTicks();
+}
 EnemyType Enemy::GetEnemyTypeFromBinary(string binaryIn)
 {
     if (binaryIn == "000") {
@@ -61,6 +65,7 @@ EnemyType Enemy::GetEnemyTypeFromBinary(string binaryIn)
 Enemy::Enemy(int ID) : Interpolator(ID) {
     width = 20;
     height = 20;
+    lastAttackTimestamp = 0;
 }
 void Enemy::OnInterpolate(DataPoint* data)
 {
@@ -76,6 +81,15 @@ Bobleech::Bobleech(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vecto
 void Bobleech::Render(SDL_Renderer* renderer) {
     Animatable::Render(renderer, x, y, 20, 20);
 }
+bool Bobleech::IsAttacking()
+{
+    double timeSinceAttack = SDL_GetTicks() - lastAttackTimestamp;
+    return (timeSinceAttack > 1000); // bobleech is always ready to attack
+}
+EnemyAttackData Bobleech::GetAttackData()
+{
+    return EnemyAttackData(x, y, 3, 2);
+}
 #pragma endregion Bobleech
 #pragma region Flopper
 Flopper::Flopper(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{ "%FlopperIdle", "%FlopperFly", "FlopperSpawn" }, t) {
@@ -90,6 +104,15 @@ void Flopper::Render(SDL_Renderer* renderer) {
     //TODO draw the flopper based on the state
     Animatable::UpdateAnimation();
     Animatable::Render(renderer, x, y, 30, 30);
+}
+bool Flopper::IsAttacking()
+{
+    double timeSinceAttack = SDL_GetTicks() - lastAttackTimestamp;
+    return (timeSinceAttack > 2000) && state == IDLE; // flopper doesnt damage player when flying or spawning
+}
+EnemyAttackData Flopper::GetAttackData()
+{
+    return EnemyAttackData(x, y, 10, 10);
 }
 #pragma endregion Flopper
 #pragma region Clingabing
@@ -107,6 +130,15 @@ void Clingabing::Render(SDL_Renderer* renderer)
     //TODO add clingabing frames and animate
     SDL_Rect* clingabingRect = new SDL_Rect{x, y, 15, 15};
     SDL_RenderDrawRect(renderer, clingabingRect);
+}
+bool Clingabing::IsAttacking()
+{
+    double timeSinceAttack = SDL_GetTicks() - lastAttackTimestamp;
+    return timeSinceAttack > 1000; //clingabing is always ready to attack
+}
+EnemyAttackData Clingabing::GetAttackData()
+{
+    return EnemyAttackData(x, y, 5, 5);
 }
 #pragma endregion Clingabing
 #pragma region OtherPlayer

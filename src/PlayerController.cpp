@@ -31,6 +31,7 @@ int InputMapping::GetDirectionState(Vector2 playerPos) {
 PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisionManager) : Animatable(*new vector<string>{ "%walk", "%run", "%dash" }, t) {
     //player's values
     attackCooldown = 500;
+    playerHealth = 100;
     //dash values
     dashCooldown = 1000; // time after start of dash when another dash can be initiated, must be greather than dashduration
     dashDuration = 200; // time spent physically dashing
@@ -73,6 +74,10 @@ Vector2 PlayerController::GetMiddle()
     double xMid = xPos + (width / 2);
     double yMid = yPos + (height / 2);
     return Vector2(xMid, yMid);
+}
+Hitbox PlayerController::GetPlayerBox()
+{
+    return Hitbox{(int)xPos, (int)yPos, (int)height, (int)width};
 }
 #pragma endregion Getters
 void PlayerController::HandleInput(SDL_Event& event, MyGame* game){
@@ -141,6 +146,10 @@ void PlayerController::UpdateMove(double deltaTime){
             movementState = 1;
         }
     }
+
+    //TESTING
+    cout << playerHealth << endl;
+    //TESTING
     int nextDirState = inputs->GetDirectionState(Vector2(xPos, yPos));
     if (nextDirState >= 0) {
         direction = nextDirState;
@@ -162,6 +171,18 @@ void PlayerController::UpdateMove(double deltaTime){
     }
 
     attackState = (SDL_GetTicks() - lastAttackTimestamp < attackCooldown);
+}
+void PlayerController::UpdateEnemyAttacks(MyGame* game)
+{
+    vector<Enemy*> enemies = game->GetCollidingEnemies(GetPlayerBox());
+    for (Enemy* e : enemies) {
+        if (e->IsAttacking()) {
+            e->ResetAttackTimestamp();
+            EnemyAttackData incomingAttack = e->GetAttackData();
+            playerHealth -= incomingAttack.attackDamage;
+            //TODO add knockback by calculating delta from enemy position to player position and multiplying by knockback modifier
+        }
+    }
 }
 void PlayerController::UpdateBasicMovement(double deltaTime)
 {
