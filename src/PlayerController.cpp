@@ -229,9 +229,6 @@ void PlayerController::Render(SDL_Renderer* renderer) {
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     }
     SDL_RenderDrawRect(renderer, playerRect);
-    Vector2 middle = GetMiddle();
-    attackBox->x = attackBoxOffset.x + middle.x;
-    attackBox->y = attackBoxOffset.y + middle.y;
     SDL_Rect* DebugAttackBoxRect = new SDL_Rect{ attackBox->x, attackBox->y, attackBox->w, attackBox->h};
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderDrawRect(renderer, DebugAttackBoxRect);

@@ -39,6 +39,7 @@ private:
     void UpdateBasicMovement(double deltaTime);
     void UpdateDashMovement();
     void UpdateStun();
+
     //hitboxes, collision, ect
     Hitbox* attackBox;
     Vector2 attackBoxOffset;
@@ -49,9 +50,9 @@ private:
     double yPos;
 
     //states
-    int direction;
+    int direction; //0-7, representing cardinal directions starting from 0 = north (directly up)
     int movementState; // 0 = still, 1 = walking, 2 = dashing
-    int attackState;
+    int attackState; // 0 = not attacking, 1 = attacking (aka on cooldown from attack)
 
     //attack values
     double lastAttackTimestamp;
