@@ -5,14 +5,7 @@ DiscoveryScreen::DiscoveryScreen()
     discoverDelay = 500;
     discoverTimer = 0;
 }
-ServerHost* DiscoveryScreen::ShowDiscoveryScreen(SDL_Renderer* renderer, ServerManager* serverManager) {
-    discoverTimer++; //normally would use SDL_GetTicks(), but accuracy is not important so this innaccurate way is fine
-    if (discoverTimer > discoverDelay) {
-        discoverTimer -= discoverDelay;
-        //send requests
-        string discoverRequest = "0000";
-        serverManager->SendMessage(discoverRequest);
-    }
+void DiscoveryScreen::Render(SDL_Renderer* renderer) {
     //display
     SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
     SDL_RenderClear(renderer);
@@ -28,6 +21,15 @@ ServerHost* DiscoveryScreen::ShowDiscoveryScreen(SDL_Renderer* renderer, ServerM
         SDL_RenderDrawRect(renderer, serverSymbol);
     }
     SDL_RenderPresent(renderer);
+}
+ServerHost* DiscoveryScreen::ShowDiscoveryScreen(ServerManager* serverManager) {
+    discoverTimer++; //normally would use SDL_GetTicks(), but accuracy is not important so this innaccurate way is fine
+    if (discoverTimer > discoverDelay) {
+        discoverTimer -= discoverDelay;
+        //send requests
+        string discoverRequest = "0000";
+        serverManager->SendMessage(discoverRequest);
+    }
     if (selecting) {
         return servers[selectedServer];
     }
@@ -73,4 +75,16 @@ void DiscoveryScreen::Input(SDL_Event& event) {
             selecting = true;
         }
     }
+}
+
+void DiscoveryScreen::Update(double deltaTime)
+{
+}
+
+void DiscoveryScreen::OnEnter()
+{
+}
+
+void DiscoveryScreen::OnExit()
+{
 }

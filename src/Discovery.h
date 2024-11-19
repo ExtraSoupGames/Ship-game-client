@@ -3,6 +3,7 @@
 #include "SDL_net.h"
 #include "ServerManager.h"
 #include <vector>
+#include "GameState.h"
 using namespace std;
 struct ServerHost {
 	string host;
@@ -12,7 +13,7 @@ struct ServerHost {
 		port = pPort;
 	}
 };
-class DiscoveryScreen {
+class DiscoveryScreen : public GameState{
 	int selectedServer;
 	vector<ServerHost*> servers;
 	bool ServerExists(string host, int port);
@@ -21,7 +22,11 @@ class DiscoveryScreen {
 	double discoverTimer;
 public:
 	DiscoveryScreen();
-	ServerHost* ShowDiscoveryScreen(SDL_Renderer* renderer, ServerManager* serverManager);
-	void OnReceive(char* inData, int dataLength);
-	void Input(SDL_Event& event);
+	ServerHost* ShowDiscoveryScreen(ServerManager* serverManager);
+	void Render(SDL_Renderer* renderer) override;
+	void OnReceive(char* inData, int dataLength) override;
+	void Input(SDL_Event& event) override;
+	void Update(double deltaTime) override;
+	void OnEnter() override;
+	void OnExit() override;
 };

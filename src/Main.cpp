@@ -82,7 +82,8 @@ int main(int argc, char* argv[]) {
             char* inData = ((char*)packet->data);
             discovering->OnReceive(inData, packet->len);
         }
-        host = discovering->ShowDiscoveryScreen(renderer, serverManager);
+        host = discovering->ShowDiscoveryScreen(serverManager);
+        discovering->Render(renderer);
         serverFound = !(host == nullptr);
     }
     if (!exiting) {

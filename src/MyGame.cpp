@@ -253,6 +253,14 @@ void MyGame::Render(SDL_Renderer* renderer) {
     SDL_RenderPresent(renderer);
 }
 
+void MyGame::OnEnter()
+{
+}
+
+void MyGame::OnExit()
+{
+}
+
 vector<Enemy*> MyGame::GetCollidingEnemies(Hitbox area)
 {
     vector<Enemy*> collidingEnemies = *new vector<Enemy*>();

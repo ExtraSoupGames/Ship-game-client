@@ -16,6 +16,7 @@
 #include "Animation.h"
 #include "PlayerController.h"
 #include "Data.h"
+#include "GameState.h"
 using namespace std;
 struct Hitbox {
     //defined by a point and a width and height
@@ -25,7 +26,7 @@ struct Hitbox {
     int h;
     bool Collides(Hitbox& other);
 };
-class MyGame {
+class MyGame : public GameState{
 
     private:
         vector<Enemy*>* enemies;
@@ -53,10 +54,12 @@ class MyGame {
         std::vector<std::string> messages;
 
 
-        void OnReceive(char* message, int messageLength);
-        void Input(SDL_Event& event);
-        void Update(double deltaTime);
-        void Render(SDL_Renderer* renderer);
+        void OnReceive(char* message, int messageLength) override;
+        void Input(SDL_Event& event) override;
+        void Update(double deltaTime) override;
+        void Render(SDL_Renderer* renderer) override;
+        void OnEnter() override;
+        void OnExit() override;
         double thisPlayerX = 0;
         double thisPlayerY = 0;
         vector<Enemy*> GetCollidingEnemies(Hitbox area);
