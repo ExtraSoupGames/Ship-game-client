@@ -37,9 +37,14 @@ private:
     Vector2 GetMiddle();
     double width;
     double height;
+    Hitbox GetPlayerBox();
+
+    //movement
     double xPos;
     double yPos;
-    Hitbox GetPlayerBox();
+    double xVelo;
+    double yVelo;
+    void ApplyForce(double xForce, double yForce);
 
     //states
     int direction; //0-7, representing cardinal directions starting from 0 = north (directly up)

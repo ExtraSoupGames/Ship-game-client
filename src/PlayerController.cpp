@@ -28,6 +28,7 @@ int InputMapping::GetDirectionState(Vector2 playerPos) {
 }
 #pragma endregion InputMapping
 #pragma region PlayerController
+
 PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisionManager) : Animatable(*new vector<string>{ "%walk", "%run", "%dash" }, t) {
     //player's values
     attackCooldown = 500;
@@ -56,7 +57,10 @@ PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisi
     dashStartPoint = *new Vector2{ 0,0 };
     dashEndPoint = *new Vector2{ 0,0 };
     inputs = new InputMapping();
+    xVelo = 0;
+    yVelo = 0;
 }
+
 #pragma region Getters
 PlayerState PlayerController::GetState() {
     return *new PlayerState(direction, movementState, attackState);
@@ -79,7 +83,13 @@ Hitbox PlayerController::GetPlayerBox()
 {
     return Hitbox{(int)xPos, (int)yPos, (int)height, (int)width};
 }
+void PlayerController::ApplyForce(double xForce, double yForce)
+{
+    xVelo += xForce;
+    yVelo += yForce;
+}
 #pragma endregion Getters
+
 void PlayerController::HandleInput(SDL_Event& event, MyGame* game){
     switch (event.key.keysym.sym) {
 #pragma region directional keys
@@ -133,6 +143,7 @@ void PlayerController::HandleInput(SDL_Event& event, MyGame* game){
     inputs->mousePos = Vector2(mouseX, mouseY);
 
 }
+
 #pragma region UpdateMovement
 void PlayerController::UpdateMove(double deltaTime){
 #pragma region stateUpdate
@@ -147,14 +158,15 @@ void PlayerController::UpdateMove(double deltaTime){
         }
     }
 
-    //TESTING
-    cout << playerHealth << endl;
-    //TESTING
     int nextDirState = inputs->GetDirectionState(Vector2(xPos, yPos));
     if (nextDirState >= 0) {
         direction = nextDirState;
         //cout << "direction: " << direction << endl;
     }
+    //apply friction to velocity
+    double frictionModifier = 0.1f;
+    xVelo = xVelo - (xVelo * (frictionModifier * (deltaTime / 10)));
+    yVelo = yVelo - (yVelo * (frictionModifier * (deltaTime / 10)));
 #pragma endregion stateUpdate
     switch (movementState) {
         //0 or 1 is still or moving so just do movement code for either incase the still state is inaccurate
@@ -180,19 +192,24 @@ void PlayerController::UpdateEnemyAttacks(MyGame* game)
             e->ResetAttackTimestamp();
             EnemyAttackData incomingAttack = e->GetAttackData();
             playerHealth -= incomingAttack.attackDamage;
-            //TODO add knockback by calculating delta from enemy position to player position and multiplying by knockback modifier
+            //receive knockback
+            Vector2 playerPos = Vector2(xPos, yPos);
+            Vector2 enemyPos = Vector2(incomingAttack.enemyMiddleX, incomingAttack.enemyMiddleY);
+            Vector2 knockbackDirection = (playerPos - enemyPos).Normalise();
+            Vector2 finalKnockback = knockbackDirection * (incomingAttack.knockbackModifier);
+            ApplyForce(finalKnockback.x, finalKnockback.y);
         }
     }
 }
 void PlayerController::UpdateBasicMovement(double deltaTime)
 {
-    double speed = 0.3f;
+    double speed = 0.005f;
     Vector2 currentPos = *new Vector2{ xPos, yPos };
     Vector2 endPos;
     Vector2 finalPos;
     Vector2 currentDir = inputs->GetDirectionMoving();
-    double xVelo = currentDir.x * speed;
-    double yVelo = currentDir.y * speed;
+    xVelo += currentDir.x * speed;
+    yVelo += currentDir.y * speed;
     endPos = *new Vector2{ (xPos + (xVelo * deltaTime)), (yPos + (yVelo * deltaTime)) };
     finalPos = collisionManager->ApplyCollision(currentPos, endPos);
     xPos = finalPos.x;

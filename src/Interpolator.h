@@ -11,8 +11,8 @@ struct EnemyAttackData {
 	int enemyMiddleX;
 	int enemyMiddleY;
 	int attackDamage;
-	int knockbackModifier;
-	EnemyAttackData(int enemyX, int enemyY, int damage, int kb) {
+	double knockbackModifier;
+	EnemyAttackData(int enemyX, int enemyY, int damage, double kb) {
 		enemyMiddleX = enemyX;
 		enemyMiddleY = enemyY;
 		attackDamage = damage;
