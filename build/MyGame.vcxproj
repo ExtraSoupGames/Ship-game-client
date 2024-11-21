@@ -317,6 +317,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\src\Collision.cpp" />
     <ClCompile Include="..\src\Discovery.cpp" />
     <ClCompile Include="..\src\GameState.cpp" />
+    <ClCompile Include="..\src\GlobalSettings.cpp" />
     <ClCompile Include="..\src\Interpolator.cpp" />
     <ClCompile Include="..\src\MainMenu.cpp" />
     <ClCompile Include="..\src\PlayerController.cpp" />
@@ -330,6 +331,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\src\Data.h" />
     <ClInclude Include="..\src\Discovery.h" />
     <ClInclude Include="..\src\GameState.h" />
+    <ClInclude Include="..\src\GlobalSettings.h" />
     <ClInclude Include="..\src\Interpolator.h" />
     <ClInclude Include="..\src\MainMenu.h" />
     <ClInclude Include="..\src\PlayerController.h" />

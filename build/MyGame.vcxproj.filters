@@ -37,6 +37,9 @@
     <ClCompile Include="..\src\MainMenu.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\GlobalSettings.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Interpolator.h">
@@ -74,6 +77,9 @@
     </ClInclude>
     <ClInclude Include="..\src\MainMenu.h">
       <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GlobalSettings.h">
+      <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
