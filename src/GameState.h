@@ -1,5 +1,6 @@
 #pragma once
 #include "SDL.h"
+#include "GlobalSettings.h"
 #include <SDL_net.h>
 #include <iostream>
 using namespace std;
@@ -21,10 +22,13 @@ public:
 class GameStateMachine {
 private:
 	GameState* currentState;
+	GameState* nextState;
 protected:
 public:
 	GameStateMachine();
+	bool receivingPackets;
+	GlobalSettingsProfile* settings;
 	bool running;
 	void SwitchState(GameState* newState);
-	void Run(UDPsocket* socket, UDPpacket* packet, SDL_Renderer* renderer);
+	void Run(SDL_Renderer* renderer);
 };

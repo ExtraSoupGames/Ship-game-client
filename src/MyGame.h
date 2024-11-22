@@ -33,9 +33,7 @@ class MyGame : public GameState{
         vector<OtherPlayer*>* players;
         double clientServerTimeDiff;
         double serverStartTime;
-        int clientID = 0;
         CollisionManager* collisions;
-        ServerManager* server;
         SDL_Renderer* renderer;
         TextureManager* textureManager;
         PlayerController* playerController;
@@ -50,7 +48,7 @@ class MyGame : public GameState{
         void HandleEnemyData(string data);
         void HandleBoundaryData(string data);
     public:
-        MyGame(int pClientID, ServerManager* serverManager, SDL_Renderer* renderer, GameStateMachine* pMachine);
+        MyGame(SDL_Renderer* renderer, GameStateMachine* pMachine);
         std::vector<std::string> messages;
 
 

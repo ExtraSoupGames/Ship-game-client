@@ -10,12 +10,10 @@ bool Hitbox::Collides(Hitbox& other) {
     return true;
 }
 
-MyGame::MyGame(int pClientID, ServerManager* serverManager, SDL_Renderer* gameRenderer, GameStateMachine* pMachine) : GameState(pMachine){
+MyGame::MyGame(SDL_Renderer* gameRenderer, GameStateMachine* pMachine) : GameState(pMachine){
     serverStartTime = 0;
     clientServerTimeDiff = 0;
     broadcastTimer = 0;
-    clientID = pClientID;
-    server = serverManager;
     renderer = gameRenderer;
     textureManager = new TextureManager(renderer);
     collisions = new CollisionManager();
@@ -59,7 +57,7 @@ void MyGame::HandleEnemyData(string message) {
         message = message.substr(0, message.size() - padding); // remove the padding
     }
 
-    double timestamp = server->TimestampDecompress(message.substr(message.size() - 64, 64)); // the timestamp is the final piece of data
+    double timestamp = machine->settings->server->TimestampDecompress(message.substr(message.size() - 64, 64)); // the timestamp is the final piece of data
 
     string enemyData = message.substr(0, message.size() - 64);
     vector<int> aliveEnemyIDs = *new vector<int>();
@@ -70,8 +68,8 @@ void MyGame::HandleEnemyData(string message) {
     for (int i = 0; i < (enemyData.size() - (enemyPacketSize - 1)); i += enemyPacketSize) { //iterate through each enemies data (each enemy has 48 bits to store position and ID
         //get the information about the enemy
         EnemyType enemyType = Enemy::GetEnemyTypeFromBinary(enemyData.substr(i, 3));
-        int ID = server->IntDecompress(enemyData.substr(i+3, 32));
-        int* position = server->PositionDecompress(enemyData.substr(i + 35, 16));
+        int ID = machine->settings->server->IntDecompress(enemyData.substr(i+3, 32));
+        int* position = machine->settings->server->PositionDecompress(enemyData.substr(i + 35, 16));
         int X = *position;
         int Y = *(position + 1);
         string extraData = enemyData.substr(i + 51, 2);
@@ -104,7 +102,7 @@ void MyGame::HandlePlayerData(string message) {
         int padding = (message.size() - 64) % 55;
         message = message.substr(0, message.size() - padding); // remove the padding
     }
-    double timestamp = server->TimestampDecompress(message.substr(message.size() - 64, 64)); // the timestamp is the final piece of data
+    double timestamp = machine->settings->server->TimestampDecompress(message.substr(message.size() - 64, 64)); // the timestamp is the final piece of data
 
     //the first packet that comes from the server will be the base start time offset for all other packets
     if (serverStartTime < 100) {
@@ -113,15 +111,15 @@ void MyGame::HandlePlayerData(string message) {
     }
     string playerData = message.substr(0, (message.size() - 64));
     for (int i = 0; i < (playerData.size() - 54); i += 55) { //iterate through each player data (each player has 3 args: ID, X, Y)
-        int ID = server->IntDecompress(playerData.substr(i, 32));
-        if (ID == clientID) {
+        int ID = machine->settings->server->IntDecompress(playerData.substr(i, 32));
+        if (ID == machine->settings->clientID) {
             continue; // this player's movement is handled by its own playercontroller
         }
-        int* position = server->PositionDecompress(playerData.substr(i + 32, 16));
+        int* position = machine->settings->server->PositionDecompress(playerData.substr(i + 32, 16));
         int X = *position;
         int Y = *(position + 1);
-        PlayerState state = server->PlayerStateDecompress(playerData.substr(i+48, 7));
-        if (ID != clientID) {
+        PlayerState state = machine->settings->server->PlayerStateDecompress(playerData.substr(i+48, 7));
+        if (ID != machine->settings->clientID) {
             //ignore the incoming data about this client as the client has authority on it's own player's movement
 
             auto it = std::find_if(players->begin(), players->end(), [&ID](OtherPlayer* e) {return e->HasID(ID); });
@@ -153,18 +151,18 @@ void MyGame::HandleBoundaryData(string message) {
     }
     int messageDataLength = message.size() - 64;
     for (int i = 0; i < messageDataLength - 5 * 32; i += 6 * 32) {
-        double p1x = server->IntDecompress(message.substr(i, 32));
-        double p1y = server->IntDecompress(message.substr(i + 32, 32));
-        double p2x = server->IntDecompress(message.substr(i + 64, 32));
-        double p2y = server->IntDecompress(message.substr(i + 96, 32));
-        double ofx = server->IntDecompress(message.substr(i + 128, 32));
-        double ofy = server->IntDecompress(message.substr(i + 160, 32));
+        double p1x = machine->settings->server->IntDecompress(message.substr(i, 32));
+        double p1y = machine->settings->server->IntDecompress(message.substr(i + 32, 32));
+        double p2x = machine->settings->server->IntDecompress(message.substr(i + 64, 32));
+        double p2y = machine->settings->server->IntDecompress(message.substr(i + 96, 32));
+        double ofx = machine->settings->server->IntDecompress(message.substr(i + 128, 32));
+        double ofy = machine->settings->server->IntDecompress(message.substr(i + 160, 32));
         collisions->AddBoundary(*new CollisionBoundary(p1x, p1y, p2x, p2y, ofx, ofy));
     }
 }
 #pragma endregion incomingDataProcessing
 void MyGame::OnReceive(char* data, int messagelength) {
-    string message = server->CharToBinary(data, messagelength);
+    string message = machine->settings->server->CharToBinary(data, messagelength);
     string messageType = message.substr(0, 4); // first 4 bits denote type of data in packet
     message = message.substr(4);
     if (messageType == "1000") { // enemy positions code
@@ -178,10 +176,10 @@ void MyGame::OnReceive(char* data, int messagelength) {
         cout << "Game Initiated!" << endl;
     }
     if (messageType == "1010") { // important message confirmation from server code
-        server->ReceiveImportantMessageConfirmation(message);
+        machine->settings->server->ReceiveImportantMessageConfirmation(message);
     }
     if (messageType == "1100") { // impotant message received from server, send confirmation, just for testing
-        server->SendImportantMessageConfirmation(message, clientID);
+        machine->settings->server->SendImportantMessageConfirmation(message, machine->settings->clientID);
     }
 }
 #pragma endregion incomingData
@@ -199,7 +197,7 @@ void MyGame::Update(double deltaTime) {
     if (collisions->IsEmpty()) {
         stringstream binaryText;
         binaryText << "0010"; // this is a boundary data request code
-        server->SendMessage(binaryText.str());
+        machine->settings->server->SendMessage(binaryText.str());
         return;
     }
 #pragma endregion boundaryRequests
@@ -210,11 +208,11 @@ void MyGame::Update(double deltaTime) {
         // Prepare player data
         stringstream binaryText;
         binaryText << "0100" << 
-            server->IntCompress(clientID) <<
-            server->PositionCompress(playerController->GetXForServer(), playerController->GetYForServer()) <<
-            server->PlayerStateCompress(playerController->GetState());
+            machine->settings->server->IntCompress(machine->settings->clientID) <<
+            machine->settings->server->PositionCompress(playerController->GetXForServer(), playerController->GetYForServer()) <<
+            machine->settings->server->PlayerStateCompress(playerController->GetState());
         // Send player data
-        server->SendMessage(binaryText.str());
+        machine->settings->server->SendMessage(binaryText.str());
     }
 #pragma endregion playerDataOut
 #pragma region playerProcessing
@@ -238,7 +236,7 @@ void MyGame::Update(double deltaTime) {
     serverBroadcastTimer += deltaTime;
     if (serverBroadcastTimer > serverBroadcastDelay) {
         serverBroadcastTimer -= serverBroadcastDelay;
-        server->SendAllImportantMessages();
+        machine->settings->server->SendAllImportantMessages();
     }
 #pragma endregion serverUpdates
 }
@@ -280,7 +278,10 @@ vector<Enemy*> MyGame::GetCollidingEnemies(Hitbox area)
 void MyGame::SendEnemyDamageMessage(Enemy* enemyDamaged, int damage) {
     stringstream binaryText;
     int knockback = 0;
-    binaryText << "0110" << server->IntCompress(enemyDamaged->GetID()) << server->IntCompress(damage) << server->IntCompress(knockback);
+    binaryText << "0110" << 
+        machine->settings->server->IntCompress(enemyDamaged->GetID()) << 
+        machine->settings->server->IntCompress(damage) << 
+        machine->settings->server->IntCompress(knockback);
     // Send hit data
-    server->SendMessage(binaryText.str());
+    machine->settings->server->SendMessage(binaryText.str());
 }

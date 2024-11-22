@@ -13,6 +13,10 @@ ServerManager::ServerManager(UDPsocket* serverSocket, int pClientID) {
     clientID = pClientID;
     importantMessages = *new vector<ImportantMessage*>();
 }
+string ServerManager::ToString()
+{
+    return "Server Manager Properties, Host:" + host + " port: " + to_string(port);
+}
 void ServerManager::SetHost(string pHost, int pPort) {
     host = pHost;
     port = pPort;

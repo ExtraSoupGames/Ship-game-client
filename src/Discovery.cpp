@@ -1,9 +1,11 @@
 #include "Discovery.h"
-DiscoveryScreen::DiscoveryScreen(GameStateMachine* machine) : GameState(machine)
+DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine, SDL_Renderer* pRenderer) : GameState(machine)
 {
     selectedServer = 0;
     discoverDelay = 500;
     discoverTimer = 0;
+    machine = pMachine;
+    renderer = pRenderer;
 }
 void DiscoveryScreen::Render(SDL_Renderer* renderer) {
     //display
@@ -22,21 +24,19 @@ void DiscoveryScreen::Render(SDL_Renderer* renderer) {
     }
     SDL_RenderPresent(renderer);
 }
-ServerHost* DiscoveryScreen::ShowDiscoveryScreen(ServerManager* serverManager) {
+void DiscoveryScreen::Update(double deltaTime) {
     discoverTimer++; //normally would use SDL_GetTicks(), but accuracy is not important so this innaccurate way is fine
     if (discoverTimer > discoverDelay) {
         discoverTimer -= discoverDelay;
         //send requests
         string discoverRequest = "0000";
-        serverManager->SendMessage(discoverRequest);
+        machine->settings->server->SendMessage(discoverRequest);
+        cout << "Searching for servers at :" << machine->settings->server->ToString() << endl;
     }
     if (selecting) {
-        return servers[selectedServer];
+        machine->settings->server->SetHost(servers[selectedServer]->host, servers[selectedServer]->port);
+        machine->SwitchState(new MyGame(renderer, machine));
     }
-    else {
-        return nullptr;
-    }
-   
 }
 void DiscoveryScreen::OnReceive(char* inData, int dataLength) {
     string data = ServerManager::CharToBinary(inData, dataLength);
@@ -75,10 +75,6 @@ void DiscoveryScreen::Input(SDL_Event& event) {
             selecting = true;
         }
     }
-}
-
-void DiscoveryScreen::Update(double deltaTime)
-{
 }
 
 void DiscoveryScreen::OnEnter()

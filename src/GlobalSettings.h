@@ -1,9 +1,14 @@
 #pragma once
 #include "SDL.h"
-#include "Discovery.h"
+#include "SDL_net.h"
+#include <iostream>
 using namespace std;
+class ServerManager;
 class GlobalSettingsProfile {
-	ServerHost* host;
+public:
+	UDPsocket socket;
+	ServerManager* server;
+	int clientID;
 	int screenHeight;
 	int screenWidth;
 	GlobalSettingsProfile();

@@ -2,8 +2,9 @@
 #include "SDL.h"
 #include "SDL_net.h"
 #include "ServerManager.h"
-#include <vector>
 #include "GameState.h"
+#include "MyGame.h"
+#include <vector>
 using namespace std;
 struct ServerHost {
 	string host;
@@ -16,13 +17,13 @@ struct ServerHost {
 class DiscoveryScreen : public GameState{
 	int selectedServer;
 	vector<ServerHost*> servers;
+	SDL_Renderer* renderer;
 	bool ServerExists(string host, int port);
 	bool selecting = false;
 	double discoverDelay; // dont spam packets as this is unneccesary load on network
 	double discoverTimer;
 public:
-	DiscoveryScreen(GameStateMachine* machine);
-	ServerHost* ShowDiscoveryScreen(ServerManager* serverManager);
+	DiscoveryScreen(GameStateMachine* machine, SDL_Renderer* renderer);
 	void Render(SDL_Renderer* renderer) override;
 	void OnReceive(char* inData, int dataLength) override;
 	void Input(SDL_Event& event) override;
