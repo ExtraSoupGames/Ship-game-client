@@ -40,6 +40,9 @@
     <ClCompile Include="..\src\GlobalSettings.cpp">
       <Filter>Data</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ServerLauncher.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Interpolator.h">
@@ -80,6 +83,9 @@
     </ClInclude>
     <ClInclude Include="..\src\GlobalSettings.h">
       <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ServerLauncher.h">
+      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

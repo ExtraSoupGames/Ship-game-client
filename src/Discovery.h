@@ -3,6 +3,7 @@
 #include "SDL_net.h"
 #include "ServerManager.h"
 #include "GameState.h"
+#include "ServerLauncher.h"
 #include "MyGame.h"
 #include <vector>
 using namespace std;

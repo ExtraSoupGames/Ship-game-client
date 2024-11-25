@@ -75,6 +75,12 @@ void DiscoveryScreen::Input(SDL_Event& event) {
             selecting = true;
         }
     }
+    if (event.key.keysym.sym == SDLK_p) {
+        if (event.type == SDL_KEYUP) {
+            ServerLauncher createServer = ServerLauncher();
+            createServer.RunServer();
+        }
+    }
 }
 
 void DiscoveryScreen::OnEnter()

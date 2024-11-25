@@ -321,6 +321,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\src\Interpolator.cpp" />
     <ClCompile Include="..\src\MainMenu.cpp" />
     <ClCompile Include="..\src\PlayerController.cpp" />
+    <ClCompile Include="..\src\ServerLauncher.cpp" />
     <ClCompile Include="..\src\ServerManager.cpp" />
     <ClCompile Include="..\src\TextureManager.cpp" />
     <ClCompile Include="..\src\Vector2.cpp" />
@@ -335,6 +336,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\src\Interpolator.h" />
     <ClInclude Include="..\src\MainMenu.h" />
     <ClInclude Include="..\src\PlayerController.h" />
+    <ClInclude Include="..\src\ServerLauncher.h" />
     <ClInclude Include="..\src\ServerManager.h" />
     <ClInclude Include="..\src\TextureManager.h" />
     <ClInclude Include="..\src\Vector2.h" />
