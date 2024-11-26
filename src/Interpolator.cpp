@@ -75,11 +75,12 @@ Hitbox Enemy::GetHitbox() {
 }
 #pragma endregion Enemy
 #pragma region Bobleech
-Bobleech::Bobleech(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{"%Bobleech"}, t) {
+Bobleech::Bobleech(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{"%Bobleech", "%Bobleech"}, t) {
     Animatable::PlayAnimation(0);
 }
 void Bobleech::Render(SDL_Renderer* renderer) {
-    Animatable::Render(renderer, x, y, 20, 20);
+    Animatable::Render(renderer, x, y, 32, 32);
+    Animatable::UpdateAnimation();
 }
 bool Bobleech::IsAttacking()
 {
