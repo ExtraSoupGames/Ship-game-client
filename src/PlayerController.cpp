@@ -40,8 +40,8 @@ PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisi
     //stun values
     stunDuration = 500;
     //starting position
-    xPos = 100;
-    yPos = 100;
+    xPos = 200;
+    yPos = 200;
     width = 20;
     height = 20;
     //used later
@@ -157,7 +157,6 @@ void PlayerController::UpdateMove(double deltaTime){
             movementState = 1;
         }
     }
-
     int nextDirState = inputs->GetDirectionState(Vector2(xPos, yPos));
     if (nextDirState >= 0) {
         direction = nextDirState;

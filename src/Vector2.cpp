@@ -17,6 +17,9 @@ Vector2 Vector2::operator-(Vector2 other) {
 }
 Vector2 Vector2::Normalise() {
     double magnitude = this->FindDistance(*new Vector2(0, 0));
+    if (magnitude == 0) {
+        return Vector2(this->x, this->y);
+    }
     return *new Vector2(x / magnitude, y / magnitude);
 }
 Vector2 Vector2::operator*(const double factor) {
