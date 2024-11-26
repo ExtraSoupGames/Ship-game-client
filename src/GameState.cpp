@@ -80,7 +80,7 @@ void GameStateMachine::Run() {
                 if (event.type == SDL_QUIT) {
                     running = false;
                 }
-                if (event.key.keysym.sym == SDLK_ESCAPE) {
+                if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
                     running = false;
                 }
             }
