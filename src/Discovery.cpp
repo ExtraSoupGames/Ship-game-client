@@ -7,13 +7,12 @@ void DiscoveryScreen::ServerClickedEvent()
     }
     selecting = true;
 }
-DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine, SDL_Renderer* pRenderer) : GameState(machine)
+DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine) : GameState(machine)
 {
     selectedServer = 0;
     discoverDelay = 500;
     discoverTimer = 0;
     machine = pMachine;
-    renderer = pRenderer;
     buttons.push_back(new Button("Connect", 100, 100, 30, 30, [this]() {this->ServerClickedEvent(); }));
 }
 void DiscoveryScreen::Render(SDL_Renderer* renderer) {
@@ -45,7 +44,7 @@ void DiscoveryScreen::Update(double deltaTime) {
     }
     if (selecting) {
         machine->settings->server->SetHost(servers[selectedServer]->host, servers[selectedServer]->port);
-        machine->SwitchState(new MyGame(renderer, machine));
+        machine->SwitchState(new MyGame(machine));
     }
 }
 void DiscoveryScreen::OnReceive(char* inData, int dataLength) {

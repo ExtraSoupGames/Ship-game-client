@@ -11,6 +11,7 @@
 #include "MyGame.h"
 #include "Discovery.h"
 #include "GameState.h"
+#include "MainMenu.h"
 
 int main(int argc, char* argv[]) {
 #pragma region initialization
@@ -40,8 +41,8 @@ int main(int argc, char* argv[]) {
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 #pragma endregion initialization
 
-    GameStateMachine* game = new GameStateMachine();
-    GameState* gameState = (GameState*)new DiscoveryScreen(game, renderer);
+    GameStateMachine* game = new GameStateMachine(renderer);
+    GameState* gameState = (GameState*)new MainMenu(game);
     game->SwitchState(gameState);
     game->receivingPackets = true;
 

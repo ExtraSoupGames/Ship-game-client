@@ -26,7 +26,7 @@ class DiscoveryScreen : public GameState{
 	double discoverTimer;
 	void ServerClickedEvent();
 public:
-	DiscoveryScreen(GameStateMachine* machine, SDL_Renderer* renderer);
+	DiscoveryScreen(GameStateMachine* machine);
 	void Render(SDL_Renderer* renderer) override;
 	void OnReceive(char* inData, int dataLength) override;
 	void Input(SDL_Event& event) override;

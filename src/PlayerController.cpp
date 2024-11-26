@@ -40,8 +40,8 @@ PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisi
     //stun values
     stunDuration = 500;
     //starting position
-    xPos = 50;
-    yPos = 50;
+    xPos = 100;
+    yPos = 100;
     width = 20;
     height = 20;
     //used later

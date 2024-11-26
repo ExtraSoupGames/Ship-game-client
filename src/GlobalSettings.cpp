@@ -8,11 +8,12 @@ int getRandomID() {
     uniform_int_distribution<mt19937::result_type> randomID(1, 999999);//random distribution between 1 and big number so 2 clients most likely wont get same ID
     return randomID(rng);
 }
-GlobalSettingsProfile::GlobalSettingsProfile() {
+GlobalSettingsProfile::GlobalSettingsProfile(SDL_Renderer* pRenderer) {
     clientID = getRandomID(); //generate a (probably) unique user ID
     //this means the client is registered to recieve packets from the server
     // 
     // Create a UDP socket
+    renderer = pRenderer;
     socket = SDLNet_UDP_Open(0);
     if (!socket) {
         std::cout << "SDLNet_UDP_Open: " << SDLNet_GetError() << std::endl;

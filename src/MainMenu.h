@@ -6,6 +6,7 @@ class MainMenu : public GameState {
 private:
 public:
 	MainMenu(GameStateMachine* pMachine);
+	void TransferToDiscoveryScreen();
 	void Update(double deltaTime);
 	void Render(SDL_Renderer* renderer);
 	void OnEnter();

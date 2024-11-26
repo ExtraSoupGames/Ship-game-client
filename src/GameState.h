@@ -31,7 +31,7 @@ private:
 	GameState* nextState;
 protected:
 public:
-	GameStateMachine();
+	GameStateMachine(SDL_Renderer* renderer);
 	bool receivingPackets;
 	GlobalSettingsProfile* settings;
 	bool running;

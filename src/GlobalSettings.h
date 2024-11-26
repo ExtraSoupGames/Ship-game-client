@@ -11,5 +11,6 @@ public:
 	int clientID;
 	int screenHeight;
 	int screenWidth;
-	GlobalSettingsProfile();
+	SDL_Renderer* renderer;
+	GlobalSettingsProfile(SDL_Renderer* pRenderer);
 };

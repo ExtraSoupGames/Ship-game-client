@@ -13,12 +13,12 @@ void GameState::RenderButtons(SDL_Renderer* renderer)
         b->Render(renderer);
     }
 }
-GameStateMachine::GameStateMachine()
+GameStateMachine::GameStateMachine(SDL_Renderer* renderer)
 {
     currentState = nullptr;
     nextState = nullptr;
     running = true;
-    settings = new GlobalSettingsProfile();
+    settings = new GlobalSettingsProfile(renderer);
     receivingPackets = false;
 }
 

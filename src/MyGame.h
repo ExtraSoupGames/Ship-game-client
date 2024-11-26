@@ -34,7 +34,6 @@ class MyGame : public GameState{
         double clientServerTimeDiff;
         double serverStartTime;
         CollisionManager* collisions;
-        SDL_Renderer* renderer;
         TextureManager* textureManager;
         PlayerController* playerController;
         double broadcastTimer;
@@ -48,7 +47,7 @@ class MyGame : public GameState{
         void HandleEnemyData(string data);
         void HandleBoundaryData(string data);
     public:
-        MyGame(SDL_Renderer* renderer, GameStateMachine* pMachine);
+        MyGame(GameStateMachine* pMachine);
         std::vector<std::string> messages;
 
 

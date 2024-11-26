@@ -10,12 +10,11 @@ bool Hitbox::Collides(Hitbox& other) {
     return true;
 }
 
-MyGame::MyGame(SDL_Renderer* gameRenderer, GameStateMachine* pMachine) : GameState(pMachine){
+MyGame::MyGame(GameStateMachine* pMachine) : GameState(pMachine){
     serverStartTime = 0;
     clientServerTimeDiff = 0;
     broadcastTimer = 0;
-    renderer = gameRenderer;
-    textureManager = new TextureManager(renderer);
+    textureManager = new TextureManager(machine->settings->renderer);
     collisions = new CollisionManager();
     playerController = new PlayerController(textureManager, collisions);
     textureManager->InitializeAllTextures();
@@ -255,6 +254,7 @@ void MyGame::Render(SDL_Renderer* renderer) {
     //number->Render(renderer);
 
     collisions->DrawDebug(renderer);
+    GameState::RenderButtons(renderer);
     SDL_RenderPresent(renderer);
 }
 void MyGame::OnEnter()
