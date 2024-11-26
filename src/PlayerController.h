@@ -80,5 +80,5 @@ public:
     void HandleInput(SDL_Event& event, MyGame* game);
     void UpdateMove(double deltaTime);
     void UpdateEnemyAttacks(MyGame* game);
-    void Render(SDL_Renderer* renderer);
+    void Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings);
 };

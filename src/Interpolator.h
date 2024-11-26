@@ -50,7 +50,7 @@ public:
 	Hitbox GetHitbox();
 	Enemy(int ID);
 	int GetID();
-	virtual void Render(SDL_Renderer* renderer);
+	virtual void Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings);
 	virtual bool IsAttacking() = 0; // does the player get damaged if they overlap
 	virtual EnemyAttackData GetAttackData() = 0;
 	void ResetAttackTimestamp(); // called by the player when the player is attacked
@@ -60,7 +60,7 @@ public:
 class Bobleech : public Enemy, public Animatable {
 public:
 	Bobleech(int ID, TextureManager* t);
-	void Render(SDL_Renderer* renderer) override;
+	void Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings) override;
 	bool IsAttacking() override;
 	virtual EnemyAttackData GetAttackData() override;
 };
@@ -70,7 +70,7 @@ protected:
 	void OnInterpolate(DataPoint* data) override;
 public:
 	Flopper(int ID, TextureManager* t);
-	void Render(SDL_Renderer* renderer) override;
+	void Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings) override;
 	bool IsAttacking() override;
 	virtual EnemyAttackData GetAttackData() override;
 };
@@ -80,7 +80,7 @@ protected:
 	void OnInterpolate(DataPoint* data) override;
 public:
 	Clingabing(int ID, TextureManager* t);
-	void Render(SDL_Renderer* renderer) override;
+	void Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings) override;
 	bool IsAttacking() override;
 	virtual EnemyAttackData GetAttackData() override;
 };
@@ -92,6 +92,6 @@ protected:
 	void OnInterpolate(DataPoint* data) override;
 public:
 	OtherPlayer(int ID, TextureManager* t);
-	void Render(SDL_Renderer* renderer);
+	void Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings);
 };
 

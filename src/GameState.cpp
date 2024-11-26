@@ -13,12 +13,22 @@ void GameState::RenderButtons(SDL_Renderer* renderer)
         b->Render(renderer);
     }
 }
-GameStateMachine::GameStateMachine(SDL_Renderer* renderer)
+GameStateMachine::GameStateMachine()
 {
+    int screenScale = 2;
+    int screenHeight = 180 * screenScale;
+    int screenWidth = 320 * screenScale;
+    SDL_Window* window = SDL_CreateWindow(
+        "Multiplayer Ship Game Client",
+        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+        screenWidth, screenHeight,
+        SDL_WINDOW_SHOWN
+    );
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     currentState = nullptr;
     nextState = nullptr;
     running = true;
-    settings = new GlobalSettingsProfile(renderer);
+    settings = new GlobalSettingsProfile(renderer, screenWidth, screenHeight);
     receivingPackets = false;
 }
 
@@ -29,7 +39,7 @@ void GameStateMachine::SwitchState(GameState* newState)
         currentState = nextState;
     }
 }
-void GameStateMachine::Run(SDL_Renderer* renderer) {
+void GameStateMachine::Run() {
     //prepare packet for receiving data
     UDPpacket* packet = SDLNet_AllocPacket(512);
     if (!packet) {
@@ -76,7 +86,7 @@ void GameStateMachine::Run(SDL_Renderer* renderer) {
             }
 #pragma endregion input
 
-            currentState->Render(renderer);
+            currentState->Render(settings->renderer);
             currentState = nextState;
         }
     }

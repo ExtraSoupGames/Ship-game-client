@@ -43,7 +43,7 @@ Interpolator::Interpolator(int pID) {
 int Enemy::GetID() {
     return ID;
 }
-void Enemy::Render(SDL_Renderer* renderer) {
+void Enemy::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings) {
     SDL_Rect* enemyRect = new SDL_Rect{x, y, 20, 20};
     SDL_SetRenderDrawColor(renderer, 255, 0, 255, 255);
     SDL_RenderDrawRect(renderer, enemyRect);
@@ -78,8 +78,8 @@ Hitbox Enemy::GetHitbox() {
 Bobleech::Bobleech(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{"%Bobleech", "%Bobleech"}, t) {
     Animatable::PlayAnimation(0);
 }
-void Bobleech::Render(SDL_Renderer* renderer) {
-    Animatable::Render(renderer, x, y, 32, 32);
+void Bobleech::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings) {
+    Animatable::Render(renderer, x, y, 16, 16, settings);
     Animatable::UpdateAnimation();
 }
 bool Bobleech::IsAttacking()
@@ -101,10 +101,10 @@ void Flopper::OnInterpolate(DataPoint* data) {
     state = flopperData->state;
     PlayAnimation(state);
 }
-void Flopper::Render(SDL_Renderer* renderer) {
+void Flopper::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings) {
     //TODO draw the flopper based on the state
     Animatable::UpdateAnimation();
-    Animatable::Render(renderer, x, y, 30, 30);
+    Animatable::Render(renderer, x, y, 16, 16, settings);
 }
 bool Flopper::IsAttacking()
 {
@@ -126,7 +126,7 @@ Clingabing::Clingabing(int ID, TextureManager* t) : Enemy(ID), Animatable(*new v
     state = IDLE;
 }
 
-void Clingabing::Render(SDL_Renderer* renderer)
+void Clingabing::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings)
 {
     //TODO add clingabing frames and animate
     SDL_Rect* clingabingRect = new SDL_Rect{x, y, 15, 15};
@@ -143,7 +143,7 @@ EnemyAttackData Clingabing::GetAttackData()
 }
 #pragma endregion Clingabing
 #pragma region OtherPlayer
-void OtherPlayer::Render(SDL_Renderer* renderer) {
+void OtherPlayer::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings) {
     SDL_Rect* playerRect = new SDL_Rect{ x, y, 20, 20 };
     if (state.attackState == 1) {
         SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
@@ -153,7 +153,7 @@ void OtherPlayer::Render(SDL_Renderer* renderer) {
     }
     SDL_RenderDrawRect(renderer, playerRect);
     Animatable::UpdateAnimation();
-    Animatable::Render(renderer, x, y, 30, 30);
+    Animatable::Render(renderer, x, y, 16, 16, settings);
 }
 void OtherPlayer::OnInterpolate(DataPoint* data){
     PlayerData* playerData = (PlayerData*)(data);

@@ -4,6 +4,7 @@
 #include <thread>
 #include <SDL_thread.h>
 #include "TextureManager.h"
+#include "GlobalSettings.h"
 #include "SDL.h"
 using namespace std;
 struct Frame {
@@ -36,5 +37,5 @@ public:
 	void StartAnimating();
 	void StopAnimating();
 	void UpdateAnimation();
-	void Render(SDL_Renderer* renderer, int xPos, int yPos, int width, int height);
+	void Render(SDL_Renderer* renderer, int xPos, int yPos, int width, int height, GlobalSettingsProfile* settings);
 };

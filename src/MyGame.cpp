@@ -244,12 +244,12 @@ void MyGame::Render(SDL_Renderer* renderer) {
     SDL_RenderClear(renderer);
 
     for (Enemy* e : *enemies) {
-        e->Render(renderer);
+        e->Render(renderer, machine->settings);
     }
     for (OtherPlayer* p : *players) {
-        p->Render(renderer);
+        p->Render(renderer, machine->settings);
     }
-    playerController->Render(renderer);
+    playerController->Render(renderer, machine->settings);
 
     //number->Render(renderer);
 

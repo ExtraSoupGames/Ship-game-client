@@ -32,22 +32,15 @@ int main(int argc, char* argv[]) {
         SDLNet_Quit();
         return 1;
     }
-    SDL_Window* window = SDL_CreateWindow(
-        "Multiplayer Ship Game Client",
-        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-        640, 360,
-        SDL_WINDOW_SHOWN
-    );
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 #pragma endregion initialization
 
-    GameStateMachine* game = new GameStateMachine(renderer);
+    GameStateMachine* game = new GameStateMachine();
     GameState* gameState = (GameState*)new MainMenu(game);
     game->SwitchState(gameState);
     game->receivingPackets = true;
 
 
-    game->Run(renderer);
+    game->Run();
     // Clean up
     SDLNet_Quit();
     SDL_Quit();

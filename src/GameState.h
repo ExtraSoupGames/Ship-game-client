@@ -31,10 +31,10 @@ private:
 	GameState* nextState;
 protected:
 public:
-	GameStateMachine(SDL_Renderer* renderer);
+	GameStateMachine();
 	bool receivingPackets;
 	GlobalSettingsProfile* settings;
 	bool running;
 	void SwitchState(GameState* newState);
-	void Run(SDL_Renderer* renderer);
+	void Run();
 };

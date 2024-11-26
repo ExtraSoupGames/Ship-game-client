@@ -289,7 +289,7 @@ void PlayerController::Stun()
     lastStunTimestamp = SDL_GetTicks();
 }
 #pragma endregion PlayerActions
-void PlayerController::Render(SDL_Renderer* renderer) {
+void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings) {
     SDL_Rect* playerRect = new SDL_Rect{ (int)xPos, (int)yPos, 20, 20 };
     if (attackState == 1) {
         SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
@@ -305,6 +305,6 @@ void PlayerController::Render(SDL_Renderer* renderer) {
         Animatable::PlayAnimation(movementState);
     }
     Animatable::UpdateAnimation();
-    Animatable::Render(renderer, xPos, yPos, 30, 30);
+    Animatable::Render(renderer, xPos, yPos, 16, 16, settings);
 }
 #pragma endregion PlayerController
