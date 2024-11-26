@@ -1,4 +1,12 @@
 #include "Discovery.h"
+void DiscoveryScreen::ServerClickedEvent()
+{
+    if (servers.size() <= 0) {
+        //prevent out of bounds errors by not allowing server to be selected until servers have been found
+        return;
+    }
+    selecting = true;
+}
 DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine, SDL_Renderer* pRenderer) : GameState(machine)
 {
     selectedServer = 0;
@@ -6,6 +14,7 @@ DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine, SDL_Renderer* pRend
     discoverTimer = 0;
     machine = pMachine;
     renderer = pRenderer;
+    testButton = new Button(100, 100, 30, 30, [this]() {this->ServerClickedEvent(); });
 }
 void DiscoveryScreen::Render(SDL_Renderer* renderer) {
     //display
@@ -22,6 +31,7 @@ void DiscoveryScreen::Render(SDL_Renderer* renderer) {
         }
         SDL_RenderDrawRect(renderer, serverSymbol);
     }
+    testButton->Render(renderer);
     SDL_RenderPresent(renderer);
 }
 void DiscoveryScreen::Update(double deltaTime) {
@@ -66,19 +76,16 @@ void DiscoveryScreen::Input(SDL_Event& event) {
             }
         }
     }
-    if (event.key.keysym.sym == SDLK_SPACE) {
-        if (event.type == SDL_KEYUP) {
-            if (servers.size() <= 0) {
-                //prevent out of bounds errors by not allowing server to be selected until servers have been found
-                return;
-            }
-            selecting = true;
-        }
-    }
     if (event.key.keysym.sym == SDLK_p) {
         if (event.type == SDL_KEYUP) {
             ServerLauncher createServer = ServerLauncher();
             createServer.RunServer();
+        }
+    }
+    if (event.type == SDL_MOUSEBUTTONDOWN) {
+        cout << "Clicked somewhere" << endl;
+        if (testButton->IsInBounds(event.button.x, event.button.y)) {
+            testButton->Click();
         }
     }
 }

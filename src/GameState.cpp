@@ -49,9 +49,8 @@ void GameStateMachine::Run(SDL_Renderer* renderer) {
 #pragma region input
             SDL_Event event;
             while (SDL_PollEvent(&event)) {
-                if ((event.type == SDL_KEYDOWN || event.type == SDL_KEYUP) && event.key.repeat == 0) {
-                    currentState->Input(event);
-                }
+                currentState->Input(event);
+
 
                 if (event.type == SDL_QUIT) {
                     running = false;

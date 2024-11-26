@@ -11,26 +11,8 @@ class Button {
 	int height;
 	function<void()> clickFunction;
 public:
-	Button(int buttonX, int buttonY, int buttonWidth, int buttonHeight, function<void()> clickEvent) {
-		x = buttonX;
-		y = buttonY;
-		width = buttonWidth;
-		height = buttonHeight;
-		clickFunction = clickEvent;
-	}
-	void Render(SDL_Renderer* renderer) {
-		SDL_RenderDrawRect(renderer, new SDL_Rect{x, y, width, height});
-	}
-	void Click() {
-		clickFunction();
-	}
-	bool IsInBounds(int clickX, int clickY) {
-		if (clickX < x || clickY < y) {
-			return false;
-		}
-		if (clickX > x + width || clickY > y + height) {
-			return false;
-		}
-		return true;
-	}
+	Button(int buttonX, int buttonY, int buttonWidth, int buttonHeight, function<void()> clickEvent);
+	void Render(SDL_Renderer* renderer);
+	void Click();
+	bool IsInBounds(int clickX, int clickY);
 };
