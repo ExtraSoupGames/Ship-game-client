@@ -46,6 +46,9 @@
     <ClCompile Include="..\src\Button.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\UIRendering.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Interpolator.h">
@@ -91,6 +94,9 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Button.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\UIRendering.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>

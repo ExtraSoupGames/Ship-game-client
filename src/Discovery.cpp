@@ -14,7 +14,7 @@ DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine, SDL_Renderer* pRend
     discoverTimer = 0;
     machine = pMachine;
     renderer = pRenderer;
-    testButton = new Button(100, 100, 30, 30, [this]() {this->ServerClickedEvent(); });
+    testButton = new Button("Connect", 100, 100, 30, 30, [this]() {this->ServerClickedEvent(); });
 }
 void DiscoveryScreen::Render(SDL_Renderer* renderer) {
     //display
@@ -83,7 +83,6 @@ void DiscoveryScreen::Input(SDL_Event& event) {
         }
     }
     if (event.type == SDL_MOUSEBUTTONDOWN) {
-        cout << "Clicked somewhere" << endl;
         if (testButton->IsInBounds(event.button.x, event.button.y)) {
             testButton->Click();
         }

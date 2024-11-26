@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_net.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include <cstring>
 #include <chrono>
@@ -15,13 +16,19 @@ int main(int argc, char* argv[]) {
 #pragma region initialization
     // Initialize SDL and SDL_net
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-        std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << std::endl;
+        cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError() << endl;
         return 1;
     }
 
     if (SDLNet_Init() < 0) {
-        std::cerr << "SDLNet could not initialize! SDLNet_Error: " << SDLNet_GetError() << std::endl;
+        cerr << "SDLNet could not initialize! SDLNet_Error: " << SDLNet_GetError() << endl;
         SDL_Quit();
+        return 1;
+    }
+    if (TTF_Init() < 0) {
+        cerr << "TTF Could not initialize! TTF_Error: " << TTF_GetError() << endl;
+        SDL_Quit();
+        SDLNet_Quit();
         return 1;
     }
     SDL_Window* window = SDL_CreateWindow(
