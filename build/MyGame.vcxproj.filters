@@ -43,6 +43,9 @@
     <ClCompile Include="..\src\ServerLauncher.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Button.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Interpolator.h">
@@ -87,6 +90,9 @@
     <ClInclude Include="..\src\ServerLauncher.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\Button.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\jonny\Desktop\CI628\CMakeLists.txt" />
@@ -103,6 +109,9 @@
     </Filter>
     <Filter Include="GameStates">
       <UniqueIdentifier>{faaa22c2-10fd-451a-902f-7e21a7f147fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{0cb0da8d-b8b7-48c6-bec1-cbdc1842751a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

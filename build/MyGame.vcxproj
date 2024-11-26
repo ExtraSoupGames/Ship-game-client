@@ -314,6 +314,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\Animation.cpp" />
+    <ClCompile Include="..\src\Button.cpp" />
     <ClCompile Include="..\src\Collision.cpp" />
     <ClCompile Include="..\src\Discovery.cpp" />
     <ClCompile Include="..\src\GameState.cpp" />
@@ -328,6 +329,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Main.cpp" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\MyGame.cpp" />
     <ClInclude Include="..\src\Animation.h" />
+    <ClInclude Include="..\src\Button.h" />
     <ClInclude Include="..\src\Collision.h" />
     <ClInclude Include="..\src\Data.h" />
     <ClInclude Include="..\src\Discovery.h" />
