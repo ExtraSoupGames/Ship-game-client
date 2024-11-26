@@ -41,6 +41,9 @@ class MyGame : public GameState{
         double serverBroadcastTimer = 0;
         double serverBroadcastDelay = 500;//adjust this to change how quickly important messages are resent - could affect performance if too low
 
+        int cameraOffsetX;
+        int cameraOffsetY;
+
         Animatable* number;
         template <typename T> Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp);
         void HandlePlayerData(string data);

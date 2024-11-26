@@ -137,11 +137,6 @@ void PlayerController::HandleInput(SDL_Event& event, MyGame* game){
         }
         break;
     }
-    int mouseX;
-    int mouseY;
-    SDL_GetMouseState(&mouseX, &mouseY);
-    inputs->mousePos = Vector2(mouseX, mouseY);
-
 }
 
 #pragma region UpdateMovement
@@ -289,8 +284,15 @@ void PlayerController::Stun()
     lastStunTimestamp = SDL_GetTicks();
 }
 #pragma endregion PlayerActions
-void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings) {
-    SDL_Rect* playerRect = new SDL_Rect{ (int)xPos, (int)yPos, 20, 20 };
+void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY) {
+    //convert the mouse coordinates back into world coordinates here because the offset is passed in
+    //TODO regorganise this as having it here is strange
+    int mouseX;
+    int mouseY;
+    SDL_GetMouseState(&mouseX, &mouseY);
+    inputs->mousePos = Vector2(mouseX + camOffX, mouseY + camOffY);
+
+    SDL_Rect* playerRect = new SDL_Rect{ (int)xPos - camOffX, (int)yPos - camOffY, 20, 20 };
     if (attackState == 1) {
         SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
     }
@@ -298,13 +300,13 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     }
     SDL_RenderDrawRect(renderer, playerRect);
-    SDL_Rect* DebugAttackBoxRect = new SDL_Rect{ attackBox->x, attackBox->y, attackBox->w, attackBox->h};
+    SDL_Rect* DebugAttackBoxRect = new SDL_Rect{ attackBox->x - camOffX, attackBox->y - camOffY, attackBox->w, attackBox->h};
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderDrawRect(renderer, DebugAttackBoxRect);
     if (currentAnimation != movementState) {
         Animatable::PlayAnimation(movementState);
     }
     Animatable::UpdateAnimation();
-    Animatable::Render(renderer, xPos, yPos, 16, 16, settings);
+    Animatable::Render(renderer, xPos - camOffX, yPos - camOffY, 16, 16, settings);
 }
 #pragma endregion PlayerController

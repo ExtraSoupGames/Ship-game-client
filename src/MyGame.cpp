@@ -24,12 +24,8 @@ MyGame::MyGame(GameStateMachine* pMachine) : GameState(pMachine){
 
     pMachine = machine;
 
-
-    //test animations
-    string animationName = "anim";
-    vector<string> animations = *new vector<string>{ animationName };
-    number = new Animatable(animations, textureManager);
-    number->PlayAnimation(0);
+    cameraOffsetX = 0;
+    cameraOffsetY = 0;
 }
 #pragma region incomingData
 #pragma region incomingDataProcessing
@@ -228,9 +224,6 @@ void MyGame::Update(double deltaTime) {
         p->Interpolate(timern);
     }
 #pragma endregion playerProcessing
-#pragma region animationProcessing
-    number->UpdateAnimation();
-#pragma endregion animationProcessing
 #pragma region serverUpdates
     serverBroadcastTimer += deltaTime;
     if (serverBroadcastTimer > serverBroadcastDelay) {
@@ -244,16 +237,14 @@ void MyGame::Render(SDL_Renderer* renderer) {
     SDL_RenderClear(renderer);
 
     for (Enemy* e : *enemies) {
-        e->Render(renderer, machine->settings);
+        e->Render(renderer, machine->settings, cameraOffsetX, cameraOffsetY);
     }
     for (OtherPlayer* p : *players) {
-        p->Render(renderer, machine->settings);
+        p->Render(renderer, machine->settings, cameraOffsetX, cameraOffsetY);
     }
-    playerController->Render(renderer, machine->settings);
+    playerController->Render(renderer, machine->settings, cameraOffsetX, cameraOffsetY);
 
-    //number->Render(renderer);
-
-    collisions->DrawDebug(renderer);
+    collisions->DrawDebug(renderer, cameraOffsetX, cameraOffsetY);
     GameState::RenderButtons(renderer);
     SDL_RenderPresent(renderer);
 }
