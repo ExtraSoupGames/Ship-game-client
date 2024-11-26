@@ -197,7 +197,7 @@ void PlayerController::UpdateEnemyAttacks(MyGame* game)
 }
 void PlayerController::UpdateBasicMovement(double deltaTime)
 {
-    double speed = 0.005f;
+    double speed = 0.002f;
     Vector2 currentPos = *new Vector2{ xPos, yPos };
     Vector2 endPos;
     Vector2 finalPos;

@@ -43,8 +43,8 @@ class MyGame : public GameState{
 
         int cameraOffsetX;
         int cameraOffsetY;
+        void AdjustCamera();
 
-        Animatable* number;
         template <typename T> Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp);
         void HandlePlayerData(string data);
         void HandleEnemyData(string data);

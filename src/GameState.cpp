@@ -15,7 +15,7 @@ void GameState::RenderButtons(SDL_Renderer* renderer)
 }
 GameStateMachine::GameStateMachine()
 {
-    int screenScale = 2;
+    int screenScale = 4;
     int screenHeight = 180 * screenScale;
     int screenWidth = 320 * screenScale;
     SDL_Window* window = SDL_CreateWindow(

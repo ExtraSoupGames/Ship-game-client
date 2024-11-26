@@ -27,6 +27,30 @@ MyGame::MyGame(GameStateMachine* pMachine) : GameState(pMachine){
     cameraOffsetX = 0;
     cameraOffsetY = 0;
 }
+void MyGame::AdjustCamera() {
+    int playerScreenX = playerController->GetXForServer() - cameraOffsetX;
+    int playerScreenY = playerController->GetYForServer() - cameraOffsetY;
+    float screenRatio = 0.5; // the amount of screen (0 - 1) that the player occupies
+    float minRatio = 0.5 - screenRatio / 2;
+    float maxRatio = 0.5 + screenRatio / 2;
+    int maximumX = machine->settings->screenWidth * maxRatio;
+    int minimumX = machine->settings->screenWidth * minRatio;
+    int maximumY = machine->settings->screenHeight * maxRatio;
+    int minimumY = machine->settings->screenHeight * minRatio;
+    if (playerScreenX < minimumX) {
+        cameraOffsetX -= 1;
+    }
+    else if (playerScreenX > maximumX) {
+        cameraOffsetX += 1;
+    }
+    if (playerScreenY < minimumY) {
+        cameraOffsetY -= 1;
+    }
+    else if (playerScreenY > maximumY) {
+        cameraOffsetY += 1;
+    }
+}
+
 #pragma region incomingData
 #pragma region incomingDataProcessing
 template <typename T> Enemy* MyGame::ProcessEnemy(DataPoint* data, int ID, double timestamp)
@@ -210,6 +234,7 @@ void MyGame::Update(double deltaTime) {
         machine->settings->server->SendMessage(binaryText.str());
     }
 #pragma endregion playerDataOut
+    AdjustCamera();
 #pragma region playerProcessing
     playerController->UpdateMove(deltaTime);
     playerController->UpdateEnemyAttacks(this);
