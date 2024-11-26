@@ -24,7 +24,6 @@ class DiscoveryScreen : public GameState{
 	bool selecting = false;
 	double discoverDelay; // dont spam packets as this is unneccesary load on network
 	double discoverTimer;
-	Button* testButton;
 	void ServerClickedEvent();
 public:
 	DiscoveryScreen(GameStateMachine* machine, SDL_Renderer* renderer);

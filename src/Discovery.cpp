@@ -14,7 +14,7 @@ DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine, SDL_Renderer* pRend
     discoverTimer = 0;
     machine = pMachine;
     renderer = pRenderer;
-    testButton = new Button("Connect", 100, 100, 30, 30, [this]() {this->ServerClickedEvent(); });
+    buttons.push_back(new Button("Connect", 100, 100, 30, 30, [this]() {this->ServerClickedEvent(); }));
 }
 void DiscoveryScreen::Render(SDL_Renderer* renderer) {
     //display
@@ -31,7 +31,7 @@ void DiscoveryScreen::Render(SDL_Renderer* renderer) {
         }
         SDL_RenderDrawRect(renderer, serverSymbol);
     }
-    testButton->Render(renderer);
+    GameState::RenderButtons(renderer);
     SDL_RenderPresent(renderer);
 }
 void DiscoveryScreen::Update(double deltaTime) {
@@ -80,11 +80,6 @@ void DiscoveryScreen::Input(SDL_Event& event) {
         if (event.type == SDL_KEYUP) {
             ServerLauncher createServer = ServerLauncher();
             createServer.RunServer();
-        }
-    }
-    if (event.type == SDL_MOUSEBUTTONDOWN) {
-        if (testButton->IsInBounds(event.button.x, event.button.y)) {
-            testButton->Click();
         }
     }
 }
