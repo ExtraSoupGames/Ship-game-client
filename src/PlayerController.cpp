@@ -140,7 +140,7 @@ void PlayerController::HandleInput(SDL_Event& event, MyGame* game){
 }
 
 #pragma region UpdateMovement
-void PlayerController::UpdateMove(double deltaTime){
+void PlayerController::UpdateMove(double deltaTime, int screenScaling){
 #pragma region stateUpdate
     if (inputs->IsStill()) {
         if (movementState == 1) {
@@ -166,7 +166,7 @@ void PlayerController::UpdateMove(double deltaTime){
         //0 or 1 is still or moving so just do movement code for either incase the still state is inaccurate
     case 0:
     case 1:
-        UpdateBasicMovement(deltaTime);
+        UpdateBasicMovement(deltaTime * screenScaling); // multiplying by screen scaling is a hacky way to adjust player speed for screen size
         break;
     case 2:
         UpdateDashMovement();

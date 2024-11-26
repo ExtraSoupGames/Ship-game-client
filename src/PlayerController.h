@@ -78,7 +78,7 @@ public:
 
     PlayerController(TextureManager* t, CollisionManager* pCollisionManager);
     void HandleInput(SDL_Event& event, MyGame* game);
-    void UpdateMove(double deltaTime);
+    void UpdateMove(double deltaTime, int screenScaling);
     void UpdateEnemyAttacks(MyGame* game);
     void Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY);
 };

@@ -236,7 +236,7 @@ void MyGame::Update(double deltaTime) {
 #pragma endregion playerDataOut
     AdjustCamera();
 #pragma region playerProcessing
-    playerController->UpdateMove(deltaTime);
+    playerController->UpdateMove(deltaTime, machine->settings->screenScaling());
     playerController->UpdateEnemyAttacks(this);
     double delay = 100;  //snapshot buffer should be 3-4x base rate of packets - this way we can lose 2 packets and not experience jittering
     double timern = clientServerTimeDiff + SDL_GetTicks() - delay;
