@@ -14,7 +14,7 @@ struct Frame {
 	}
 };
 struct Animation {
-	Animation(string name, TextureManager* t, float animationDuration, bool loop);
+	Animation(string name, TextureManager* t, double frameDuration, bool loop);
 	vector<Frame> frames;
 	float totalDuration;
 	float frameDuration();
@@ -32,7 +32,7 @@ private:
 protected:
 	int currentAnimation;
 public:
-	Animatable(vector<string> animationNames, TextureManager* t);
+	Animatable(vector<string> animationNames, TextureManager* t, int defaultAnim = 0);
 	void PlayAnimation(int ID);
 	void StartAnimating();
 	void StopAnimating();

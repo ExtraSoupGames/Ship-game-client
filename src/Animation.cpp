@@ -1,24 +1,24 @@
 #include "Animation.h"
-Animation::Animation(string name, TextureManager* t, float animationDuration, bool loop)
+Animation::Animation(string name, TextureManager* t, double frameDuration, bool loop)
 {
 	frames = t->LoadAnimation(name);
-	totalDuration = animationDuration;
+	totalDuration = frameDuration * frames.size();
 	looping = loop;
 }
 float Animation::frameDuration() {
 	return totalDuration / frames.size();
 }
-Animatable::Animatable(vector<string> animationNames, TextureManager* t) {
+Animatable::Animatable(vector<string> animationNames, TextureManager* t, int defaultAnim) {
 	animations = *new vector<Animation>();
 	animating = true;
 	currentAnimation = 0;
-	defaultAnimation = 0;
+	defaultAnimation = defaultAnim;
 	currentFrame = 0;
 	lastAnimated = SDL_GetTicks();
 	texture = t->GetErrorTexture();
 	for (string animation : animationNames) {
 		bool animationIsLooping = animation.at(0) == '%';
-		animations.push_back(*new Animation(animation, t, 800, animationIsLooping));
+		animations.push_back(*new Animation(animation, t, 100, animationIsLooping));
 	}
 }
 void Animatable::PlayAnimation(int ID) {

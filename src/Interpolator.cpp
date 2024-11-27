@@ -93,18 +93,20 @@ EnemyAttackData Bobleech::GetAttackData()
 }
 #pragma endregion Bobleech
 #pragma region Flopper
-Flopper::Flopper(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{ "%FlopperIdle", "%FlopperFly", "FlopperSpawn" }, t) {
+Flopper::Flopper(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{ "%FlopperIdle", "FlopperLaunch", "FlopperSpawn", "%FlopperFly"}, t, 3) {//set flopper fly as default so after launching it goes to that TODO add queueing system
     state = SPAWNING;
 }
 void Flopper::OnInterpolate(DataPoint* data) {
     FlopperData* flopperData = (FlopperData*)data;
-    state = flopperData->state;
-    PlayAnimation(state);
+    if (state != flopperData->state) {
+        state = flopperData->state;
+        PlayAnimation(state);
+    }
 }
 void Flopper::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY) {
     //TODO draw the flopper based on the state
     Animatable::UpdateAnimation();
-    Animatable::Render(renderer, x - camOffX, y - camOffY, 16, 16, settings);
+    Animatable::Render(renderer, x - camOffX, y - camOffY, 32, 32, settings);
 }
 bool Flopper::IsAttacking()
 {
