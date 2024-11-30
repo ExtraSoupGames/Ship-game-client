@@ -35,6 +35,8 @@ GameStateMachine::GameStateMachine()
 void GameStateMachine::SwitchState(GameState* newState)
 {
 	nextState = newState;
+    currentState->OnExit();
+    nextState->OnEnter();
     if (currentState == nullptr) {
         currentState = nextState;
     }
