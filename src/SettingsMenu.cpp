@@ -1,5 +1,8 @@
 #include "SettingsMenu.h"
-
+#include "MainMenu.h"
+SettingsMenu::SettingsMenu(GameStateMachine* machine) : GameState(machine) {
+	buttons.push_back(new Button("Exit", 100, 100, 500, 30, [this] {this->ExitButtonPressed(); }));
+}
 void SettingsMenu::Update(double deltaTime)
 {
 }
@@ -22,4 +25,9 @@ void SettingsMenu::Input(SDL_Event& event)
 
 void SettingsMenu::OnReceive(char* inData, int dataLength)
 {
+}
+
+void SettingsMenu::ExitButtonPressed()
+{
+	machine->SwitchState(new MainMenu(machine));
 }

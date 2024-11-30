@@ -3,11 +3,8 @@
 MainMenu::MainMenu(GameStateMachine* pMachine) : GameState(pMachine)
 {
 	buttons.push_back(new Button("Search for a server", 100, 100, 500, 30, [this] {this->TransferToDiscoveryScreen(); }));
-}
-
-void MainMenu::TransferToDiscoveryScreen()
-{
-	machine->SwitchState(new DiscoveryScreen(machine));
+	buttons.push_back(new Button("Settings", 100, 200, 500, 30, [this] {this->TransferToSettingsScreen(); }));
+	buttons.push_back(new Button("Create a server", 100, 300, 500, 30, [this] {this->TransferToCreateScreen(); }));
 }
 
 void MainMenu::Update(double deltaTime)
@@ -31,4 +28,17 @@ void MainMenu::Input(SDL_Event& event)
 }
 void MainMenu::OnReceive(char* inData, int dataLength)
 {
+}
+
+void MainMenu::TransferToDiscoveryScreen()
+{
+	machine->SwitchState(new DiscoveryScreen(machine));
+}
+void MainMenu::TransferToSettingsScreen()
+{
+	machine->SwitchState(new DiscoveryScreen(machine));
+}
+void MainMenu::TransferToCreateScreen()
+{
+	machine->SwitchState(new DiscoveryScreen(machine));
 }

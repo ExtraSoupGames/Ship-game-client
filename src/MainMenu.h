@@ -7,6 +7,8 @@ private:
 public:
 	MainMenu(GameStateMachine* pMachine);
 	void TransferToDiscoveryScreen();
+	void TransferToSettingsScreen();
+	void TransferToCreateScreen();
 	void Update(double deltaTime);
 	void Render(SDL_Renderer* renderer);
 	void OnEnter();
