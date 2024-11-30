@@ -49,6 +49,12 @@
     <ClCompile Include="..\src\UIRendering.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ServerCreate.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SettingsMenu.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Interpolator.h">
@@ -98,6 +104,12 @@
     </ClInclude>
     <ClInclude Include="..\src\UIRendering.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ServerCreate.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SettingsMenu.h">
+      <Filter>GameStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
