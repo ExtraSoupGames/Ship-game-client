@@ -3,6 +3,7 @@
 #include "GameState.h"
 using namespace std;
 class SettingsMenu : public GameState {
+public:
 	SettingsMenu(GameStateMachine* machine);
 	void Update(double deltaTime);
 	void Render(SDL_Renderer* renderer);

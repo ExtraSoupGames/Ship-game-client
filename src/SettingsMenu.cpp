@@ -9,6 +9,10 @@ void SettingsMenu::Update(double deltaTime)
 
 void SettingsMenu::Render(SDL_Renderer* renderer)
 {
+	SDL_SetRenderDrawColor(renderer, 100, 100, 150, 255);
+	SDL_RenderClear(renderer);
+	GameState::RenderButtons(renderer);
+	SDL_RenderPresent(renderer);
 }
 
 void SettingsMenu::OnEnter()
