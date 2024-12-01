@@ -1,16 +1,14 @@
 #include "GameState.h"
-void GameState::OnClick(int x, int y)
+void GameState::UIInput(SDL_Event& e)
 {
-    for (Button* b : buttons) {
-        if (b->IsInBounds(x, y)) {
-            b->Click();
-        }
+    for (UIElement* u : UIElements) {
+        u->Input(e);
     }
 }
-void GameState::RenderButtons(SDL_Renderer* renderer)
+void GameState::RenderUI(SDL_Renderer* renderer)
 {
-    for (Button* b : buttons) {
-        b->Render(renderer);
+    for (UIElement* u : UIElements) {
+        u->Render(renderer);
     }
 }
 GameStateMachine::GameStateMachine()
@@ -78,9 +76,6 @@ void GameStateMachine::Run() {
             SDL_Event event;
             while (SDL_PollEvent(&event)) {
                 currentState->Input(event);
-                if (event.type == SDL_MOUSEBUTTONDOWN) {
-                    currentState->OnClick(event.button.x, event.button.y);
-                }
                 if (event.type == SDL_QUIT) {
                     running = false;
                 }

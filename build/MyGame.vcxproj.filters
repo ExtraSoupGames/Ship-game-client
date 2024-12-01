@@ -55,6 +55,12 @@
     <ClCompile Include="..\src\SettingsMenu.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Textbox.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\UIElement.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Interpolator.h">
@@ -110,6 +116,12 @@
     </ClInclude>
     <ClInclude Include="..\src\SettingsMenu.h">
       <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Textbox.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\UIElement.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

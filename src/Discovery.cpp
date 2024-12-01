@@ -13,7 +13,7 @@ DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine) : GameState(machine
     discoverDelay = 500;
     discoverTimer = 0;
     machine = pMachine;
-    buttons.push_back(new Button("Connect", 100, 100, 30, 30, [this]() {this->ServerClickedEvent(); }));
+    UIElements.push_back(new Button("Connect", 100, 100, 30, 30, [this]() {this->ServerClickedEvent(); }));
 }
 void DiscoveryScreen::Render(SDL_Renderer* renderer) {
     //display
@@ -30,7 +30,7 @@ void DiscoveryScreen::Render(SDL_Renderer* renderer) {
         }
         SDL_RenderDrawRect(renderer, serverSymbol);
     }
-    GameState::RenderButtons(renderer);
+    GameState::RenderUI(renderer);
     SDL_RenderPresent(renderer);
 }
 void DiscoveryScreen::Update(double deltaTime) {
@@ -67,6 +67,7 @@ bool DiscoveryScreen::ServerExists(string host, int port) {
     return false;
 }
 void DiscoveryScreen::Input(SDL_Event& event) {
+    UIInput(event);
     if (event.key.keysym.sym == SDLK_TAB) {
         if (event.type == SDL_KEYUP) {
             selectedServer += 1;

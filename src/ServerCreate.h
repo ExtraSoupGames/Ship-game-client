@@ -1,8 +1,11 @@
 #pragma once
 #include "SDL.h"
 #include "GameState.h"
+#include "Textbox.h"
 using namespace std;
 class ServerCreate : public GameState {
+private:
+	Textbox* servername;
 public:
 	ServerCreate(GameStateMachine* machine);
 	void Update(double deltaTime);

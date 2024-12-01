@@ -4,6 +4,7 @@
 using namespace std;
 class ServerLauncher {
 public:
-	ServerLauncher();
+	string serverName;
+	ServerLauncher(string nameForServer);
 	void RunServer();
 };

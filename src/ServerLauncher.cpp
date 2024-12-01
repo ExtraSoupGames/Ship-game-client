@@ -1,15 +1,16 @@
 #include "ServerLauncher.h"
 #include "Windows.h"
-ServerLauncher::ServerLauncher() {
+ServerLauncher::ServerLauncher(string nameForServer) {
 #if defined(_WINDOWS)
     cout << "Server Launcher created for windows" << endl;
+    serverName = nameForServer;
 #else
     cout << "Server Launcher not created, wrong platform" << endl;
     throw runtime_error("Creating Servers currently only works on windows, sorry :/");
 #endif
 }
 void ServerLauncher::RunServer() {
-	std::string command = "\"C:\\Program Files\\Java\\jdk-21\\bin\\java.exe\" -jar ..\\Assets\\ServerBuild\\Pong.jar MyServer";
+	std::string command = "\"C:\\Program Files\\Java\\jdk-21\\bin\\java.exe\" -jar ..\\Assets\\ServerBuild\\Pong.jar " + serverName;
     // Setup the process information
     STARTUPINFO si = { sizeof(STARTUPINFO) };
     PROCESS_INFORMATION pi;

@@ -11,13 +11,13 @@ class GameState {
 private:
 protected:
 	GameStateMachine* machine;
-	vector<Button*> buttons;
-	void RenderButtons(SDL_Renderer* renderer);
+	vector<UIElement*> UIElements;
+	void RenderUI(SDL_Renderer* renderer);
 public:
 	GameState(GameStateMachine* pMachine) {
 		machine = pMachine;
 	}
-	void OnClick(int x, int y);
+	void UIInput(SDL_Event& e);
 	virtual void Update(double deltaTime) = 0;
 	virtual void Render(SDL_Renderer* renderer) = 0;
 	virtual void OnEnter() = 0;

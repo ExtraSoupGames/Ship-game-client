@@ -270,7 +270,7 @@ void MyGame::Render(SDL_Renderer* renderer) {
     playerController->Render(renderer, machine->settings, cameraOffsetX, cameraOffsetY);
 
     collisions->DrawDebug(renderer, cameraOffsetX, cameraOffsetY);
-    GameState::RenderButtons(renderer);
+    GameState::RenderUI(renderer);
     SDL_RenderPresent(renderer);
 }
 void MyGame::OnEnter()
