@@ -11,20 +11,22 @@ using namespace std;
 struct ServerHost {
 	string host;
 	int port;
-	ServerHost(string pHost, int pPort) {
+	string name;
+	ServerHost(string pHost, int pPort, string pName) {
 		host = pHost;
 		port = pPort;
+		name = pName;
 	}
 };
 class DiscoveryScreen : public GameState{
 	int selectedServer;
 	vector<ServerHost*> servers;
-	SDL_Renderer* renderer;
 	bool ServerExists(string host, int port);
 	bool selecting = false;
 	double discoverDelay; // dont spam packets as this is unneccesary load on network
 	double discoverTimer;
 	void ServerClickedEvent();
+	void TransferToMainMenu();
 public:
 	DiscoveryScreen(GameStateMachine* machine);
 	void Render(SDL_Renderer* renderer) override;

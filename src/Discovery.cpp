@@ -1,4 +1,5 @@
 #include "Discovery.h"
+#include "MainMenu.h"
 void DiscoveryScreen::ServerClickedEvent()
 {
     if (servers.size() <= 0) {
@@ -7,6 +8,9 @@ void DiscoveryScreen::ServerClickedEvent()
     }
     selecting = true;
 }
+void DiscoveryScreen::TransferToMainMenu() {
+    machine->SwitchState(new MainMenu(machine));
+}
 DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine) : GameState(machine)
 {
     selectedServer = 0;
@@ -14,21 +18,27 @@ DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine) : GameState(machine
     discoverTimer = 0;
     machine = pMachine;
     UIElements.push_back(new Button("Connect", 100, 100, 30, 30, [this]() {this->ServerClickedEvent(); }));
+    UIElements.push_back(new Button("Back", 100, 200, 30, 30, [this] {this->TransferToMainMenu(); }));
 }
 void DiscoveryScreen::Render(SDL_Renderer* renderer) {
     //display
-    SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
+    SDL_SetRenderDrawColor(renderer, 100, 100, 150, 255);
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    int serverHeight = 50;
+    int serverWidth = 100;
+    int padding = 10;
+    int selectedPadding = 5;
     for (int i = 0; i < servers.size(); i++) {
         SDL_Rect* serverSymbol;
         if (i != selectedServer) {
-            serverSymbol = new SDL_Rect{ 10, 10 + i * 50, 30, 30 };
+            serverSymbol = new SDL_Rect{ padding, padding + i * serverWidth, serverWidth - padding * 2, serverHeight - padding * 2 };
         }
         else {
-            serverSymbol = new SDL_Rect{ 5, 5 + i * 50, 40, 40 };
+            serverSymbol = new SDL_Rect{ selectedPadding, selectedPadding + i * serverWidth, serverWidth - selectedPadding * 2, serverHeight - selectedPadding * 2};
         }
         SDL_RenderDrawRect(renderer, serverSymbol);
+        UIRendering::RenderText(renderer, servers.at(i)->name, 10, 10 + i * 50, 10);
     }
     GameState::RenderUI(renderer);
     SDL_RenderPresent(renderer);
@@ -52,8 +62,10 @@ void DiscoveryScreen::OnReceive(char* inData, int dataLength) {
     if (data.substr(0, 4) == "0001") {
         string host = ServerManager::DecompressHost(data.substr(4, 512));
         int port = ServerManager::IntDecompress(data.substr(516, 32));
+        string name = ServerManager::DecompressString(data.substr(548, 512));
+        name.erase(remove_if(name.begin(), name.end(), [](char c) { return c == '\0'; }), name.end());
         if (!ServerExists(host, port)) {
-            ServerHost* newServer = new ServerHost(host, port);
+            ServerHost* newServer = new ServerHost(host, port, name);
             servers.push_back(newServer);
         }
     }

@@ -52,6 +52,8 @@ public:
 	static string PlayerStateCompress(PlayerState state);
 	//undefined length (should be 512 bits) server host decompression
 	static string DecompressHost(string binaryIn);
+	//undefined length
+	static string DecompressString(string binaryIn);
 #pragma endregion compression
 };
 //messages to be sent that need confirmation from the server to make sure they are sent

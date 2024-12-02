@@ -170,3 +170,11 @@ string ServerManager::DecompressHost(string binaryIn)
     }
     return out;
 }
+string ServerManager::DecompressString(string binaryIn) {
+    string out = "";
+    for (int i = 0; i < binaryIn.size() - 7; i += 8) {
+        char newChar = (char)stoi(binaryIn.substr(i, 8), nullptr, 2);
+        out = out + newChar;
+    }
+    return out;
+}
