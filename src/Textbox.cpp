@@ -18,16 +18,22 @@ char Textbox::GetCharFromEvent(SDL_Event& e)
 	}
 }
 
-Textbox::Textbox(string defaultText, int x, int y, int width, int height)
+Textbox::Textbox(string defaultText, int x, int y, int width, int height, int fontSize)
 	: ClickableUIElement(x, y, width, height, [this] { this->Select(); }, [this] {this->Deselect(); })
 {
 	selected = false;
 	currentText = defaultText;
+	font = TTF_OpenFont("arial.ttf", fontSize);
+}
+
+Textbox::~Textbox()
+{
+	TTF_CloseFont(font);
 }
 
 void Textbox::Render(SDL_Renderer* renderer)
 {
-	UIRendering::RenderText(renderer, currentText, x, y);
+	UIRendering::RenderText(renderer, currentText, x, y, font);
 }
 
 

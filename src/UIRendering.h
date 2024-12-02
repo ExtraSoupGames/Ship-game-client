@@ -6,5 +6,5 @@
 using namespace std;
 class UIRendering {
 public:
-	static void RenderText(SDL_Renderer* renderer, string textToRender, int x, int y, int size = 25);
+	static void RenderText(SDL_Renderer* renderer, string textToRender, int x, int y, TTF_Font* font);
 };

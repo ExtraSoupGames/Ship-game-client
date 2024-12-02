@@ -17,8 +17,9 @@ DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine) : GameState(machine
     discoverDelay = 500;
     discoverTimer = 0;
     machine = pMachine;
-    UIElements.push_back(new Button("Connect", 100, 100, 30, 30, [this]() {this->ServerClickedEvent(); }));
-    UIElements.push_back(new Button("Back", 100, 200, 30, 30, [this] {this->TransferToMainMenu(); }));
+    font = TTF_OpenFont("arial.ttf", 15);
+    UIElements.push_back(new Button("Connect", 100, 100, 30, 30, [this]() {this->ServerClickedEvent(); }, 25));
+    UIElements.push_back(new Button("Back", 100, 200, 30, 30, [this] {this->TransferToMainMenu(); }, 25));
 }
 void DiscoveryScreen::Render(SDL_Renderer* renderer) {
     //display
@@ -38,7 +39,7 @@ void DiscoveryScreen::Render(SDL_Renderer* renderer) {
             serverSymbol = new SDL_Rect{ selectedPadding, selectedPadding + i * serverWidth, serverWidth - selectedPadding * 2, serverHeight - selectedPadding * 2};
         }
         SDL_RenderDrawRect(renderer, serverSymbol);
-        UIRendering::RenderText(renderer, servers.at(i)->name, 10, 10 + i * 50, 10);
+        UIRendering::RenderText(renderer, servers.at(i)->name, 10, 10 + i * 50, font);
     }
     GameState::RenderUI(renderer);
     SDL_RenderPresent(renderer);

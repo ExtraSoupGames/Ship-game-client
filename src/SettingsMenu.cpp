@@ -1,7 +1,7 @@
 #include "SettingsMenu.h"
 #include "MainMenu.h"
 SettingsMenu::SettingsMenu(GameStateMachine* machine) : GameState(machine) {
-	UIElements.push_back(new Button("Exit", 100, 100, 500, 30, [this] {this->ExitButtonPressed(); }));
+	UIElements.push_back(new Button("Exit", 100, 100, 500, 30, [this] {this->ExitButtonPressed(); }, 25));
 }
 void SettingsMenu::Update(double deltaTime)
 {

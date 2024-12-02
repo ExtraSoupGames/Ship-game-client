@@ -5,9 +5,9 @@
 #include "Textbox.h"
 MainMenu::MainMenu(GameStateMachine* pMachine) : GameState(pMachine)
 {
-	UIElements.push_back(new Button("Search for a server", 100, 100, 500, 30, [this] {this->TransferToDiscoveryScreen(); }));
-	UIElements.push_back(new Button("Settings", 100, 200, 500, 30, [this] {this->TransferToSettingsScreen(); }));
-	UIElements.push_back(new Button("Create a server", 100, 300, 500, 30, [this] {this->TransferToCreateScreen(); }));
+	UIElements.push_back(new Button("Search for a server", 100, 100, 500, 30, [this] {this->TransferToDiscoveryScreen(); }, 25));
+	UIElements.push_back(new Button("Settings", 100, 200, 500, 30, [this] {this->TransferToSettingsScreen(); }, 25));
+	UIElements.push_back(new Button("Create a server", 100, 300, 500, 30, [this] {this->TransferToCreateScreen(); }, 25));
 }
 
 void MainMenu::Update(double deltaTime)

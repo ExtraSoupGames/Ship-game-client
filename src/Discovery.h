@@ -25,6 +25,7 @@ class DiscoveryScreen : public GameState{
 	bool selecting = false;
 	double discoverDelay; // dont spam packets as this is unneccesary load on network
 	double discoverTimer;
+	TTF_Font* font;
 	void ServerClickedEvent();
 	void TransferToMainMenu();
 public:
