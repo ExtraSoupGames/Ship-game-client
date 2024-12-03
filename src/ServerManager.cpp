@@ -22,22 +22,30 @@ void ServerManager::SetHost(string pHost, int pPort) {
     port = pPort;
 }
 void ServerManager::SendMessage(string messageBinary) {
+    //declare the IPadress variable
     IPaddress ip;
-    SDLNet_ResolveHost(&ip, host.c_str(), port); // Connect to the server
+    //assign it by resolving the host declared in the server manager
+    SDLNet_ResolveHost(&ip, host.c_str(), port);
     //pad the message to a byte (only first 7 bits used of each byte)
     while ((messageBinary.size() % 7) != 0) {
         messageBinary.append("0");
     }
     //compress the bit data into a string for sending
     string compressedData;
+    //iterate through each 7 bits of the message
     for (int i = 0; i < messageBinary.size() / 7; i++) {
+        //extract the relevant data
         string byteData = messageBinary.substr(i * 7, 7);
-        byteData.append("1"); // each 7 digits of data is sent as a byte with a 1 at the end, this way no bytes are empty as this causes problems
+        // each 7 digits of data is sent as a byte with a 1 at the end, this way no bytes are empty as this causes problems
+        byteData.append("1");
+        // convert this byte to an integer, using the base 2, this will be a number between 0 and 255, then convert this to a char, and add it to the string
         compressedData.push_back((static_cast<char>(stoi(byteData, nullptr, 2))));
     }
+    //calculate the size of the compressed data
     int bytes = compressedData.size();
-    // Prepare the packet to send
+    // Prepare the packet to send, based on the size of the data
     UDPpacket* packet = SDLNet_AllocPacket(bytes);
+    //handle errors from the packet preperation
     if (!packet) {
         std::cerr << "SDLNet_AllocPacket: " << SDLNet_GetError() << std::endl;
         SDLNet_UDP_Close(*socket);
@@ -47,11 +55,12 @@ void ServerManager::SendMessage(string messageBinary) {
 
     //copy the compressed string data into the packet
     strcpy((char*)packet->data, compressedData.c_str());
-    //cout << bytes << endl;
+    //set the length of the packet
     packet->len = bytes + 1;
+    //set the address of the packet to the IP address we found earlier
     packet->address = ip;
 
-    // Send the packet
+    // Send the packet and handle any errors
     if (SDLNet_UDP_Send(*socket, -1, packet) == 0) {
         std::cerr << "SDLNet_UDP_Send: " << SDLNet_GetError() << std::endl;
     }
