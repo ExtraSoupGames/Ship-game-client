@@ -63,10 +63,15 @@ void GameStateMachine::Run() {
             currentState->Update(deltaTime);
 
 #pragma region receivePackets
+            //only receive packets when required
             if (receivingPackets) {
+                //receive the packet into the packet variable, from the socket
                 int packets = SDLNet_UDP_Recv(settings->socket, packet);
+                //if any packets were received
                 if (packets) {
+                    //copy the packet data into an array of char
                     char* inData = ((char*)packet->data);
+                    //allow the current state to process whatever data is received
                     currentState->OnReceive(inData, packet->len);
                 }
             }
