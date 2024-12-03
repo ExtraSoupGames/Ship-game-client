@@ -51,6 +51,7 @@ class MyGame : public GameState{
         void HandleBoundaryData(string data);
     public:
         MyGame(GameStateMachine* pMachine);
+        ~MyGame();
         std::vector<std::string> messages;
 
 

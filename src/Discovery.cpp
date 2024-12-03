@@ -21,6 +21,9 @@ DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine) : GameState(machine
     UIElements.push_back(new Button("Connect", 100, 100, 30, 30, [this]() {this->ServerClickedEvent(); }, 25));
     UIElements.push_back(new Button("Back", 100, 200, 30, 30, [this] {this->TransferToMainMenu(); }, 25));
 }
+DiscoveryScreen::~DiscoveryScreen() {
+    TTF_CloseFont(font);
+}
 void DiscoveryScreen::Render(SDL_Renderer* renderer) {
     //display
     SDL_SetRenderDrawColor(renderer, 100, 100, 150, 255);

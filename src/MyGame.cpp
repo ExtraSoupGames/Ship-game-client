@@ -27,6 +27,13 @@ MyGame::MyGame(GameStateMachine* pMachine) : GameState(pMachine){
     cameraOffsetX = 0;
     cameraOffsetY = 0;
 }
+MyGame::~MyGame() {
+    delete textureManager;
+    delete collisions;
+    delete playerController;
+    delete enemies;
+    delete players;
+}
 void MyGame::AdjustCamera() {
     int playerScreenX = playerController->GetXForServer() - cameraOffsetX;
     int playerScreenY = playerController->GetYForServer() - cameraOffsetY;

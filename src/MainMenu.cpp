@@ -9,7 +9,9 @@ MainMenu::MainMenu(GameStateMachine* pMachine) : GameState(pMachine)
 	UIElements.push_back(new Button("Settings", 100, 200, 500, 30, [this] {this->TransferToSettingsScreen(); }, 25));
 	UIElements.push_back(new Button("Create a server", 100, 300, 500, 30, [this] {this->TransferToCreateScreen(); }, 25));
 }
+MainMenu::~MainMenu() {
 
+}
 void MainMenu::Update(double deltaTime)
 {
 }

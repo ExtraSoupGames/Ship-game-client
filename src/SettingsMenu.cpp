@@ -3,6 +3,9 @@
 SettingsMenu::SettingsMenu(GameStateMachine* machine) : GameState(machine) {
 	UIElements.push_back(new Button("Exit", 100, 100, 500, 30, [this] {this->ExitButtonPressed(); }, 25));
 }
+SettingsMenu::~SettingsMenu() {
+
+}
 void SettingsMenu::Update(double deltaTime)
 {
 }

@@ -8,6 +8,7 @@ private:
 	Textbox* servername;
 public:
 	ServerCreate(GameStateMachine* machine);
+	~ServerCreate();
 	void Update(double deltaTime);
 	void Render(SDL_Renderer* renderer);
 	void OnEnter();

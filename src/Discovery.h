@@ -30,6 +30,7 @@ class DiscoveryScreen : public GameState{
 	void TransferToMainMenu();
 public:
 	DiscoveryScreen(GameStateMachine* machine);
+	~DiscoveryScreen();
 	void Render(SDL_Renderer* renderer) override;
 	void OnReceive(char* inData, int dataLength) override;
 	void Input(SDL_Event& event) override;

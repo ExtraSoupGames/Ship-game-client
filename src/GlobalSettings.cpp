@@ -25,3 +25,7 @@ GlobalSettingsProfile::GlobalSettingsProfile(SDL_Renderer* pRenderer, int pScree
 	screenWidth = pScreenWidth;
     screenHeight = pScreenHeight;
 }
+GlobalSettingsProfile::~GlobalSettingsProfile() {
+    delete server;
+    SDLNet_UDP_Close(socket);
+}

@@ -17,4 +17,5 @@ public:
 	}
 	SDL_Renderer* renderer;
 	GlobalSettingsProfile(SDL_Renderer* pRenderer, int screenWidth, int screenHeight);
+	~GlobalSettingsProfile();
 };

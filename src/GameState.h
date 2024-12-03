@@ -17,6 +17,7 @@ public:
 	GameState(GameStateMachine* pMachine) {
 		machine = pMachine;
 	}
+	~GameState();
 	void UIInput(SDL_Event& e);
 	virtual void Update(double deltaTime) = 0;
 	virtual void Render(SDL_Renderer* renderer) = 0;
@@ -32,6 +33,7 @@ private:
 protected:
 public:
 	GameStateMachine();
+	~GameStateMachine();
 	bool receivingPackets;
 	GlobalSettingsProfile* settings;
 	bool running;

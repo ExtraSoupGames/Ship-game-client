@@ -11,6 +11,9 @@ void GameState::RenderUI(SDL_Renderer* renderer)
         u->Render(renderer);
     }
 }
+GameState::~GameState() {
+    UIElements.clear();
+}
 GameStateMachine::GameStateMachine()
 {
     int screenScale = 4;
@@ -28,6 +31,9 @@ GameStateMachine::GameStateMachine()
     running = true;
     settings = new GlobalSettingsProfile(renderer, screenWidth, screenHeight);
     receivingPackets = false;
+}
+GameStateMachine::~GameStateMachine() {
+    delete settings;
 }
 
 void GameStateMachine::SwitchState(GameState* newState)

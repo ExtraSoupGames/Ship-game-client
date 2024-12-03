@@ -6,6 +6,7 @@ class MainMenu : public GameState {
 private:
 public:
 	MainMenu(GameStateMachine* pMachine);
+	~MainMenu();
 	void TransferToDiscoveryScreen();
 	void TransferToSettingsScreen();
 	void TransferToCreateScreen();

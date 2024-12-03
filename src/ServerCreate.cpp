@@ -7,6 +7,9 @@ ServerCreate::ServerCreate(GameStateMachine* machine) : GameState(machine) {
 	servername = new Textbox("ServerName", 100, 300, 500, 30, 25);
 	UIElements.push_back(servername);
 }
+ServerCreate::~ServerCreate() {
+
+}
 void ServerCreate::Update(double deltaTime)
 {
 }
