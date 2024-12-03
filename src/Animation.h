@@ -27,12 +27,13 @@ private:
 	int currentFrame;
 	bool animating;
 	double lastAnimated;
-	vector<Animation> animations;
+	vector<Animation*>* animations;
 	void SetTexture(SDL_Texture* t);
 protected:
 	int currentAnimation;
 public:
 	Animatable(vector<string> animationNames, TextureManager* t, int defaultAnim = 0);
+	~Animatable();
 	void PlayAnimation(int ID);
 	void StartAnimating();
 	void StopAnimating();

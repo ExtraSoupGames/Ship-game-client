@@ -9,7 +9,7 @@ using namespace std;
 class TextureManager
 {
 private:
-	map<string, SDL_Texture*> textures;
+	map<string, SDL_Texture*>* textures;
 	Frame* LoadFrame(string name, string suffix);
 	void LoadTextures();
 	bool LoadTexture(string name);

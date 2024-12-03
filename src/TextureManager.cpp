@@ -320,7 +320,7 @@ bool TextureManager::LoadTexture(string name) {
         string filename = "..\\Assets\\FullTextures\\" + name + ".bmp";
         SDL_Surface* surface = SDL_LoadBMP(filename.c_str());
         SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-        textures.insert({ name, texture });
+        textures->insert({ name, texture });
         SDL_FreeSurface(surface);        
 	}
 	else if (FileExists("..\\Assets\\TextureMaps\\" + name + ".bmp")) {
@@ -335,7 +335,7 @@ bool TextureManager::LoadTexture(string name) {
             textureMap.write(outFileName.c_str());
             SDL_Surface* surface = SDL_LoadBMP(outFileName.c_str());
             SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-            textures.insert({ name, texture });
+            textures->insert({ name, texture });
             SDL_FreeSurface(surface);
 		}
 		else {
@@ -358,18 +358,19 @@ void TextureManager::InitializeAllTextures() {
 }
 TextureManager::TextureManager(SDL_Renderer* pRenderer) {
     renderer = pRenderer;
+    textures = new map<string, SDL_Texture*>;
 }
 SDL_Texture* TextureManager::GetTexture(string name)
 {
-	if (textures.find(name) == textures.end()) {//if the texture being retrieved does not exist then return null and print an error
+	if (textures->find(name) == textures->end()) {//if the texture being retrieved does not exist then return null and print an error
 		cout << "Error finding texture " << name << endl;
 		return GetErrorTexture();
 	}
-	SDL_Texture* texture = textures[name];
+	SDL_Texture* texture = textures->at(name);
 	return texture;
 }
 SDL_Texture* TextureManager::GetErrorTexture() {
-	if (textures.find("Error") == textures.end()) {
+	if (textures->find("Error") == textures->end()) {
 		LoadTexture("Error");
 	}
 	return GetTexture("Error");

@@ -15,11 +15,12 @@ private:
 	UDPsocket* socket;
 	string host;
 	int port;
-	vector<ImportantMessage*> importantMessages;
+	vector<ImportantMessage*>* importantMessages;
 	int nextMessageID = 0;
 	int clientID;
 public:
 	ServerManager(UDPsocket* serverSocket, int pClientID);
+	~ServerManager();
 	string ToString();
 	void SetHost(string pHost, int pPort);
 	void SendMessage(string binaryIn);

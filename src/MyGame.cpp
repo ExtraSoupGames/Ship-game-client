@@ -183,7 +183,7 @@ void MyGame::HandleBoundaryData(string message) {
         double p2y = machine->settings->server->IntDecompress(message.substr(i + 96, 32));
         double ofx = machine->settings->server->IntDecompress(message.substr(i + 128, 32));
         double ofy = machine->settings->server->IntDecompress(message.substr(i + 160, 32));
-        collisions->AddBoundary(*new CollisionBoundary(p1x, p1y, p2x, p2y, ofx, ofy));
+        collisions->AddBoundary(new CollisionBoundary(p1x, p1y, p2x, p2y, ofx, ofy));
     }
 }
 #pragma endregion incomingDataProcessing

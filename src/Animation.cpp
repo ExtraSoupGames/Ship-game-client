@@ -9,7 +9,7 @@ float Animation::frameDuration() {
 	return totalDuration / frames.size();
 }
 Animatable::Animatable(vector<string> animationNames, TextureManager* t, int defaultAnim) {
-	animations = *new vector<Animation>();
+	animations = new vector<Animation*>();
 	animating = true;
 	currentAnimation = 0;
 	defaultAnimation = defaultAnim;
@@ -18,11 +18,14 @@ Animatable::Animatable(vector<string> animationNames, TextureManager* t, int def
 	texture = t->GetErrorTexture();
 	for (string animation : animationNames) {
 		bool animationIsLooping = animation.at(0) == '%';
-		animations.push_back(*new Animation(animation, t, 100, animationIsLooping));
+		animations->push_back(new Animation(animation, t, 100, animationIsLooping));
 	}
 }
+Animatable::~Animatable() {
+	delete[] animations;
+}
 void Animatable::PlayAnimation(int ID) {
-	if (ID >= animations.size() || ID < 0) {
+	if (ID >= animations->size() || ID < 0) {
 		cout << "Animation ID provided was invalid, ID: " << ID << endl;
 		return;
 	}
@@ -31,7 +34,7 @@ void Animatable::PlayAnimation(int ID) {
 		currentFrame = 0;
 		currentAnimation = ID;
 		lastAnimated = SDL_GetTicks();
-		SetTexture(animations[currentAnimation].frames[currentFrame].texture);
+		SetTexture(animations->at(currentAnimation)->frames[currentFrame].texture);
 	}
 	animating = true;
 	currentAnimation = ID;
@@ -48,13 +51,13 @@ void Animatable::StopAnimating() {
 }
 void Animatable::UpdateAnimation() {
 	if (animating) {
-		float frameDuration = animations[currentAnimation].frameDuration();
+		float frameDuration = animations->at(currentAnimation)->frameDuration();
 		if (SDL_GetTicks() - lastAnimated > frameDuration) {
-			SetTexture(animations[currentAnimation].frames[currentFrame].texture);
+			SetTexture(animations->at(currentAnimation)->frames[currentFrame].texture);
 			lastAnimated += frameDuration;
-			if (!(currentFrame < animations[currentAnimation].frames.size() - 1)) {
+			if (!(currentFrame < animations->at(currentAnimation)->frames.size() - 1)) {
 				currentFrame = 0;
-				if (!animations[currentAnimation].looping) {
+				if (!animations->at(currentAnimation)->looping) {
 					currentAnimation = defaultAnimation;
 				}
 			}

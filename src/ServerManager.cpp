@@ -11,7 +11,10 @@ ServerManager::ServerManager(UDPsocket* serverSocket, int pClientID) {
     host = "255.255.255.255";
     port = 55555;
     clientID = pClientID;
-    importantMessages = *new vector<ImportantMessage*>();
+    importantMessages = new vector<ImportantMessage*>();
+}
+ServerManager::~ServerManager() {
+    delete[] importantMessages;
 }
 string ServerManager::ToString()
 {
@@ -69,11 +72,11 @@ void ServerManager::SendImportantMessage(string binaryContents)
 {
     ImportantMessage* messageToSend = new ImportantMessage(binaryContents, nextMessageID, clientID);
     nextMessageID++;
-    importantMessages.push_back(messageToSend);
+    importantMessages->push_back(messageToSend);
 }
 void ServerManager::SendAllImportantMessages()
 {
-    for (ImportantMessage* im : importantMessages) {
+    for (ImportantMessage* im : *importantMessages) {
         SendMessage(im->GetMessage());
     }
 }
@@ -84,13 +87,13 @@ void ServerManager::ReceiveImportantMessageConfirmation(string binaryIn) {
         //this message was intended for a different client, ignore
         return;
     }
-    for (ImportantMessage* im : importantMessages) {
+    for (ImportantMessage* im : *importantMessages) {
         if (messageID != im->messageID) {
             //dont remove any messages that arent the one that we just received confirmation for
             continue;
         }
         //find the correct message and remove it as we dont need to send it anymore
-        importantMessages.erase(remove(importantMessages.begin(), importantMessages.end(), im));
+        importantMessages->erase(remove(importantMessages->begin(), importantMessages->end(), im));
         cout << "successful hit fully processed" << endl;
         return;
     }
