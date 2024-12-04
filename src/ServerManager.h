@@ -12,17 +12,18 @@ using namespace std;
 struct ImportantMessage;
 class ServerManager {
 private:
-	UDPsocket* socket;
+	UDPsocket socket;
 	string host;
 	int port;
 	vector<ImportantMessage*>* importantMessages;
 	int nextMessageID = 0;
 	int clientID;
 public:
-	ServerManager(UDPsocket* serverSocket, int pClientID);
+	ServerManager(UDPsocket serverSocket, int pClientID);
 	~ServerManager();
 	string ToString();
 	void SetHost(string pHost, int pPort);
+	void ResetSocket();
 	void SendMessage(string binaryIn);
 	//send an important message that will keep sending until confirmation that it has been sent is received - do not use unless required as it is much slower
 	void SendImportantMessage(string binaryContents);

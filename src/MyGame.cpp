@@ -224,6 +224,8 @@ void MyGame::Update(double deltaTime) {
         stringstream binaryText;
         binaryText << "0010"; // this is a boundary data request code
         machine->settings->server->SendMessage(binaryText.str());
+        cout << "Requesting boundary info" << endl;
+        cout << "machine server settings: " << machine->settings->server->ToString() << endl;
         return;
     }
 #pragma endregion boundaryRequests

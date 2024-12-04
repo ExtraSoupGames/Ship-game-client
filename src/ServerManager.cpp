@@ -6,7 +6,7 @@ PlayerState::PlayerState(int pDirection, int pMovementState, int pAttackState) {
     attackState = pAttackState;
 }
 
-ServerManager::ServerManager(UDPsocket* serverSocket, int pClientID) {
+ServerManager::ServerManager(UDPsocket serverSocket, int pClientID) {
 	socket = serverSocket;
     host = "255.255.255.255";
     port = 55555;
@@ -14,22 +14,37 @@ ServerManager::ServerManager(UDPsocket* serverSocket, int pClientID) {
     importantMessages = new vector<ImportantMessage*>();
 }
 ServerManager::~ServerManager() {
-    delete[] importantMessages;
+    delete importantMessages;
 }
 string ServerManager::ToString()
 {
     return "Server Manager Properties, Host:" + host + " port: " + to_string(port);
 }
 void ServerManager::SetHost(string pHost, int pPort) {
+    pHost.erase(std::remove(pHost.begin(), pHost.end(), '\0'), pHost.end());
     host = pHost;
     port = pPort;
-    cout << "Host assigned!, Host: " << host << " Port: " << port << endl;
+}
+void ServerManager::ResetSocket() {
+    if (socket) {
+        SDLNet_UDP_Close(socket);
+    }
+    socket = SDLNet_UDP_Open(port);
+    if (!socket) {
+        std::cout << "SDLNet_UDP_Open: " << SDLNet_GetError() << std::endl;
+        SDLNet_Quit();
+        SDL_Quit();
+        throw new exception("Error opening socket");
+    }
 }
 void ServerManager::SendMessage(string messageBinary) {
     //declare the IPadress variable
     IPaddress ip;
     //assign it by resolving the host declared in the server manager
-    SDLNet_ResolveHost(&ip, host.c_str(), port);
+    if (SDLNet_ResolveHost(&ip, host.c_str(), port) == -1) {
+        std::cerr << "SDLNet_ResolveHost error: " << SDLNet_GetError() << std::endl;
+        return;
+    }
     //pad the message to a byte (only first 7 bits used of each byte)
     while ((messageBinary.size() % 7) != 0) {
         messageBinary.append("0");
@@ -52,7 +67,7 @@ void ServerManager::SendMessage(string messageBinary) {
     //handle errors from the packet preperation
     if (!packet) {
         std::cerr << "SDLNet_AllocPacket: " << SDLNet_GetError() << std::endl;
-        SDLNet_UDP_Close(*socket);
+        SDLNet_UDP_Close(socket);
         SDLNet_Quit();
         SDL_Quit();
     }
@@ -65,7 +80,7 @@ void ServerManager::SendMessage(string messageBinary) {
     packet->address = ip;
 
     // Send the packet and handle any errors
-    if (SDLNet_UDP_Send(*socket, -1, packet) == 0) {
+    if (SDLNet_UDP_Send(socket, -1, packet) == 0) {
         std::cerr << "SDLNet_UDP_Send: " << SDLNet_GetError() << std::endl;
     }
 }

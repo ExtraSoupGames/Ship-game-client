@@ -58,6 +58,7 @@ void DiscoveryScreen::Update(double deltaTime) {
     }
     if (selecting) {
         machine->settings->server->SetHost(servers[selectedServer]->host, servers[selectedServer]->port);
+        machine->settings->server->ResetSocket();
         machine->SwitchState(new MyGame(machine));
     }
 }
@@ -70,6 +71,7 @@ void DiscoveryScreen::OnReceive(char* inData, int dataLength) {
         name.erase(remove_if(name.begin(), name.end(), [](char c) { return c == '\0'; }), name.end());
         if (!ServerExists(host, port)) {
             ServerHost* newServer = new ServerHost(host, port, name);
+            cout << "new host is: " << host << endl;
             servers.push_back(newServer);
         }
     }

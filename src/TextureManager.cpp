@@ -363,7 +363,7 @@ TextureManager::TextureManager(SDL_Renderer* pRenderer) {
 SDL_Texture* TextureManager::GetTexture(string name)
 {
 	if (textures->find(name) == textures->end()) {//if the texture being retrieved does not exist then return null and print an error
-		cout << "Error finding texture " << name << endl;
+		//cout << "Error finding texture " << name << endl;
 		return GetErrorTexture();
 	}
 	SDL_Texture* texture = textures->at(name);

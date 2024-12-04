@@ -14,14 +14,14 @@ GlobalSettingsProfile::GlobalSettingsProfile(SDL_Renderer* pRenderer, int pScree
     // 
     // Create a UDP socket
     renderer = pRenderer;
-    socket = SDLNet_UDP_Open(0);
+    socket = SDLNet_UDP_Open(55555);
     if (!socket) {
         std::cout << "SDLNet_UDP_Open: " << SDLNet_GetError() << std::endl;
         SDLNet_Quit();
         SDL_Quit();
         throw new exception("Error opening socket");
     }
-	server = new ServerManager(&socket, clientID);
+	server = new ServerManager(socket, clientID);
 	screenWidth = pScreenWidth;
     screenHeight = pScreenHeight;
 }
