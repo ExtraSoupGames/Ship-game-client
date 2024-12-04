@@ -64,9 +64,9 @@ void DiscoveryScreen::Update(double deltaTime) {
 void DiscoveryScreen::OnReceive(char* inData, int dataLength) {
     string data = ServerManager::CharToBinary(inData, dataLength);
     if (data.substr(0, 4) == "0001") {
-        string host = ServerManager::DecompressHost(data.substr(4, 512));
-        int port = ServerManager::IntDecompress(data.substr(516, 32));
-        string name = ServerManager::DecompressString(data.substr(548, 512));
+        string host = ServerManager::DecompressHost(data.substr(4, 128));
+        int port = ServerManager::IntDecompress(data.substr(132, 32));
+        string name = ServerManager::DecompressString(data.substr(164, 512));
         name.erase(remove_if(name.begin(), name.end(), [](char c) { return c == '\0'; }), name.end());
         if (!ServerExists(host, port)) {
             ServerHost* newServer = new ServerHost(host, port, name);

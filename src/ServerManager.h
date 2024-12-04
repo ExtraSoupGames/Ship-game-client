@@ -51,7 +51,7 @@ public:
 	static PlayerState PlayerStateDecompress(string binaryIn);
 	//7 bit player state compression
 	static string PlayerStateCompress(PlayerState state);
-	//undefined length (should be 512 bits) server host decompression
+	//undefined length (should be 128 bits) server host decompression
 	static string DecompressHost(string binaryIn);
 	//undefined length
 	static string DecompressString(string binaryIn);

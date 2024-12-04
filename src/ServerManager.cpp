@@ -23,6 +23,7 @@ string ServerManager::ToString()
 void ServerManager::SetHost(string pHost, int pPort) {
     host = pHost;
     port = pPort;
+    cout << "Host assigned!, Host: " << host << " Port: " << port << endl;
 }
 void ServerManager::SendMessage(string messageBinary) {
     //declare the IPadress variable
