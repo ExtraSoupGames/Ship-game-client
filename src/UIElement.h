@@ -22,4 +22,6 @@ public:
 	void HandleClickInput(SDL_Event& e);
 	void OnClick();
 	void OnClickOff();
+	virtual void OnHover() = 0;
+	virtual void OnUnHover() = 0;
 };

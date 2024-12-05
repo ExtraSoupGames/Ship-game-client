@@ -12,13 +12,16 @@ Button::Button(string buttonText, int buttonX, int buttonY, function<void()> cli
 	if (useBigButton) {
 		width = 160 * screenScaling;
 		height = 16 * screenScaling;
-		texture = textureManager->GetTexture("UI\\Button");
+		unHoverTexture = textureManager->GetTexture("UI\\Button");
+		hoverTexture = textureManager->GetTexture("UI\\ButtonHover");
 	}
 	else {
 		width = 80 * screenScaling;
 		height = 16 * screenScaling;
-		texture = textureManager->GetTexture("UI\\ButtonSmall");
+		unHoverTexture = textureManager->GetTexture("UI\\ButtonSmall");
+		hoverTexture = textureManager->GetTexture("UI\\ButtonSmallHover");
 	}
+	currentTexture = unHoverTexture;
 }
 Button::~Button()
 {
@@ -27,11 +30,16 @@ Button::~Button()
 void Button::Render(SDL_Renderer* renderer) {
 	SDL_Rect* destRect;
 	destRect = new SDL_Rect{ x, y, width, height };
-	SDL_RenderCopy(renderer, texture, NULL, destRect);
+	SDL_RenderCopy(renderer, currentTexture, NULL, destRect);
 	UIRendering::RenderText(renderer, displayText, x + (3 * screenScaling), y + (3 * screenScaling), font);
 }
 void Button::Input(SDL_Event& e)
 {
 	HandleClickInput(e);
 }
-
+void Button::OnHover() {
+	currentTexture = hoverTexture;
+}
+void Button::OnUnHover() {
+	currentTexture = unHoverTexture;
+}

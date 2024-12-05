@@ -41,4 +41,12 @@ void ClickableUIElement::HandleClickInput(SDL_Event& e)
 			OnClickOff();
 		}
 	}
+	else if (e.type == SDL_MOUSEMOTION) {
+		if (IsInBounds(e.button.x, e.button.y)) {
+			OnHover();
+		}
+		else {
+			OnUnHover();
+		}
+	}
 }

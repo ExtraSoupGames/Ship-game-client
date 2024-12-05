@@ -9,7 +9,9 @@ using namespace std;
 class Button : public ClickableUIElement {
 	string displayText;
 	TTF_Font* font;
-	SDL_Texture* texture;
+	SDL_Texture* currentTexture;
+	SDL_Texture* unHoverTexture;
+	SDL_Texture* hoverTexture;
 	bool useBigButton;
 	int screenScaling;
 public:
@@ -17,4 +19,6 @@ public:
 	~Button();
 	void Render(SDL_Renderer* renderer) override;
 	void Input(SDL_Event& e) override;
+	void OnHover() override;
+	void OnUnHover() override;
 };
