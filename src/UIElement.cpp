@@ -55,12 +55,17 @@ bool ClickableUIElement::IsInBounds(int clickX, int clickY)
 
 void ClickableUIElement::HandleClickInput(SDL_Event& e)
 {
-	if (e.type == SDL_MOUSEBUTTONDOWN) {
+	if (e.type == SDL_MOUSEBUTTONUP) {
 		if (IsInBounds(e.button.x, e.button.y)) {
 			OnClick();
 		}
 		else {
 			OnClickOff();
+		}
+	}
+	if (e.type == SDL_MOUSEBUTTONDOWN) {
+		if (IsInBounds(e.button.x, e.button.y)) {
+			//TODO Clicked animation
 		}
 	}
 	else if (e.type == SDL_MOUSEMOTION) {
