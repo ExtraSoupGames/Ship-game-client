@@ -10,9 +10,6 @@ private:
 	string currentText;
 	bool selected;
 	TTF_Font* font;
-	SDL_Texture* currentTexture;
-	SDL_Texture* hoverTexture;
-	SDL_Texture* unHoverTexture;
 	int screenScaling;
 	static char GetCharFromEvent(SDL_Event& e);
 public:
@@ -23,6 +20,4 @@ public:
 	void Render(SDL_Renderer* renderer) override;
 	void Input(SDL_Event& e) override;
 	string GetText();
-	void OnHover() override;
-	void OnUnHover() override;
 };

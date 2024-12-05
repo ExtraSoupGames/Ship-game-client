@@ -1,13 +1,25 @@
 #include "UIElement.h"
 
-ClickableUIElement::ClickableUIElement(int pX, int pY, int pWidth, int pHeight, function<void()> clickFunc, function<void()> clickOffFunc)
+ClickableUIElement::ClickableUIElement(int pX, int pY, int pScreenScaling, bool isSmall , TextureManager* textureManager, function<void()> clickFunc, function<void()> clickOffFunc)
 {
 	clickFunction = clickFunc;
-	x = pX;
-	y = pY;
-	width = pWidth;
-	height = pHeight;
+	x = pX * pScreenScaling;
+	y = pY * pScreenScaling;
 	clickAwayFunction = clickOffFunc;
+
+	if (isSmall) {
+		width = 80 * pScreenScaling;
+		height = 16 * pScreenScaling;
+		unHoverTexture = textureManager->GetTexture("UI\\ButtonSmall");
+		hoverTexture = textureManager->GetTexture("UI\\ButtonSmallHover");
+	}
+	else {
+		width = 160 * pScreenScaling;
+		height = 16 * pScreenScaling;
+		unHoverTexture = textureManager->GetTexture("UI\\Button");
+		hoverTexture = textureManager->GetTexture("UI\\ButtonHover");
+	}
+	currentTexture = unHoverTexture;
 }
 
 void ClickableUIElement::OnClick()
@@ -18,6 +30,16 @@ void ClickableUIElement::OnClickOff() {
 	if (clickAwayFunction != 0) {
 		clickAwayFunction();
 	}
+}
+
+void ClickableUIElement::OnHover()
+{
+	currentTexture = hoverTexture;
+}
+
+void ClickableUIElement::OnUnHover()
+{
+	currentTexture = unHoverTexture;
 }
 
 bool ClickableUIElement::IsInBounds(int clickX, int clickY)
@@ -49,4 +71,9 @@ void ClickableUIElement::HandleClickInput(SDL_Event& e)
 			OnUnHover();
 		}
 	}
+}
+void ClickableUIElement::Render(SDL_Renderer* renderer) {
+	SDL_Rect* destRect;
+	destRect = new SDL_Rect{ x, y, width, height };
+	SDL_RenderCopy(renderer, currentTexture, NULL, destRect);
 }
