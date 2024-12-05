@@ -18,12 +18,12 @@ char Textbox::GetCharFromEvent(SDL_Event& e)
 	}
 }
 
-Textbox::Textbox(string defaultText, int x, int y, int width, int height, int fontSize)
-	: ClickableUIElement(x, y, width, height, [this] { this->Select(); }, [this] {this->Deselect(); })
+Textbox::Textbox(string defaultText, int x, int y, int width, int height, int pScreenScaling, int fontSize)
+	: ClickableUIElement(x * pScreenScaling, y * pScreenScaling, width * pScreenScaling, height * pScreenScaling, [this] { this->Select(); }, [this] {this->Deselect(); })
 {
 	selected = false;
 	currentText = defaultText;
-	font = TTF_OpenFont("arial.ttf", fontSize);
+	font = UIRendering::LoadFontAtPixelHeight(fontSize, pScreenScaling);
 }
 
 Textbox::~Textbox()

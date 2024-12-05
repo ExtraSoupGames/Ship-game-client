@@ -1,7 +1,7 @@
 #include "SettingsMenu.h"
 #include "MainMenu.h"
 SettingsMenu::SettingsMenu(GameStateMachine* machine) : GameState(machine) {
-	UIElements.push_back(new Button("Exit", 100, 100, [this] {this->ExitButtonPressed(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+	UIElements.push_back(new Button("Exit", 25, 10, [this] {this->ExitButtonPressed(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
 }
 SettingsMenu::~SettingsMenu() {
 

@@ -12,7 +12,7 @@ private:
 public:
 	void Select();
 	void Deselect();
-	Textbox(string defaultText, int x, int y, int width, int height, int fontSize);
+	Textbox(string defaultText, int x, int y, int width, int height, int pScreenScaling, int fontSize);
 	~Textbox();
 	void Render(SDL_Renderer* renderer) override;
 	void Input(SDL_Event& e) override;

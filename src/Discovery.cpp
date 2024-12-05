@@ -17,9 +17,9 @@ DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine) : GameState(machine
     discoverDelay = 500;
     discoverTimer = 0;
     machine = pMachine;
-    font = TTF_OpenFont("arial.ttf", 15);
-    UIElements.push_back(new Button("Connect", 100, 100, [this]() {this->ServerClickedEvent(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-    UIElements.push_back(new Button("Back", 100, 200, [this] {this->TransferToMainMenu(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    font = TTF_OpenFont("PixelatedElegance.ttf", 15);
+    UIElements.push_back(new Button("Connect", 25, 10, [this]() {this->ServerClickedEvent(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    UIElements.push_back(new Button("Back", 25, 30, [this] {this->TransferToMainMenu(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
 }
 DiscoveryScreen::~DiscoveryScreen() {
     TTF_CloseFont(font);

@@ -7,4 +7,5 @@ using namespace std;
 class UIRendering {
 public:
 	static void RenderText(SDL_Renderer* renderer, string textToRender, int x, int y, TTF_Font* font);
+	static TTF_Font* LoadFontAtPixelHeight(int fontSize, int screenScaling);
 };

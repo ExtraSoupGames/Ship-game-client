@@ -5,9 +5,9 @@
 #include "Textbox.h"
 MainMenu::MainMenu(GameStateMachine* pMachine) : GameState(pMachine)
 {
-	UIElements.push_back(new Button("Search for a server", 100, 100, [this] {this->TransferToDiscoveryScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-	UIElements.push_back(new Button("Settings", 100, 200, [this] {this->TransferToSettingsScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-	UIElements.push_back(new Button("Create a server", 100, 300, [this] {this->TransferToCreateScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+	UIElements.push_back(new Button("Search for a server", 25, 10, [this] {this->TransferToDiscoveryScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+	UIElements.push_back(new Button("Settings", 25, 30, [this] {this->TransferToSettingsScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+	UIElements.push_back(new Button("Create a server", 25, 50, [this] {this->TransferToCreateScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
 }
 MainMenu::~MainMenu() {
 

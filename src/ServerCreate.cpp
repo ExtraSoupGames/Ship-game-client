@@ -2,9 +2,9 @@
 #include "MainMenu.h"
 #include "ServerLauncher.h"
 ServerCreate::ServerCreate(GameStateMachine* machine) : GameState(machine) {
-	UIElements.push_back(new Button("Exit", 100, 100, [this] {this->ExitButtonPressed(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-	UIElements.push_back(new Button("Create a server", 100, 200, [this] {this->CreateButtonPressed(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-	servername = new Textbox("ServerName", 100, 300, 500, 30, 25);
+	UIElements.push_back(new Button("Exit", 25, 10, [this] {this->ExitButtonPressed(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+	UIElements.push_back(new Button("Create a server", 25, 30, [this] {this->CreateButtonPressed(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+	servername = new Textbox("ServerName", 25, 50, 500, 30, machine->settings->screenScaling(), 25);
 	UIElements.push_back(servername);
 }
 ServerCreate::~ServerCreate() {
