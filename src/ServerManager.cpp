@@ -29,7 +29,7 @@ void ServerManager::ResetSocket() {
     if (socket) {
         SDLNet_UDP_Close(socket);
     }
-    socket = SDLNet_UDP_Open(port);
+    socket = SDLNet_UDP_Open(0);
     if (!socket) {
         std::cout << "SDLNet_UDP_Open: " << SDLNet_GetError() << std::endl;
         SDLNet_Quit();

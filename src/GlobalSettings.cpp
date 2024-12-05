@@ -14,7 +14,7 @@ GlobalSettingsProfile::GlobalSettingsProfile(SDL_Renderer* pRenderer, int pScree
     // 
     // Create a UDP socket
     renderer = pRenderer;
-    socket = SDLNet_UDP_Open(55555);
+    socket = SDLNet_UDP_Open(0);
     if (!socket) {
         std::cout << "SDLNet_UDP_Open: " << SDLNet_GetError() << std::endl;
         SDLNet_Quit();
