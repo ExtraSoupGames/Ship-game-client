@@ -34,7 +34,6 @@ class MyGame : public GameState{
         double clientServerTimeDiff;
         double serverStartTime;
         CollisionManager* collisions;
-        TextureManager* textureManager;
         PlayerController* playerController;
         double broadcastTimer;
         double broadcastSpacing = 20;

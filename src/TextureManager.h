@@ -16,6 +16,7 @@ private:
 	SDL_Renderer* renderer;
 public:
 	TextureManager(SDL_Renderer* pRenderer);
+	~TextureManager();
 	void InitializeAllTextures();
 	SDL_Texture* GetTexture(string name);
 	SDL_Texture* GetErrorTexture();

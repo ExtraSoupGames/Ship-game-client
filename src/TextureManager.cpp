@@ -351,7 +351,7 @@ bool TextureManager::LoadTexture(string name) {
 }
 void TextureManager::InitializeAllTextures() {
     vector<string> texturesToLoad = *new vector<string>{
-    "Pirate", "PirateResult"};
+    "Pirate", "PirateResult", "UI\\Button", "UI\\ButtonSmall"};
     for (string s : texturesToLoad) {
         LoadTexture(s);
     }
@@ -360,10 +360,14 @@ TextureManager::TextureManager(SDL_Renderer* pRenderer) {
     renderer = pRenderer;
     textures = new map<string, SDL_Texture*>;
 }
+TextureManager::~TextureManager()
+{
+    delete textures;
+}
 SDL_Texture* TextureManager::GetTexture(string name)
 {
 	if (textures->find(name) == textures->end()) {//if the texture being retrieved does not exist then return null and print an error
-		//cout << "Error finding texture " << name << endl;
+		cout << "Error finding texture " << name << endl;
 		return GetErrorTexture();
 	}
 	SDL_Texture* texture = textures->at(name);

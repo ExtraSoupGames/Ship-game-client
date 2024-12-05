@@ -1,6 +1,7 @@
 #include "Globalsettings.h"
 #include <random>
 #include "Discovery.h"
+#include "TextureManager.h"
 int getRandomID() {
     //gets called once at the start to generate an ID for this client so that the server knows which data is from which client
     random_device dev;
@@ -21,11 +22,14 @@ GlobalSettingsProfile::GlobalSettingsProfile(SDL_Renderer* pRenderer, int pScree
         SDL_Quit();
         throw new exception("Error opening socket");
     }
+    textureManager = new TextureManager(renderer);
+    textureManager->InitializeAllTextures();
 	server = new ServerManager(socket, clientID);
 	screenWidth = pScreenWidth;
     screenHeight = pScreenHeight;
 }
 GlobalSettingsProfile::~GlobalSettingsProfile() {
     delete server;
+    delete textureManager;
     SDLNet_UDP_Close(socket);
 }

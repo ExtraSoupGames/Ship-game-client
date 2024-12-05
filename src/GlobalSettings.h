@@ -4,10 +4,12 @@
 #include <iostream>
 using namespace std;
 class ServerManager;
+class TextureManager;
 class GlobalSettingsProfile {
 public:
 	UDPsocket socket;
 	ServerManager* server;
+	TextureManager* textureManager;
 	int clientID;
 	int screenHeight;
 	int screenWidth;

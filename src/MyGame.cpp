@@ -14,10 +14,8 @@ MyGame::MyGame(GameStateMachine* pMachine) : GameState(pMachine){
     serverStartTime = 0;
     clientServerTimeDiff = 0;
     broadcastTimer = 0;
-    textureManager = new TextureManager(machine->settings->renderer);
     collisions = new CollisionManager();
-    playerController = new PlayerController(textureManager, collisions);
-    textureManager->InitializeAllTextures();
+    playerController = new PlayerController(machine->settings->textureManager, collisions);
 
     enemies = new vector<Enemy*>();
     players = new vector<OtherPlayer*>();
@@ -28,7 +26,6 @@ MyGame::MyGame(GameStateMachine* pMachine) : GameState(pMachine){
     cameraOffsetY = 0;
 }
 MyGame::~MyGame() {
-    delete textureManager;
     delete collisions;
     delete playerController;
     delete enemies;
@@ -65,7 +62,7 @@ template <typename T> Enemy* MyGame::ProcessEnemy(DataPoint* data, int ID, doubl
     auto it = std::find_if(enemies->begin(), enemies->end(), [&ID](Enemy* e) {return e->HasID(ID); });
     if (it == enemies->end()) {
         //if this is a new enemy
-        Enemy* newEnemy = new T(ID, textureManager);
+        Enemy* newEnemy = new T(ID, machine->settings->textureManager);
         newEnemy->AddToBuffer(new DataStream{ data });
         enemies->push_back(newEnemy);
         return newEnemy;
@@ -151,7 +148,7 @@ void MyGame::HandlePlayerData(string message) {
             auto it = std::find_if(players->begin(), players->end(), [&ID](OtherPlayer* e) {return e->HasID(ID); });
             if (it == players->end()) {
                 //if this is a new other player
-                OtherPlayer* newPlayer = new OtherPlayer(ID, textureManager);
+                OtherPlayer* newPlayer = new OtherPlayer(ID, machine->settings->textureManager);
                 newPlayer->PlayAnimation(0);
                 newPlayer->AddToBuffer(new DataStream({ new PlayerData(X, Y, state), timestamp }));
                 players->push_back(newPlayer);
