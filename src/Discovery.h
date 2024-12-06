@@ -4,7 +4,6 @@
 #include "ServerManager.h"
 #include "GameState.h"
 #include "ServerLauncher.h"
-#include "MyGame.h"
 #include "Button.h"
 #include <vector>
 using namespace std;

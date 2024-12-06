@@ -72,6 +72,7 @@ void Animatable::SetTexture(SDL_Texture* t)
 	texture = t;
 }
 void Animatable::Render(SDL_Renderer* renderer, int xPos, int yPos, int width, int height, GlobalSettingsProfile* settings) {
-	const SDL_Rect *dst = new SDL_Rect{ xPos, yPos, width * settings->screenScaling(), height * settings->screenScaling()};
+	int screenScale = settings->screenScaling();
+	const SDL_Rect *dst = new SDL_Rect{ xPos * screenScale, yPos * screenScale, width * screenScale, height * screenScale };
 	SDL_RenderCopy(renderer, texture, NULL, dst);
 }

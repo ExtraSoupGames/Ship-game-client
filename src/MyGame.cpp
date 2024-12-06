@@ -15,12 +15,10 @@ MyGame::MyGame(GameStateMachine* pMachine) : GameState(pMachine){
     clientServerTimeDiff = 0;
     broadcastTimer = 0;
     collisions = new CollisionManager();
-    playerController = new PlayerController(machine->settings->textureManager, collisions);
+    playerController = new PlayerController(machine, collisions);
 
     enemies = new vector<Enemy*>();
     players = new vector<OtherPlayer*>();
-
-    pMachine = machine;
 
     cameraOffsetX = 0;
     cameraOffsetY = 0;
@@ -32,8 +30,8 @@ MyGame::~MyGame() {
     delete players;
 }
 void MyGame::AdjustCamera() {
-    int playerScreenX = playerController->GetXForServer() - cameraOffsetX;
-    int playerScreenY = playerController->GetYForServer() - cameraOffsetY;
+    int playerScreenX = playerController->GetXForServer() * machine->settings->screenScaling() - cameraOffsetX;
+    int playerScreenY = playerController->GetYForServer() * machine->settings->screenScaling() - cameraOffsetY;
     float screenRatio = 0.5; // the amount of screen (0 - 1) that the player occupies
     float minRatio = 0.5 - screenRatio / 2;
     float maxRatio = 0.5 + screenRatio / 2;
@@ -200,9 +198,6 @@ void MyGame::OnReceive(char* data, int messagelength) {
     }
     if (messageType == "1010") { // important message confirmation from server code
         machine->settings->server->ReceiveImportantMessageConfirmation(message);
-    }
-    if (messageType == "1100") { // impotant message received from server, send confirmation, just for testing
-        machine->settings->server->SendImportantMessageConfirmation(message, machine->settings->clientID);
     }
 }
 #pragma endregion incomingData

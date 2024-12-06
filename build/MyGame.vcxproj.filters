@@ -61,6 +61,9 @@
     <ClCompile Include="..\src\UIElement.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\StartRoom.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Interpolator.h">
@@ -122,6 +125,9 @@
     </ClInclude>
     <ClInclude Include="..\src\UIElement.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\StartRoom.h">
+      <Filter>GameStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

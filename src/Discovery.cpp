@@ -1,5 +1,6 @@
 #include "Discovery.h"
 #include "MainMenu.h"
+#include "StartRoom.h"
 void DiscoveryScreen::ServerClickedEvent()
 {
     if (servers.size() <= 0) {
@@ -58,7 +59,7 @@ void DiscoveryScreen::Update(double deltaTime) {
     if (selecting) {
         machine->settings->server->SetHost(servers[selectedServer]->host, servers[selectedServer]->port);
         machine->settings->server->ResetSocket();
-        machine->SwitchState(new MyGame(machine));
+        machine->SwitchState(new StartRoom(machine));
     }
 }
 void DiscoveryScreen::OnReceive(char* inData, int dataLength) {

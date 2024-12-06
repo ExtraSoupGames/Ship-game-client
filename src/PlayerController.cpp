@@ -29,7 +29,7 @@ int InputMapping::GetDirectionState(Vector2 playerPos) {
 #pragma endregion InputMapping
 #pragma region PlayerController
 
-PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisionManager) : Animatable(*new vector<string>{ "%walk", "%run", "%dash" }, t) {
+PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager* pCollisionManager) : Animatable(*new vector<string>{ "%walk", "%run", "%dash" }, pMachine->settings->textureManager) {
     //player's values
     attackCooldown = 500;
     playerHealth = 100;
@@ -40,7 +40,7 @@ PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisi
     //stun values
     stunDuration = 500;
     //starting position
-    xPos = 200;
+    xPos = 100;
     yPos = 200;
     width = 20;
     height = 20;
@@ -54,6 +54,7 @@ PlayerController::PlayerController(TextureManager* t, CollisionManager* pCollisi
     movementState = 0;
     attackState = 0;
     collisionManager = pCollisionManager;
+    machine = pMachine;
     dashStartPoint = *new Vector2{ 0,0 };
     dashEndPoint = *new Vector2{ 0,0 };
     inputs = new InputMapping();
@@ -67,11 +68,11 @@ PlayerState PlayerController::GetState() {
 }
 int PlayerController::GetXForServer()
 {
-    return (int)xPos;
+    return (int)xPos / machine->settings->screenScaling();
 }
 int PlayerController::GetYForServer()
 {
-    return (int)yPos;
+    return (int)yPos / machine->settings->screenScaling();
 }
 Vector2 PlayerController::GetMiddle()
 {
@@ -238,6 +239,9 @@ void PlayerController::UpdateStun()
 #pragma endregion UpdateMovement
 #pragma region PlayerActions
 void PlayerController::Attack(MyGame* game) {
+    if (game == nullptr) {
+        return;
+    }
     if (SDL_GetTicks() - lastAttackTimestamp < attackCooldown) {
         //attack on cooldown
         return;
@@ -291,7 +295,8 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
     int mouseY;
     SDL_GetMouseState(&mouseX, &mouseY);
     inputs->mousePos = Vector2(mouseX + camOffX, mouseY + camOffY);
-
+    int xPosScaled = (int)xPos / machine->settings->screenScaling();
+    int yPosScaled = (int)yPos / machine->settings->screenScaling();
     SDL_Rect* playerRect = new SDL_Rect{ (int)xPos - camOffX, (int)yPos - camOffY, 20, 20 };
     if (attackState == 1) {
         SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
@@ -307,6 +312,6 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
         Animatable::PlayAnimation(movementState);
     }
     Animatable::UpdateAnimation();
-    Animatable::Render(renderer, xPos - camOffX, yPos - camOffY, 16, 16, settings);
+    Animatable::Render(renderer, xPosScaled - camOffX, yPosScaled - camOffY, 16, 16, settings);
 }
 #pragma endregion PlayerController

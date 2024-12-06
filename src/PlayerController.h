@@ -3,6 +3,7 @@
 #include "Collision.h"
 #include "Data.h"
 #include "Animation.h"
+#include "GameState.h"
 struct Hitbox;
 class MyGame;
 class TextureManager;
@@ -70,13 +71,14 @@ private:
     //references
     CollisionManager* collisionManager;
     InputMapping* inputs;
+    GameStateMachine* machine;
 public:
     //getters
     PlayerState GetState();
     int GetXForServer();
     int GetYForServer();
 
-    PlayerController(TextureManager* t, CollisionManager* pCollisionManager);
+    PlayerController(GameStateMachine* machine, CollisionManager* pCollisionManager);
     void HandleInput(SDL_Event& event, MyGame* game);
     void UpdateMove(double deltaTime, int screenScaling);
     void UpdateEnemyAttacks(MyGame* game);
