@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include "TextureManager.h"
 #include "ServerManager.h"
+#include "MyGame.h"
 using namespace std;
 class StartingLever {
 	int x;
@@ -32,4 +33,5 @@ public:
 	~StartPad();
 	void Render(SDL_Renderer* renderer, int screenScaling);
 	void UpdateTexture(string binaryData);
+	Hitbox* GetLeverBox(); // get the hitbox for the area a player can be in to activate the start lever
 };

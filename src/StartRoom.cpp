@@ -99,7 +99,10 @@ void StartRoom::Input(SDL_Event& event)
     player->HandleInput(event, nullptr);
     if (event.type == SDL_KEYDOWN) {
         if (event.key.keysym.sym == SDLK_SPACE) {
-            machine->settings->server->SendMessage("1100"); // lever pulled code
+            if (startPad->GetLeverBox()->Collides(Hitbox{ player->GetXForServer(), player->GetYForServer(), 16, 16 })) {
+                machine->settings->server->SendMessage("1100"); // lever pulled code
+                cout << "Lever pulled" << endl;
+            }
         }
     }
 }

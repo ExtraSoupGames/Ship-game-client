@@ -48,6 +48,11 @@ void StartPad::UpdateTexture(string binaryData)
 	}
 }
 
+Hitbox* StartPad::GetLeverBox()
+{
+	return new Hitbox{x - 16, y - 16, 48, 48};
+}
+
 StartingLever::StartingLever(TextureManager* t)
 {
 	x = 30;
@@ -69,6 +74,8 @@ void StartingLever::Render(SDL_Renderer* renderer, int screenScaling)
 {
 	SDL_Rect* dstRect = new SDL_Rect{ x * screenScaling, y * screenScaling, 16 * screenScaling, 16 * screenScaling };
 	SDL_RenderCopy(renderer, currentTexture, NULL, dstRect);
+	SDL_SetRenderDrawColor(renderer, 255, 255 ,255 ,255);
+	SDL_RenderDrawRect(renderer, new SDL_Rect{(x - 16) * screenScaling, (y -16) * screenScaling, 48 * screenScaling, 48 * screenScaling});
 }
 
 void StartingLever::UpdateTexture(string binaryData)
