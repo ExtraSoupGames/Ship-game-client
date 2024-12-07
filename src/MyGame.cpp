@@ -32,6 +32,8 @@ MyGame::~MyGame() {
 void MyGame::AdjustCamera() {
     int playerScreenX = playerController->GetXForServer() - cameraOffsetX;
     int playerScreenY = playerController->GetYForServer() - cameraOffsetY;
+    int playerWidth = playerController->GetWidth();
+    int playerHeight = playerController->GetHeight();
     float screenRatio = 0.6; // the amount of screen (0 - 1) that the player occupies
     float minRatio = 0.5 - screenRatio / 2;
     float maxRatio = 0.5 + screenRatio / 2;
@@ -44,13 +46,13 @@ void MyGame::AdjustCamera() {
     if (playerScreenX < minimumX) {
         cameraOffsetX -= 1;
     }
-    else if (playerScreenX > maximumX) {
+    else if (playerScreenX + playerWidth > maximumX) {
         cameraOffsetX += 1;
     }
     if (playerScreenY < minimumY) {
         cameraOffsetY -= 1;
     }
-    else if (playerScreenY > maximumY) {
+    else if (playerScreenY + playerHeight > maximumY) {
         cameraOffsetY += 1;
     }
 }

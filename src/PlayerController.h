@@ -77,6 +77,8 @@ public:
     PlayerState GetState();
     int GetXForServer();
     int GetYForServer();
+    int GetWidth();
+    int GetHeight();
 
     PlayerController(GameStateMachine* machine, CollisionManager* pCollisionManager);
     void HandleInput(SDL_Event& event, MyGame* game);

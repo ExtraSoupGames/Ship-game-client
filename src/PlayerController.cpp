@@ -74,6 +74,12 @@ int PlayerController::GetYForServer()
 {
     return (int)yPos;
 }
+int PlayerController::GetWidth() {
+    return width;
+}
+int PlayerController::GetHeight() {
+    return height;
+}
 Vector2 PlayerController::GetMiddle()
 {
     double xMid = xPos + (width / 2);
