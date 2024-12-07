@@ -32,7 +32,7 @@ MyGame::~MyGame() {
 void MyGame::AdjustCamera() {
     int playerScreenX = playerController->GetXForServer() - cameraOffsetX;
     int playerScreenY = playerController->GetYForServer() - cameraOffsetY;
-    float screenRatio = 0.5; // the amount of screen (0 - 1) that the player occupies
+    float screenRatio = 0.6; // the amount of screen (0 - 1) that the player occupies
     float minRatio = 0.5 - screenRatio / 2;
     float maxRatio = 0.5 + screenRatio / 2;
     int screenWidthScaled = machine->settings->screenWidth / machine->settings->screenScaling();
@@ -272,7 +272,7 @@ void MyGame::Render(SDL_Renderer* renderer) {
     }
     playerController->Render(renderer, machine->settings, cameraOffsetX, cameraOffsetY);
 
-    collisions->DrawDebug(renderer, cameraOffsetX, cameraOffsetY);
+    collisions->DrawDebug(renderer, cameraOffsetX, cameraOffsetY, machine->settings->screenScaling());
     GameState::RenderUI(renderer);
     SDL_RenderPresent(renderer);
 }

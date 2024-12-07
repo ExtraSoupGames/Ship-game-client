@@ -159,7 +159,7 @@ void PlayerController::UpdateMove(double deltaTime, int screenScaling){
         //cout << "direction: " << direction << endl;
     }
     //apply friction to velocity
-    double frictionModifier = 0.1f;
+    double frictionModifier = 0.13f;
     xVelo = xVelo - (xVelo * (frictionModifier * (deltaTime / 10)));
     yVelo = yVelo - (yVelo * (frictionModifier * (deltaTime / 10)));
 #pragma endregion stateUpdate
@@ -198,7 +198,7 @@ void PlayerController::UpdateEnemyAttacks(MyGame* game)
 }
 void PlayerController::UpdateBasicMovement(double deltaTime)
 {
-    double speed = 0.001f;
+    double speed = 0.0008f;
     Vector2 currentPos = *new Vector2{ xPos, yPos };
     Vector2 endPos;
     Vector2 finalPos;
@@ -295,9 +295,10 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
     int mouseY;
     SDL_GetMouseState(&mouseX, &mouseY);
     inputs->mousePos = Vector2(mouseX / machine->settings->screenScaling() + camOffX, mouseY / machine->settings->screenScaling() + camOffY);
-    int xPosScaled = (int)xPos * machine->settings->screenScaling();
-    int yPosScaled = (int)yPos * machine->settings->screenScaling();
-    SDL_Rect* playerRect = new SDL_Rect{ (int)xPosScaled - camOffX, (int)yPosScaled - camOffY, 20, 20 };
+    SDL_Rect* playerRect = new SDL_Rect{ ((int)xPos - camOffX) * machine->settings->screenScaling(),
+        ((int)yPos - camOffY) * machine->settings->screenScaling(),
+        16 * machine->settings->screenScaling(),
+        16 * machine->settings->screenScaling()};
     if (attackState == 1) {
         SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
     }
@@ -305,7 +306,10 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     }
     SDL_RenderDrawRect(renderer, playerRect);
-    SDL_Rect* DebugAttackBoxRect = new SDL_Rect{ attackBox->x - camOffX, attackBox->y - camOffY, attackBox->w, attackBox->h};
+    SDL_Rect* DebugAttackBoxRect = new SDL_Rect{ (attackBox->x - camOffX) * machine->settings->screenScaling(),
+        (attackBox->y - camOffY) * machine->settings->screenScaling(),
+        (attackBox->w) * machine->settings->screenScaling(),
+        (attackBox->h) * machine->settings->screenScaling()};
     SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
     SDL_RenderDrawRect(renderer, DebugAttackBoxRect);
     if (currentAnimation != movementState) {

@@ -5,8 +5,12 @@ int FindOrientation(Vector2* P1, Vector2* P2, Vector2* P3) {
 	return (val > 0) ? 1 : 2;
 }
 
-void CollisionBoundary::Draw(SDL_Renderer* renderer, int camOffX, int camOffY) {
-	SDL_RenderDrawLine(renderer, point1->x - camOffX, point1->y - camOffY, point2->x - camOffX, point2->y - camOffY);
+void CollisionBoundary::Draw(SDL_Renderer* renderer, int camOffX, int camOffY, int screenScaling) {
+	SDL_RenderDrawLine(renderer,
+		(point1->x - camOffX) * screenScaling,
+		(point1->y - camOffY) * screenScaling,
+		(point2->x - camOffX) * screenScaling,
+		(point2->y - camOffY) * screenScaling);
 }
 CollisionBoundary::CollisionBoundary(double x1, double y1, double x2, double y2, double ox, double oy) {
 	point1 = new Vector2{ x1, y1 };
@@ -62,9 +66,9 @@ Vector2 CollisionManager::ApplyCollision(Vector2 start, Vector2 desiredEnd) {
 	}
 	return realEnd;
 }
-void CollisionManager::DrawDebug(SDL_Renderer* renderer, int camOffX, int camOffY) {
+void CollisionManager::DrawDebug(SDL_Renderer* renderer, int camOffX, int camOffY, int screenScaling) {
 	for (CollisionBoundary* cb : *boundaries) {
-		cb->Draw(renderer, camOffX, camOffY);
+		cb->Draw(renderer, camOffX, camOffY, screenScaling);
 	}
 }
 bool CollisionManager::IsEmpty() {

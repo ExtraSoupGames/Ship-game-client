@@ -89,7 +89,7 @@ bool Bobleech::IsAttacking()
 }
 EnemyAttackData Bobleech::GetAttackData()
 {
-    return EnemyAttackData(x, y, 3, 0.5f);
+    return EnemyAttackData(x, y, 3, 0.2f);
 }
 #pragma endregion Bobleech
 #pragma region Flopper
@@ -114,7 +114,7 @@ bool Flopper::IsAttacking()
 }
 EnemyAttackData Flopper::GetAttackData()
 {
-    return EnemyAttackData(x, y, 10, 1);
+    return EnemyAttackData(x, y, 10, 0.5f);
 }
 #pragma endregion Flopper
 #pragma region Clingabing
