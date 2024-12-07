@@ -8,10 +8,14 @@ StartRoom::StartRoom(GameStateMachine* pMachine) : GameState(pMachine)
     broadcastTimer = 0;
     players = new vector<OtherPlayer*>();
     player = new PlayerController(pMachine, new CollisionManager());
+    startPad = new StartPad(machine->settings->textureManager);
 }
 
 StartRoom::~StartRoom()
 {
+    delete player;
+    delete players;
+    delete startPad;
 }
 
 void StartRoom::Render(SDL_Renderer* renderer)
@@ -19,11 +23,7 @@ void StartRoom::Render(SDL_Renderer* renderer)
     SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
     SDL_RenderClear(renderer);
 
-    //TODO change this to use a StartPad class that takes in data at start
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    int screenScale = machine->settings->screenScaling();
-    SDL_RenderDrawRect(renderer, new SDL_Rect{50 * screenScale, 50 * screenScale, 50 * screenScale, 50 * screenScale});
-
+    startPad->Render(renderer, machine->settings->screenScaling());
 
     for (OtherPlayer* p : *players) {
         p->Render(renderer, machine->settings, 0 ,0); // no camera movement on start room screen
@@ -31,7 +31,9 @@ void StartRoom::Render(SDL_Renderer* renderer)
     player->Render(renderer, machine->settings, 0 ,0); // no camera movement on start room screen
     SDL_RenderPresent(renderer);
 }
-
+void StartRoom::HandleStartPadData(string message) {
+    startPad->UpdateTexture(message);
+}
 void StartRoom::HandlePlayerData(string message) {
     if (!((message.size() - 64) % 55) == 0 && message.size() > 1) { // size shoule be a multiple of 32 for the ID + 16 for the position + 7 for the state per player + 64 for timestamp
         int padding = (message.size() - 64) % 55;
@@ -88,7 +90,7 @@ void StartRoom::OnReceive(char* inData, int dataLength)
         machine->SwitchState(new MyGame(machine));
     }
     if (messageType == "1110") { //starting pad info
-
+        HandleStartPadData(message);
     }
 }
 

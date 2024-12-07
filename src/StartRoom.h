@@ -4,6 +4,7 @@
 #include "ServerManager.h"
 #include "Interpolator.h"
 #include "PlayerController.h"
+#include "StartPad.h"
 #include <iostream>
 using namespace std;
 class StartRoom : public GameState {
@@ -13,6 +14,7 @@ private:
 	vector<OtherPlayer*>* players;
 	PlayerController* player;
 	GameStateMachine* machine;
+	StartPad* startPad;
 
 	double broadcastTimer;
 	double broadcastSpacing = 20;
@@ -20,6 +22,7 @@ private:
 	double serverBroadcastDelay = 500;//adjust this to change how quickly important messages are resent - could affect performance if too low
 
 	void HandlePlayerData(string message);
+	void HandleStartPadData(string message);
 public:
 	StartRoom(GameStateMachine* pMachine);
 	~StartRoom();

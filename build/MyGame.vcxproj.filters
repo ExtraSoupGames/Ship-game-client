@@ -64,6 +64,9 @@
     <ClCompile Include="..\src\StartRoom.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\StartPad.cpp">
+      <Filter>GameFiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Interpolator.h">
@@ -128,6 +131,9 @@
     </ClInclude>
     <ClInclude Include="..\src\StartRoom.h">
       <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\StartPad.h">
+      <Filter>GameFiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
