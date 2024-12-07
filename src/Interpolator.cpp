@@ -104,7 +104,6 @@ void Flopper::OnInterpolate(DataPoint* data) {
     }
 }
 void Flopper::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY) {
-    //TODO draw the flopper based on the state
     Animatable::UpdateAnimation();
     Animatable::Render(renderer, x - camOffX, y - camOffY, 32, 32, settings);
 }
@@ -131,7 +130,7 @@ Clingabing::Clingabing(int ID, TextureManager* t) : Enemy(ID), Animatable(*new v
 void Clingabing::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY)
 {
     //TODO add clingabing frames and animate
-    SDL_Rect* clingabingRect = new SDL_Rect{x - camOffX, y - camOffY, 15, 15};
+    SDL_Rect* clingabingRect = new SDL_Rect{(x - camOffX) * settings->screenScaling(), (y - camOffY) * settings->screenScaling(), 15, 15};
     SDL_RenderDrawRect(renderer, clingabingRect);
 }
 bool Clingabing::IsAttacking()
@@ -146,7 +145,7 @@ EnemyAttackData Clingabing::GetAttackData()
 #pragma endregion Clingabing
 #pragma region OtherPlayer
 void OtherPlayer::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY) {
-    SDL_Rect* playerRect = new SDL_Rect{ x - camOffX, y - camOffY, 20, 20 };
+    SDL_Rect* playerRect = new SDL_Rect{ (x - camOffX) * settings->screenScaling(), (y- camOffY) * settings->screenScaling(), 20, 20 };
     if (state.attackState == 1) {
         SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
     }

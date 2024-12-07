@@ -30,15 +30,17 @@ MyGame::~MyGame() {
     delete players;
 }
 void MyGame::AdjustCamera() {
-    int playerScreenX = playerController->GetXForServer() * machine->settings->screenScaling() - cameraOffsetX;
-    int playerScreenY = playerController->GetYForServer() * machine->settings->screenScaling() - cameraOffsetY;
+    int playerScreenX = playerController->GetXForServer() - cameraOffsetX;
+    int playerScreenY = playerController->GetYForServer() - cameraOffsetY;
     float screenRatio = 0.5; // the amount of screen (0 - 1) that the player occupies
     float minRatio = 0.5 - screenRatio / 2;
     float maxRatio = 0.5 + screenRatio / 2;
-    int maximumX = machine->settings->screenWidth * maxRatio;
-    int minimumX = machine->settings->screenWidth * minRatio;
-    int maximumY = machine->settings->screenHeight * maxRatio;
-    int minimumY = machine->settings->screenHeight * minRatio;
+    int screenWidthScaled = machine->settings->screenWidth / machine->settings->screenScaling();
+    int screenHeightScaled = machine->settings->screenHeight / machine->settings->screenScaling();
+    int maximumX = screenWidthScaled * maxRatio;
+    int minimumX = screenWidthScaled * minRatio;
+    int maximumY = screenHeightScaled * maxRatio;
+    int minimumY = screenHeightScaled * minRatio;
     if (playerScreenX < minimumX) {
         cameraOffsetX -= 1;
     }

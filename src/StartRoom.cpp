@@ -1,12 +1,13 @@
 #include "StartRoom.h"
 #include "MyGame.h"
-StartRoom::StartRoom(GameStateMachine* machine) : GameState(machine)
+StartRoom::StartRoom(GameStateMachine* pMachine) : GameState(pMachine)
 {
+    machine = pMachine;
     serverStartTime = 0;
     clientServerTimeDiff = 0;
     broadcastTimer = 0;
     players = new vector<OtherPlayer*>();
-    player = new PlayerController(machine, new CollisionManager());
+    player = new PlayerController(pMachine, new CollisionManager());
 }
 
 StartRoom::~StartRoom()

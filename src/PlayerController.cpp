@@ -40,8 +40,8 @@ PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager*
     //stun values
     stunDuration = 500;
     //starting position
-    xPos = 100;
-    yPos = 200;
+    xPos = 20;
+    yPos = 50;
     width = 20;
     height = 20;
     //used later
@@ -68,11 +68,11 @@ PlayerState PlayerController::GetState() {
 }
 int PlayerController::GetXForServer()
 {
-    return (int)xPos / machine->settings->screenScaling();
+    return (int)xPos;
 }
 int PlayerController::GetYForServer()
 {
-    return (int)yPos / machine->settings->screenScaling();
+    return (int)yPos;
 }
 Vector2 PlayerController::GetMiddle()
 {
@@ -198,7 +198,7 @@ void PlayerController::UpdateEnemyAttacks(MyGame* game)
 }
 void PlayerController::UpdateBasicMovement(double deltaTime)
 {
-    double speed = 0.002f;
+    double speed = 0.001f;
     Vector2 currentPos = *new Vector2{ xPos, yPos };
     Vector2 endPos;
     Vector2 finalPos;
@@ -294,10 +294,10 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
     int mouseX;
     int mouseY;
     SDL_GetMouseState(&mouseX, &mouseY);
-    inputs->mousePos = Vector2(mouseX + camOffX, mouseY + camOffY);
-    int xPosScaled = (int)xPos / machine->settings->screenScaling();
-    int yPosScaled = (int)yPos / machine->settings->screenScaling();
-    SDL_Rect* playerRect = new SDL_Rect{ (int)xPos - camOffX, (int)yPos - camOffY, 20, 20 };
+    inputs->mousePos = Vector2(mouseX / machine->settings->screenScaling() + camOffX, mouseY / machine->settings->screenScaling() + camOffY);
+    int xPosScaled = (int)xPos * machine->settings->screenScaling();
+    int yPosScaled = (int)yPos * machine->settings->screenScaling();
+    SDL_Rect* playerRect = new SDL_Rect{ (int)xPosScaled - camOffX, (int)yPosScaled - camOffY, 20, 20 };
     if (attackState == 1) {
         SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
     }
@@ -312,6 +312,6 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
         Animatable::PlayAnimation(movementState);
     }
     Animatable::UpdateAnimation();
-    Animatable::Render(renderer, xPosScaled - camOffX, yPosScaled - camOffY, 16, 16, settings);
+    Animatable::Render(renderer, xPos - camOffX, yPos - camOffY, 16, 16, settings);
 }
 #pragma endregion PlayerController

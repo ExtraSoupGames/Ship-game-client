@@ -12,6 +12,7 @@ private:
 	double clientServerTimeDiff;
 	vector<OtherPlayer*>* players;
 	PlayerController* player;
+	GameStateMachine* machine;
 
 	double broadcastTimer;
 	double broadcastSpacing = 20;
@@ -20,7 +21,7 @@ private:
 
 	void HandlePlayerData(string message);
 public:
-	StartRoom(GameStateMachine* machine);
+	StartRoom(GameStateMachine* pMachine);
 	~StartRoom();
 	void Render(SDL_Renderer* renderer) override;
 	void OnReceive(char* inData, int dataLength) override;
