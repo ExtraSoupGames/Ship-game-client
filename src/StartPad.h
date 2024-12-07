@@ -12,6 +12,8 @@ class StartingLever {
 	SDL_Texture* poweredTexture;
 	bool powered;
 public:
+	StartingLever(TextureManager* t);
+	~StartingLever();
 	void Render(SDL_Renderer* renderer, int screenScaling);
 	void UpdateTexture(string bianryData);
 };

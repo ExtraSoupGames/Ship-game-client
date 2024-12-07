@@ -8,7 +8,7 @@ StartPad::StartPad(TextureManager* t)
 	unpoweredTexture = t->GetTexture("StartPadUnpowered");
 	partialPoweredTexture = t->GetTexture("StartPadPartialPowered");
 	poweredTexture = t->GetTexture("StartPadPowered");
-	startLever = new StartingLever();
+	startLever = new StartingLever(t);
 	currentTexture = unpoweredTexture;
 	countdown = 6;
 }
@@ -29,7 +29,6 @@ void StartPad::Render(SDL_Renderer* renderer, int screenScaling)
 
 void StartPad::UpdateTexture(string binaryData)
 {
-	cout << binaryData << endl;
 	poweredState = ServerManager::IntDecompress(binaryData.substr(0, 2));
 	switch (poweredState) {
 	case 0:
@@ -45,8 +44,25 @@ void StartPad::UpdateTexture(string binaryData)
 	startLever->UpdateTexture(binaryData.substr(2, 1));
 	int countdown = ServerManager::IntDecompress(binaryData.substr(3,3));
 	if (countdown < 6) {
-		cout << countdown << endl;
+		//TODO add big countdown
 	}
+}
+
+StartingLever::StartingLever(TextureManager* t)
+{
+	x = 30;
+	y = 30;
+	unpoweredTexture = t->GetTexture("LeverUnpowered");
+	poweredTexture = t->GetTexture("LeverPowered");
+	currentTexture = unpoweredTexture;
+	powered = false;
+}
+
+StartingLever::~StartingLever()
+{
+	delete currentTexture;
+	delete unpoweredTexture;
+	delete poweredTexture;
 }
 
 void StartingLever::Render(SDL_Renderer* renderer, int screenScaling)
@@ -59,7 +75,6 @@ void StartingLever::UpdateTexture(string binaryData)
 {
 	powered = binaryData == "1";
 	if (powered) {
-		cout << "lever pulled" << endl;
 		currentTexture = poweredTexture;
 	}
 	else {
