@@ -29,6 +29,7 @@ void StartPad::Render(SDL_Renderer* renderer, int screenScaling)
 
 void StartPad::UpdateTexture(string binaryData)
 {
+	cout << binaryData << endl;
 	poweredState = ServerManager::IntDecompress(binaryData.substr(0, 2));
 	switch (poweredState) {
 	case 0:
@@ -58,6 +59,7 @@ void StartingLever::UpdateTexture(string binaryData)
 {
 	powered = binaryData == "1";
 	if (powered) {
+		cout << "lever pulled" << endl;
 		currentTexture = poweredTexture;
 	}
 	else {

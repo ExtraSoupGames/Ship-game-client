@@ -97,6 +97,11 @@ void StartRoom::OnReceive(char* inData, int dataLength)
 void StartRoom::Input(SDL_Event& event)
 {
     player->HandleInput(event, nullptr);
+    if (event.type == SDL_KEYDOWN) {
+        if (event.key.keysym.sym == SDLK_SPACE) {
+            machine->settings->server->SendMessage("1100"); // lever pulled code
+        }
+    }
 }
 
 void StartRoom::Update(double deltaTime)
