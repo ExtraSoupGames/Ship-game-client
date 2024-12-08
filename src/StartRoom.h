@@ -4,7 +4,7 @@
 #include "ServerManager.h"
 #include "Interpolator.h"
 #include "PlayerController.h"
-#include "StartPad.h"
+#include "PlayerPad.h"
 #include <iostream>
 using namespace std;
 class StartRoom : public GameState {

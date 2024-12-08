@@ -1,6 +1,6 @@
-#include "StartPad.h"
+#include "PlayerPad.h"
 
-StartPad::StartPad(TextureManager* t)
+PlayerPad::PlayerPad(TextureManager* t)
 {
 	x = 50;
 	y = 50;
@@ -8,26 +8,22 @@ StartPad::StartPad(TextureManager* t)
 	unpoweredTexture = t->GetTexture("StartPadUnpowered");
 	partialPoweredTexture = t->GetTexture("StartPadPartialPowered");
 	poweredTexture = t->GetTexture("StartPadPowered");
-	startLever = new StartingLever(t);
 	currentTexture = unpoweredTexture;
-	countdown = 6;
 }
-StartPad::~StartPad() {
-	delete startLever;
+PlayerPad::~PlayerPad() {
 	delete unpoweredTexture;
 	delete partialPoweredTexture;
 	delete poweredTexture;
 }
 
-void StartPad::Render(SDL_Renderer* renderer, int screenScaling)
+void PlayerPad::Render(SDL_Renderer* renderer, int screenScaling)
 {
-	startLever->Render(renderer, screenScaling);
 	SDL_Rect* dstRect = new SDL_Rect{x * screenScaling, y * screenScaling, 64 * screenScaling, 64 * screenScaling};
 	SDL_RenderCopy(renderer, currentTexture, NULL, dstRect);
 	delete dstRect;
 }
 
-void StartPad::UpdateTexture(string binaryData)
+void PlayerPad::UpdateTexture(string binaryData)
 {
 	poweredState = ServerManager::IntDecompress(binaryData.substr(0, 2));
 	switch (poweredState) {
@@ -41,14 +37,9 @@ void StartPad::UpdateTexture(string binaryData)
 		currentTexture = poweredTexture;
 		break;
 	}
-	startLever->UpdateTexture(binaryData.substr(2, 1));
-	int countdown = ServerManager::IntDecompress(binaryData.substr(3,3));
-	if (countdown < 6) {
-		//TODO add big countdown
-	}
 }
 
-Hitbox* StartPad::GetLeverBox()
+Hitbox* PlayerPad::GetLeverBox()
 {
 	return new Hitbox{x - 16, y - 16, 48, 48};
 }
@@ -87,4 +78,25 @@ void StartingLever::UpdateTexture(string binaryData)
 	else {
 		currentTexture = unpoweredTexture;
 	}
+}
+
+StartPad::StartPad(TextureManager* t) : PlayerPad(t)
+{
+	startLever = new StartingLever(t);
+	countdown = 6;
+}
+StartPad::~StartPad() {
+	delete startLever;
+}
+void StartPad::Render(SDL_Renderer* renderer, int screenScaling) {
+	startLever->Render(renderer, screenScaling);
+	PlayerPad::Render(renderer, screenScaling);
+}
+void StartPad::UpdateTexture(string binaryData) {
+	startLever->UpdateTexture(binaryData.substr(2, 1));
+	countdown = ServerManager::IntDecompress(binaryData.substr(3, 3));
+	if (countdown < 6) {
+		//TODO add big countdown
+	}
+	PlayerPad::UpdateTexture(binaryData);
 }

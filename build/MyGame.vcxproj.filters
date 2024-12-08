@@ -43,7 +43,7 @@
     <ClCompile Include="..\src\UIElement.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\StartPad.cpp">
+    <ClCompile Include="..\src\PlayerPad.cpp">
       <Filter>GameFiles</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Discovery.cpp">
@@ -117,7 +117,7 @@
     <ClInclude Include="..\src\UIElement.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\StartPad.h">
+    <ClInclude Include="..\src\PlayerPad.h">
       <Filter>GameFiles</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Discovery.h">

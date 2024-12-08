@@ -328,7 +328,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\src\ServerLauncher.cpp" />
     <ClCompile Include="..\src\ServerManager.cpp" />
     <ClCompile Include="..\src\SettingsMenu.cpp" />
-    <ClCompile Include="..\src\StartPad.cpp" />
+    <ClCompile Include="..\src\PlayerPad.cpp" />
     <ClCompile Include="..\src\StartRoom.cpp" />
     <ClCompile Include="..\src\Textbox.cpp" />
     <ClCompile Include="..\src\TextureManager.cpp" />
@@ -353,7 +353,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\src\ServerLauncher.h" />
     <ClInclude Include="..\src\ServerManager.h" />
     <ClInclude Include="..\src\SettingsMenu.h" />
-    <ClInclude Include="..\src\StartPad.h" />
+    <ClInclude Include="..\src\PlayerPad.h" />
     <ClInclude Include="..\src\StartRoom.h" />
     <ClInclude Include="..\src\Textbox.h" />
     <ClInclude Include="..\src\TextureManager.h" />

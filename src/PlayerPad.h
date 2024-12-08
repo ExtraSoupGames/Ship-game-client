@@ -18,7 +18,7 @@ public:
 	void Render(SDL_Renderer* renderer, int screenScaling);
 	void UpdateTexture(string bianryData);
 };
-class StartPad {
+class PlayerPad {
 	int x;
 	int y;
 	SDL_Texture* currentTexture;
@@ -26,12 +26,19 @@ class StartPad {
 	SDL_Texture* partialPoweredTexture; // some players on
 	SDL_Texture* poweredTexture; // all players on
 	int poweredState;
+public:
+	PlayerPad(TextureManager* t);
+	~PlayerPad();
+	void Render(SDL_Renderer* renderer, int screenScaling);
+	void UpdateTexture(string binaryData);
+	Hitbox* GetLeverBox(); // get the hitbox for the area a player can be in to activate the start lever
+};
+class StartPad : public PlayerPad {
+public:
 	int countdown;
 	StartingLever* startLever;
-public:
 	StartPad(TextureManager* t);
 	~StartPad();
 	void Render(SDL_Renderer* renderer, int screenScaling);
 	void UpdateTexture(string binaryData);
-	Hitbox* GetLeverBox(); // get the hitbox for the area a player can be in to activate the start lever
 };
