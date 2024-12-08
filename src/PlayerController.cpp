@@ -298,33 +298,36 @@ void PlayerController::Stun()
 }
 #pragma endregion PlayerActions
 void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY) {
-    //convert the mouse coordinates back into world coordinates here because the offset is passed in
-    //TODO regorganise this as having it here is strange
-    int mouseX;
-    int mouseY;
-    SDL_GetMouseState(&mouseX, &mouseY);
-    inputs->mousePos = Vector2(mouseX / machine->settings->screenScaling() + camOffX, mouseY / machine->settings->screenScaling() + camOffY);
-    SDL_Rect* playerRect = new SDL_Rect{ ((int)xPos - camOffX) * machine->settings->screenScaling(),
-        ((int)yPos - camOffY) * machine->settings->screenScaling(),
-        16 * machine->settings->screenScaling(),
-        16 * machine->settings->screenScaling()};
-    if (attackState == 1) {
-        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
-    }
-    else {
+    if (IsAlive())
+    {
+        //convert the mouse coordinates back into world coordinates here because the offset is passed in
+        //TODO regorganise this as having it here is strange
+        int mouseX;
+        int mouseY;
+        SDL_GetMouseState(&mouseX, &mouseY);
+        inputs->mousePos = Vector2(mouseX / machine->settings->screenScaling() + camOffX, mouseY / machine->settings->screenScaling() + camOffY);
+        SDL_Rect* playerRect = new SDL_Rect{ ((int)xPos - camOffX) * machine->settings->screenScaling(),
+            ((int)yPos - camOffY) * machine->settings->screenScaling(),
+            16 * machine->settings->screenScaling(),
+            16 * machine->settings->screenScaling() };
+        if (attackState == 1) {
+            SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+        }
+        else {
+            SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        }
+        SDL_RenderDrawRect(renderer, playerRect);
+        SDL_Rect* DebugAttackBoxRect = new SDL_Rect{ (attackBox->x - camOffX) * machine->settings->screenScaling(),
+            (attackBox->y - camOffY) * machine->settings->screenScaling(),
+            (attackBox->w) * machine->settings->screenScaling(),
+            (attackBox->h) * machine->settings->screenScaling() };
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        SDL_RenderDrawRect(renderer, DebugAttackBoxRect);
+        if (currentAnimation != movementState) {
+            Animatable::PlayAnimation(movementState);
+        }
+        Animatable::UpdateAnimation();
+        Animatable::Render(renderer, xPos - camOffX, yPos - camOffY, 16, 16, settings);
     }
-    SDL_RenderDrawRect(renderer, playerRect);
-    SDL_Rect* DebugAttackBoxRect = new SDL_Rect{ (attackBox->x - camOffX) * machine->settings->screenScaling(),
-        (attackBox->y - camOffY) * machine->settings->screenScaling(),
-        (attackBox->w) * machine->settings->screenScaling(),
-        (attackBox->h) * machine->settings->screenScaling()};
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderDrawRect(renderer, DebugAttackBoxRect);
-    if (currentAnimation != movementState) {
-        Animatable::PlayAnimation(movementState);
-    }
-    Animatable::UpdateAnimation();
-    Animatable::Render(renderer, xPos - camOffX, yPos - camOffY, 16, 16, settings);
 }
 #pragma endregion PlayerController

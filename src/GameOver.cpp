@@ -1,5 +1,5 @@
 #include "GameOver.h"
-#include "StartRoom.h"
+#include "MainMenu.h"
 GameOver::GameOver(GameStateMachine* machine) : GameOver(machine, new GameReport()) {
 }
 GameOver::GameOver(GameStateMachine* pMachine, GameReport* report) : GameState(pMachine) {
@@ -138,5 +138,5 @@ void GameOver::OnReceive(char* inData, int dataLength)
 void GameOver::ExitButtonPressed()
 {
 	machine->WipeSettings(); // TODO allow players to play again without having to reconnect
-	machine->SwitchState(new StartRoom(machine));
+	machine->SwitchState(new MainMenu(machine));
 }

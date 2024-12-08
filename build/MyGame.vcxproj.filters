@@ -49,9 +49,6 @@
     <ClCompile Include="..\src\Discovery.cpp">
       <Filter>GameStates\Menus</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GameOver.cpp">
-      <Filter>GameStates\Menus</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\MainMenu.cpp">
       <Filter>GameStates\Menus</Filter>
     </ClCompile>
@@ -72,6 +69,9 @@
     </ClCompile>
     <ClCompile Include="..\src\ReportVisual.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GameOver.cpp">
+      <Filter>GameStates\Other</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -123,9 +123,6 @@
     <ClInclude Include="..\src\Discovery.h">
       <Filter>GameStates\Menus</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\GameOver.h">
-      <Filter>GameStates\Menus</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\MainMenu.h">
       <Filter>GameStates\Menus</Filter>
     </ClInclude>
@@ -146,6 +143,9 @@
     </ClInclude>
     <ClInclude Include="..\src\ReportVisual.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GameOver.h">
+      <Filter>GameStates\Other</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
