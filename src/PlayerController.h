@@ -79,6 +79,7 @@ public:
     int GetYForServer();
     int GetWidth();
     int GetHeight();
+    bool IsAlive();
 
     PlayerController(GameStateMachine* machine, CollisionManager* pCollisionManager);
     void HandleInput(SDL_Event& event, MyGame* game);

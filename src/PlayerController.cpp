@@ -90,6 +90,9 @@ Hitbox PlayerController::GetPlayerBox()
 {
     return Hitbox{(int)xPos, (int)yPos, (int)height, (int)width};
 }
+bool PlayerController::IsAlive() {
+    return playerHealth > 0;
+}
 void PlayerController::ApplyForce(double xForce, double yForce)
 {
     xVelo += xForce;

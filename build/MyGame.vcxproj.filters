@@ -25,18 +25,6 @@
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Main.cpp">
       <Filter>GameFiles</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GameState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\MyGame.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Discovery.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\MainMenu.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\GlobalSettings.cpp">
       <Filter>Data</Filter>
     </ClCompile>
@@ -49,23 +37,38 @@
     <ClCompile Include="..\src\UIRendering.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ServerCreate.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\SettingsMenu.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Textbox.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="..\src\UIElement.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\StartRoom.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\StartPad.cpp">
       <Filter>GameFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Discovery.cpp">
+      <Filter>GameStates\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GameOver.cpp">
+      <Filter>GameStates\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MainMenu.cpp">
+      <Filter>GameStates\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ServerCreate.cpp">
+      <Filter>GameStates\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\SettingsMenu.cpp">
+      <Filter>GameStates\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GameState.cpp">
+      <Filter>GameStates\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\MyGame.cpp">
+      <Filter>GameStates\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\StartRoom.cpp">
+      <Filter>GameStates\Other</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,18 +96,6 @@
     <ClInclude Include="..\src\Vector2.h">
       <Filter>Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\GameState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MyGame.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\Discovery.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\MainMenu.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\GlobalSettings.h">
       <Filter>Data</Filter>
     </ClInclude>
@@ -117,23 +108,38 @@
     <ClInclude Include="..\src\UIRendering.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\ServerCreate.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\SettingsMenu.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Textbox.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="..\src\UIElement.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\StartRoom.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\StartPad.h">
       <Filter>GameFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Discovery.h">
+      <Filter>GameStates\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GameOver.h">
+      <Filter>GameStates\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\MainMenu.h">
+      <Filter>GameStates\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ServerCreate.h">
+      <Filter>GameStates\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SettingsMenu.h">
+      <Filter>GameStates\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\GameState.h">
+      <Filter>GameStates\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MyGame.h">
+      <Filter>GameStates\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\StartRoom.h">
+      <Filter>GameStates\Other</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +160,12 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{0cb0da8d-b8b7-48c6-bec1-cbdc1842751a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStates\Menus">
+      <UniqueIdentifier>{7bd97543-d442-4425-bb0d-c66cf81e0b82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStates\Other">
+      <UniqueIdentifier>{e5863f69-b1e3-42bf-a51d-6d1abcceead8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
