@@ -39,4 +39,5 @@ public:
 	bool running;
 	void SwitchState(GameState* newState);
 	void Run();
+	void WipeSettings();
 };

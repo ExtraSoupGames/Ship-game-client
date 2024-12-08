@@ -102,4 +102,13 @@ void GameStateMachine::Run() {
     }
 }
 
+void GameStateMachine::WipeSettings()
+{
+    SDL_Renderer* keepRenderer = settings->renderer;
+    int keepScreenWidth = settings->screenWidth;
+    int keepScreenHeight = settings->screenHeight;
+    delete settings;
+    settings = new GlobalSettingsProfile(keepRenderer, keepScreenWidth, keepScreenHeight);
+}
+
 

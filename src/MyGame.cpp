@@ -204,6 +204,13 @@ void MyGame::OnReceive(char* data, int messagelength) {
     if (messageType == "1010") { // important message confirmation from server code
         machine->settings->server->ReceiveImportantMessageConfirmation(message);
     }
+    if (messageType == "1001") { // game over code
+        //TODO add this code sending to server on all players dead
+        // TODO add player alive boolean transmission to player data
+        //TODO process incoming game report data
+        GameReport* report = new GameReport(); // add processing here
+        machine->SwitchState(new GameOver(machine, report)); // add another consturctor to allow a report to be passed in directly
+    }
 }
 #pragma endregion incomingData
 
@@ -244,9 +251,6 @@ void MyGame::Update(double deltaTime) {
 #pragma region playerProcessing
     playerController->UpdateMove(deltaTime, machine->settings->screenScaling());
     playerController->UpdateEnemyAttacks(this);
-    if (!playerController->IsAlive()) {
-        machine->SwitchState(new GameOver(machine));
-    }
     double delay = 100;  //snapshot buffer should be 3-4x base rate of packets - this way we can lose 2 packets and not experience jittering
     double timern = clientServerTimeDiff + SDL_GetTicks() - delay;
     //cout << "ClientServerDiff: " << clientServerTimeDiff << endl;

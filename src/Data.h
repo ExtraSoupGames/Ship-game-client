@@ -84,4 +84,6 @@ struct DataStream {
     double timestamp;
     bool markedForDeletion;
 };
-
+struct GameReport {
+    int timeSurvived;
+};

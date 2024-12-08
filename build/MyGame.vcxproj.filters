@@ -70,6 +70,9 @@
     <ClCompile Include="..\src\StartRoom.cpp">
       <Filter>GameStates\Other</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ReportVisual.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Interpolator.h">
@@ -140,6 +143,9 @@
     </ClInclude>
     <ClInclude Include="..\src\StartRoom.h">
       <Filter>GameStates\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ReportVisual.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

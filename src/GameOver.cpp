@@ -1,8 +1,12 @@
 #include "GameOver.h"
 #include "StartRoom.h"
-GameOver::GameOver(GameStateMachine* machine) : GameState(machine) {
+GameOver::GameOver(GameStateMachine* machine) : GameOver(machine, new GameReport()) {
+}
+GameOver::GameOver(GameStateMachine* machine, GameReport* report) : GameState(machine) {
 	UIElements.push_back(new Button("Exit", 25, 10, [this] {this->ExitButtonPressed(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-	//TODO add method to show game report
+	//TODO add UI element to show game report
+	UIElements.push_back(new ReportVisual(report, 50, 50, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+
 }
 GameOver::~GameOver() {
 
@@ -38,7 +42,6 @@ void GameOver::OnReceive(char* inData, int dataLength)
 
 void GameOver::ExitButtonPressed()
 {
-	//TODO add wipe server info function
-	//machine->WipeServerInfo(); // TODO allow players to play again without having to reconnect
+	machine->WipeSettings(); // TODO allow players to play again without having to reconnect
 	machine->SwitchState(new StartRoom(machine));
 }
