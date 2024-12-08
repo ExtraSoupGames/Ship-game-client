@@ -118,7 +118,8 @@ void StartRoom::Update(double deltaTime)
         binaryText << "0100" <<
             machine->settings->server->IntCompress(machine->settings->clientID) <<
             machine->settings->server->PositionCompress(player->GetXForServer(), player->GetYForServer()) <<
-            machine->settings->server->PlayerStateCompress(player->GetState());
+            machine->settings->server->PlayerStateCompress(player->GetState()) <<
+            machine->settings->server->BoolToChar(player->IsAlive());
         // Send player data
         machine->settings->server->SendMessage(binaryText.str());
     }

@@ -242,7 +242,8 @@ void MyGame::Update(double deltaTime) {
         binaryText << "0100" << 
             machine->settings->server->IntCompress(machine->settings->clientID) <<
             machine->settings->server->PositionCompress(playerController->GetXForServer(), playerController->GetYForServer()) <<
-            machine->settings->server->PlayerStateCompress(playerController->GetState());
+            machine->settings->server->PlayerStateCompress(playerController->GetState()) <<
+            machine->settings->server->BoolToChar(playerController->IsAlive());
         // Send player data
         machine->settings->server->SendMessage(binaryText.str());
     }

@@ -32,7 +32,7 @@ int InputMapping::GetDirectionState(Vector2 playerPos) {
 PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager* pCollisionManager) : Animatable(*new vector<string>{ "%walk", "%run", "%dash" }, pMachine->settings->textureManager) {
     //player's values
     attackCooldown = 500;
-    playerHealth = 5; // TODO change this back to 100
+    playerHealth = 100;
     //dash values
     dashCooldown = 1000; // time after start of dash when another dash can be initiated, must be greather than dashduration
     dashDuration = 200; // time spent physically dashing

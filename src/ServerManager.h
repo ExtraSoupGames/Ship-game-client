@@ -56,6 +56,10 @@ public:
 	static string DecompressHost(string binaryIn);
 	//undefined length
 	static string DecompressString(string binaryIn);
+	//1 bit bool to char
+	inline static char BoolToChar(bool inBool) {
+		return inBool ? '1' : '0';
+	}
 #pragma endregion compression
 };
 //messages to be sent that need confirmation from the server to make sure they are sent
