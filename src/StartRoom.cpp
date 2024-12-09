@@ -35,8 +35,8 @@ void StartRoom::HandleStartPadData(string message) {
     startPad->UpdateTexture(message);
 }
 void StartRoom::HandlePlayerData(string message) {
-    if (!((message.size() - 64) % 55) == 0 && message.size() > 1) { // size shoule be a multiple of 32 for the ID + 16 for the position + 7 for the state per player + 64 for timestamp
-        int padding = (message.size() - 64) % 55;
+    if (!((message.size() - 64) % 56) == 0 && message.size() > 1) { // size shoule be a multiple of 32 for the ID + 16 for the position + 7 for the state per player + 64 for timestamp
+        int padding = (message.size() - 64) % 56;
         message = message.substr(0, message.size() - padding); // remove the padding
     }
     double timestamp = machine->settings->server->TimestampDecompress(message.substr(message.size() - 64, 64)); // the timestamp is the final piece of data
@@ -47,7 +47,7 @@ void StartRoom::HandlePlayerData(string message) {
         clientServerTimeDiff = serverStartTime - SDL_GetTicks();
     }
     string playerData = message.substr(0, (message.size() - 64));
-    for (int i = 0; i < (playerData.size() - 54); i += 55) { //iterate through each player data (each player has 3 args: ID, X, Y)
+    for (int i = 0; i < (playerData.size() - 55); i += 56) { //iterate through each player data (each player has 3 args: ID, X, Y)
         int ID = machine->settings->server->IntDecompress(playerData.substr(i, 32));
         if (ID == machine->settings->clientID) {
             continue; // this player's movement is handled by its own playercontroller
@@ -56,6 +56,7 @@ void StartRoom::HandlePlayerData(string message) {
         int X = *position;
         int Y = *(position + 1);
         PlayerState state = machine->settings->server->PlayerStateDecompress(playerData.substr(i + 48, 7));
+        bool isAlive = (playerData.at(i + 55) == '1');
         if (ID != machine->settings->clientID) {
             //ignore the incoming data about this client as the client has authority on it's own player's movement
 
@@ -70,6 +71,7 @@ void StartRoom::HandlePlayerData(string message) {
             else {
                 OtherPlayer* player = *it;
                 player->AddToBuffer(new DataStream({ new PlayerData(X, Y, state), timestamp }));
+                player->isAlive = isAlive;
             }
         }
     }

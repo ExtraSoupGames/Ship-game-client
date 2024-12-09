@@ -145,16 +145,18 @@ EnemyAttackData Clingabing::GetAttackData()
 #pragma endregion Clingabing
 #pragma region OtherPlayer
 void OtherPlayer::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY) {
-    SDL_Rect* playerRect = new SDL_Rect{ (x - camOffX) * settings->screenScaling(), (y- camOffY) * settings->screenScaling(), 20, 20 };
-    if (state.attackState == 1) {
-        SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+    if (isAlive) {
+        SDL_Rect* playerRect = new SDL_Rect{ (x - camOffX) * settings->screenScaling(), (y - camOffY) * settings->screenScaling(), 20, 20 };
+        if (state.attackState == 1) {
+            SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+        }
+        else {
+            SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+        }
+        SDL_RenderDrawRect(renderer, playerRect);
+        Animatable::UpdateAnimation();
+        Animatable::Render(renderer, x - camOffX, y - camOffY, 16, 16, settings);
     }
-    else {
-        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    }
-    SDL_RenderDrawRect(renderer, playerRect);
-    Animatable::UpdateAnimation();
-    Animatable::Render(renderer, x - camOffX, y - camOffY, 16, 16, settings);
 }
 void OtherPlayer::OnInterpolate(DataPoint* data){
     PlayerData* playerData = (PlayerData*)(data);
@@ -165,5 +167,6 @@ void OtherPlayer::OnInterpolate(DataPoint* data){
 }
 OtherPlayer::OtherPlayer(int ID, TextureManager* t) : Interpolator(ID), Animatable(*new vector<string>{"%walk", "%run", "%dash"}, t) {
     state = *new PlayerState(0 ,0, 0); // default state is direction 0, standing still = 0, and not attacking = 0
+    isAlive = true;
 }
 #pragma endregion OtherPlayer

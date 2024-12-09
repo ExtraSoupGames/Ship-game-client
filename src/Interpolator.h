@@ -91,6 +91,7 @@ protected:
 	PlayerState state;
 	void OnInterpolate(DataPoint* data) override;
 public:
+	bool isAlive;
 	OtherPlayer(int ID, TextureManager* t);
 	void Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY);
 };
