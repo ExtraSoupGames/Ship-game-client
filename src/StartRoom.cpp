@@ -47,6 +47,10 @@ void StartRoom::HandlePlayerData(string message) {
         clientServerTimeDiff = serverStartTime - SDL_GetTicks();
     }
     string playerData = message.substr(0, (message.size() - 64));
+    if (playerData.size() == 0) {
+        //this is for if the server sends empty data, trying to iterate through this causes integer overflows and breaks everything
+        return;
+    }
     for (int i = 0; i < (playerData.size() - 55); i += 56) { //iterate through each player data (each player has 3 args: ID, X, Y)
         int ID = machine->settings->server->IntDecompress(playerData.substr(i, 32));
         if (ID == machine->settings->clientID) {
@@ -63,6 +67,8 @@ void StartRoom::HandlePlayerData(string message) {
             auto it = std::find_if(players->begin(), players->end(), [&ID](OtherPlayer* e) {return e->HasID(ID); });
             if (it == players->end()) {
                 //if this is a new other player
+                cout << "New Otherplayer constructed with ID: " << ID << endl;
+                cout << "Our ID: " << machine->settings->clientID << endl;
                 OtherPlayer* newPlayer = new OtherPlayer(ID, machine->settings->textureManager);
                 newPlayer->PlayAnimation(0);
                 newPlayer->AddToBuffer(new DataStream({ new PlayerData(X, Y, state), timestamp }));

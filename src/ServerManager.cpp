@@ -45,25 +45,25 @@ void ServerManager::SendMessage(string messageBinary) {
         std::cerr << "SDLNet_ResolveHost error: " << SDLNet_GetError() << std::endl;
         return;
     }
-    //pad the message to a byte (only first 7 bits used of each byte)
-    while ((messageBinary.size() % 7) != 0) {
+    //pad the message to a byte
+    while ((messageBinary.size() % 8) != 0) {
         messageBinary.append("0");
     }
     //compress the bit data into a string for sending
+    vector<bitset<8>> newData;
     string compressedData;
-    //iterate through each 7 bits of the message
-    for (int i = 0; i < messageBinary.size() / 7; i++) {
+    //iterate through each 8 bits of the message
+    for (int i = 0; i < messageBinary.size(); i+=8) {
         //extract the relevant data
-        string byteData = messageBinary.substr(i * 7, 7);
-        // each 7 digits of data is sent as a byte with a 1 at the end, this way no bytes are empty as this causes problems
-        byteData.append("1");
-        // convert this byte to an integer, using the base 2, this will be a number between 0 and 255, then convert this to a char, and add it to the string
-        compressedData.push_back((static_cast<char>(stoi(byteData, nullptr, 2))));
+        string byteData = messageBinary.substr(i, 8);
+        // convert this into a bitset of 8 bits and add to data vector
+        newData.push_back(bitset<8>(stoi(byteData, nullptr, 2)));
     }
     //calculate the size of the compressed data
-    int bytes = compressedData.size();
+    __int32 bytesWithHeader = newData.size() + 4;
+    bitset<32> bytesHeader(bytesWithHeader);
     // Prepare the packet to send, based on the size of the data
-    UDPpacket* packet = SDLNet_AllocPacket(bytes);
+    UDPpacket* packet = SDLNet_AllocPacket(bytesWithHeader);
     //handle errors from the packet preperation
     if (!packet) {
         std::cerr << "SDLNet_AllocPacket: " << SDLNet_GetError() << std::endl;
@@ -71,14 +71,16 @@ void ServerManager::SendMessage(string messageBinary) {
         SDLNet_Quit();
         SDL_Quit();
     }
-
-    //copy the compressed string data into the packet
-    strcpy((char*)packet->data, compressedData.c_str());
+    //copy the header to the start of the packet data
+    memcpy(packet->data, &bytesHeader, 4);
+    //iterate through the data, copying each byte in one at a time
+    for (int i = 0; i < newData.size(); i++) {
+        memcpy(packet->data + 4 + i, &newData.at(i), 1);
+    }
     //set the length of the packet
-    packet->len = bytes + 1;
+    packet->len = bytesWithHeader + 1;
     //set the address of the packet to the IP address we found earlier
     packet->address = ip;
-
     // Send the packet and handle any errors
     if (SDLNet_UDP_Send(socket, -1, packet) == 0) {
         std::cerr << "SDLNet_UDP_Send: " << SDLNet_GetError() << std::endl;
@@ -121,13 +123,13 @@ void ServerManager::SendImportantMessageConfirmation(string messageIn, int clien
     SendMessage(returnHeader.append(messageID.append(clntID)));
 }
 string ServerManager::CharToBinary(char* inData, int dataLength) {
-    string data = inData;
     stringstream ss;
-    for (char c : data) {
-        bitset<8> byte = c;
-        ss << byte.to_string().erase(7); // removes the last bit as it is always 1
+    for (int i = 0; i < dataLength;i++) {
+        int nextInt = (int)*(inData + i);
+        bitset<8> inByte(nextInt);
+        ss << inByte;
     }
-    return ss.str().substr(0, dataLength * 7);
+    return ss.str().substr(0, dataLength * 8);
 }
 string ServerManager::PositionCompress(int positionX, int positionY) {
     positionX = positionX / 4;

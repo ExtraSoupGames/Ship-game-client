@@ -137,12 +137,12 @@ void PlayerController::HandleInput(SDL_Event& event, MyGame* game){
         break;
 #pragma endregion directionalKeys
     case SDLK_LSHIFT:
-        if (event.type == SDL_KEYDOWN) {
+        if (event.type == SDL_KEYDOWN && IsAlive()) {
             Dash();
         }
         break;
     case SDLK_SPACE:
-        if (event.type == SDL_KEYDOWN) {
+        if (event.type == SDL_KEYDOWN && IsAlive()) {
             Attack(game);
         }
         break;
@@ -299,7 +299,7 @@ void PlayerController::Stun()
 }
 #pragma endregion PlayerActions
 void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY) {
-    if (IsAlive())
+    if (IsAlive()) // TODO add a ghost sprite for rendering player when they are dead
     {
         //convert the mouse coordinates back into world coordinates here because the offset is passed in
         //TODO regorganise this as having it here is strange

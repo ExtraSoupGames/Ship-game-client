@@ -66,7 +66,8 @@ void StartingLever::Render(SDL_Renderer* renderer, int screenScaling)
 	SDL_Rect* dstRect = new SDL_Rect{ x * screenScaling, y * screenScaling, 16 * screenScaling, 16 * screenScaling };
 	SDL_RenderCopy(renderer, currentTexture, NULL, dstRect);
 	SDL_SetRenderDrawColor(renderer, 255, 255 ,255 ,255);
-	SDL_RenderDrawRect(renderer, new SDL_Rect{(x - 16) * screenScaling, (y -16) * screenScaling, 48 * screenScaling, 48 * screenScaling});
+	SDL_Rect rect = { (x - 16) * screenScaling, (y - 16) * screenScaling, 48 * screenScaling, 48 * screenScaling };
+	SDL_RenderDrawRect(renderer, &rect);
 }
 
 void StartingLever::UpdateTexture(string binaryData)
