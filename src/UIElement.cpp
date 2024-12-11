@@ -19,7 +19,7 @@ ClickableUIElement::ClickableUIElement(int pX, int pY, int pScreenScaling, UIEle
 		height = 17 * pScreenScaling;
 		unHoverTexture = textureManager->GetTexture("UI\\ButtonSmall");
 		hoverTexture = textureManager->GetTexture("UI\\ButtonSmallHover");
-		clickTexture = textureManager->GetTexture("UI\\ButtonSmallCLick");
+		clickTexture = textureManager->GetTexture("UI\\ButtonSmallClick");
 		break;
 	case Normal:
 	default:
@@ -43,16 +43,6 @@ void ClickableUIElement::OnClickOff() {
 	}
 }
 
-void ClickableUIElement::OnHover()
-{
-	currentTexture = hoverTexture;
-}
-
-void ClickableUIElement::OnUnHover()
-{
-	currentTexture = unHoverTexture;
-}
-
 bool ClickableUIElement::IsInBounds(int clickX, int clickY)
 {
 	if (clickX < x || clickY < y) {
@@ -69,6 +59,7 @@ void ClickableUIElement::HandleClickInput(SDL_Event& e)
 	if (e.type == SDL_MOUSEBUTTONUP) {
 		if (IsInBounds(e.button.x, e.button.y)) {
 			OnClick();
+			currentTexture = hoverTexture;
 		}
 		else {
 			OnClickOff();
@@ -76,15 +67,15 @@ void ClickableUIElement::HandleClickInput(SDL_Event& e)
 	}
 	if (e.type == SDL_MOUSEBUTTONDOWN) {
 		if (IsInBounds(e.button.x, e.button.y)) {
-			//TODO Clicked animation
+			currentTexture = clickTexture;
 		}
 	}
 	else if (e.type == SDL_MOUSEMOTION) {
 		if (IsInBounds(e.button.x, e.button.y)) {
-			OnHover();
+			currentTexture = hoverTexture;
 		}
 		else {
-			OnUnHover();
+			currentTexture = unHoverTexture;
 		}
 	}
 }

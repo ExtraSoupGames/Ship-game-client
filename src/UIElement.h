@@ -32,7 +32,5 @@ public:
 	void HandleClickInput(SDL_Event& e);
 	void OnClick();
 	void OnClickOff();
-	void OnHover();
-	void OnUnHover();
 	void Render(SDL_Renderer* renderer) override;
 };
