@@ -5,9 +5,9 @@ PlayerPad::PlayerPad(TextureManager* t)
 	x = 50;
 	y = 50;
 	poweredState = 0;
-	unpoweredTexture = t->GetTexture("StartPadUnpowered");
-	partialPoweredTexture = t->GetTexture("StartPadPartialPowered");
-	poweredTexture = t->GetTexture("StartPadPowered");
+	unpoweredTexture = t->GetTexture("UI\\ButtonHover");
+	partialPoweredTexture = t->GetTexture("UI\\Button");
+	poweredTexture = t->GetTexture("UI\\ButtonClick");
 	currentTexture = unpoweredTexture;
 }
 PlayerPad::~PlayerPad() {

@@ -11,15 +11,11 @@ bool Hitbox::Collides(Hitbox& other) {
     return true;
 }
 
-MyGame::MyGame(GameStateMachine* pMachine) : GameState(pMachine){
-    serverStartTime = 0;
-    clientServerTimeDiff = 0;
-    broadcastTimer = 0;
+MyGame::MyGame(GameStateMachine* pMachine) : PlayerGameState(pMachine){
     collisions = new CollisionManager();
     playerController = new PlayerController(machine, collisions);
 
     enemies = new vector<Enemy*>();
-    players = new vector<OtherPlayer*>();
 
     cameraOffsetX = 0;
     cameraOffsetY = 0;
@@ -28,7 +24,6 @@ MyGame::~MyGame() {
     delete collisions;
     delete playerController;
     delete enemies;
-    delete players;
 }
 void MyGame::AdjustCamera() {
     int playerScreenX = playerController->GetXForServer() - cameraOffsetX;
@@ -123,48 +118,6 @@ void MyGame::HandleEnemyData(string message) {
         enemies->erase(remove_if(enemies->begin(), enemies->end(), [&enemyIDToRemove](Enemy* e) {return e->HasID(enemyIDToRemove); }));
     }
 }
-void MyGame::HandlePlayerData(string message) {
-    if (!((message.size() - 64) % 56) == 0 && message.size() > 1) { // size shoule be a multiple of 32 for the ID + 16 for the position + 7 for the state per player + 64 for timestamp
-        int padding = (message.size() - 64) % 56;
-        message = message.substr(0, message.size() - padding); // remove the padding
-    }
-    double timestamp = machine->settings->server->TimestampDecompress(message.substr(message.size() - 64, 64)); // the timestamp is the final piece of data
-
-    //the first packet that comes from the server will be the base start time offset for all other packets
-    if (serverStartTime < 100) {
-        serverStartTime = timestamp;
-        clientServerTimeDiff = serverStartTime - SDL_GetTicks();
-    }
-    string playerData = message.substr(0, (message.size() - 64));
-    for (int i = 0; i < (playerData.size() - 55); i += 56) { //iterate through each player data (each player has 3 args: ID, X, Y)
-        int ID = machine->settings->server->IntDecompress(playerData.substr(i, 32));
-        if (ID == machine->settings->clientID) {
-            continue; // this player's movement is handled by its own playercontroller
-        }
-        int* position = machine->settings->server->PositionDecompress(playerData.substr(i + 32, 16));
-        int X = *position;
-        int Y = *(position + 1);
-        PlayerState state = machine->settings->server->PlayerStateDecompress(playerData.substr(i+48, 7));
-        bool isAlive = (playerData.at(i+55) == '1');
-        if (ID != machine->settings->clientID) {
-            //ignore the incoming data about this client as the client has authority on it's own player's movement
-
-            auto it = std::find_if(players->begin(), players->end(), [&ID](OtherPlayer* e) {return e->HasID(ID); });
-            if (it == players->end()) {
-                //if this is a new other player
-                OtherPlayer* newPlayer = new OtherPlayer(ID, machine->settings->textureManager);
-                newPlayer->PlayAnimation(0);
-                newPlayer->AddToBuffer(new DataStream({ new PlayerData(X, Y, state), timestamp }));
-                players->push_back(newPlayer);
-            }
-            else {
-                OtherPlayer* player = *it;
-                player->AddToBuffer(new DataStream({ new PlayerData(X, Y, state), timestamp}));
-                player->isAlive = isAlive;
-            }
-        }
-    }
-}
 void MyGame::HandleBoundaryData(string message) {
     //cout << "Boundary data received" << endl;
     if (!collisions->IsEmpty()) {
@@ -197,7 +150,7 @@ void MyGame::OnReceive(char* data, int messagelength) {
         HandleEnemyData(message);
     }
     if (messageType == "0101") { // player data code
-        HandlePlayerData(message);
+        HandlePlayerData(message, players);
     }
     if (messageType == "0011") { // boundary data code
         HandleBoundaryData(message);
@@ -207,11 +160,9 @@ void MyGame::OnReceive(char* data, int messagelength) {
         machine->settings->server->ReceiveImportantMessageConfirmation(message);
     }
     if (messageType == "1001") { // game over code
-        //TODO add this code sending to server on all players dead
-        // TODO add player alive boolean transmission to player data
         //TODO process incoming game report data
         GameReport* report = new GameReport(); // add processing here
-        machine->SwitchState(new GameOver(machine, report)); // add another consturctor to allow a report to be passed in directly
+        machine->SwitchState(new GameOver(machine, report));
     }
 }
 #pragma endregion incomingData
@@ -235,21 +186,7 @@ void MyGame::Update(double deltaTime) {
         return;
     }
 #pragma endregion boundaryRequests
-#pragma region playerDataOut
-    broadcastTimer += deltaTime;
-    if (broadcastTimer > broadcastSpacing) {
-        broadcastTimer -= broadcastSpacing;
-        // Prepare player data
-        stringstream binaryText;
-        binaryText << "0100" << 
-            machine->settings->server->IntCompress(machine->settings->clientID) <<
-            machine->settings->server->PositionCompress(playerController->GetXForServer(), playerController->GetYForServer()) <<
-            machine->settings->server->PlayerStateCompress(playerController->GetState()) <<
-            machine->settings->server->BoolToChar(playerController->IsAlive());
-        // Send player data
-        machine->settings->server->SendMessage(binaryText.str());
-    }
-#pragma endregion playerDataOut
+    BroadcastPlayerData(deltaTime, playerController);
     AdjustCamera();
 #pragma region playerProcessing
     playerController->UpdateMove(deltaTime, machine->settings->screenScaling());

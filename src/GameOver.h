@@ -6,12 +6,11 @@
 #include "Interpolator.h"
 #include "PlayerPad.h"
 using namespace std;
-class GameOver : public GameState {
+class GameOver : public PlayerGameState {
 private:
 	PlayerPad* newGamePad;
 	double serverStartTime;
 	double clientServerTimeDiff;
-	vector<OtherPlayer*>* players;
 	PlayerController* player;
 	GameStateMachine* machine;
 
@@ -21,7 +20,6 @@ private:
 	double serverBroadcastDelay = 500;//adjust this to change how quickly important messages are resent - could affect performance if too low
 
 	void HandleNewGamePadData(string message);
-	void HandlePlayerData(string message);
 public:
 	GameOver(GameStateMachine* machine);
 	GameOver(GameStateMachine* machine, GameReport* report);

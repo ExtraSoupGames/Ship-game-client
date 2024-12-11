@@ -7,21 +7,14 @@
 #include "PlayerPad.h"
 #include <iostream>
 using namespace std;
-class StartRoom : public GameState {
+class StartRoom : public PlayerGameState {
 private:
-	double serverStartTime;
-	double clientServerTimeDiff;
-	vector<OtherPlayer*>* players;
 	PlayerController* player;
-	GameStateMachine* machine;
 	StartPad* startPad;
 
-	double broadcastTimer;
-	double broadcastSpacing = 20;
 	double serverBroadcastTimer = 0;
 	double serverBroadcastDelay = 500;//adjust this to change how quickly important messages are resent - could affect performance if too low
 
-	void HandlePlayerData(string message);
 	void HandleStartPadData(string message);
 public:
 	StartRoom(GameStateMachine* pMachine);

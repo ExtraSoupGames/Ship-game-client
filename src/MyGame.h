@@ -26,17 +26,12 @@ struct Hitbox {
     int h;
     bool Collides(Hitbox& other);
 };
-class MyGame : public GameState{
+class MyGame : public PlayerGameState{
 
     private:
         vector<Enemy*>* enemies;
-        vector<OtherPlayer*>* players;
-        double clientServerTimeDiff;
-        double serverStartTime;
         CollisionManager* collisions;
         PlayerController* playerController;
-        double broadcastTimer;
-        double broadcastSpacing = 20;
         double serverBroadcastTimer = 0;
         double serverBroadcastDelay = 500;//adjust this to change how quickly important messages are resent - could affect performance if too low
 
@@ -45,7 +40,6 @@ class MyGame : public GameState{
         void AdjustCamera();
 
         template <typename T> Enemy* ProcessEnemy(DataPoint* data, int ID, double timestamp);
-        void HandlePlayerData(string data);
         void HandleEnemyData(string data);
         void HandleBoundaryData(string data);
     public:

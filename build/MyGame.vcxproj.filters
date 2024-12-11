@@ -61,17 +61,17 @@
     <ClCompile Include="..\src\GameState.cpp">
       <Filter>GameStates\Other</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\MyGame.cpp">
-      <Filter>GameStates\Other</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\StartRoom.cpp">
-      <Filter>GameStates\Other</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\ReportVisual.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GameOver.cpp">
-      <Filter>GameStates\Other</Filter>
+      <Filter>GameStates\Playable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\StartRoom.cpp">
+      <Filter>GameStates\Playable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\MyGame.cpp">
+      <Filter>GameStates\Playable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,17 +135,17 @@
     <ClInclude Include="..\src\GameState.h">
       <Filter>GameStates\Other</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MyGame.h">
-      <Filter>GameStates\Other</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\StartRoom.h">
-      <Filter>GameStates\Other</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\ReportVisual.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="..\src\GameOver.h">
-      <Filter>GameStates\Other</Filter>
+      <Filter>GameStates\Playable</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\StartRoom.h">
+      <Filter>GameStates\Playable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MyGame.h">
+      <Filter>GameStates\Playable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +172,9 @@
     </Filter>
     <Filter Include="GameStates\Other">
       <UniqueIdentifier>{e5863f69-b1e3-42bf-a51d-6d1abcceead8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStates\Playable">
+      <UniqueIdentifier>{d2644ee4-f22d-4376-88e2-99f7b7f203b5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

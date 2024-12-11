@@ -5,7 +5,9 @@
 #include <SDL_net.h>
 #include <iostream>
 #include <vector>
+#include "Interpolator.h"
 using namespace std;
+class PlayerController;
 class GameStateMachine;
 class GameState {
 private:
@@ -42,4 +44,19 @@ public:
 	void Run();
 	void WipeSettings();
 	void Quit();
+};
+class PlayerGameState : public GameState {
+protected:
+
+	double broadcastTimer;
+	double broadcastSpacing = 20;
+	double serverStartTime;
+	double clientServerTimeDiff;
+	void HandlePlayerData(string message, vector<OtherPlayer*>* players);
+	void BroadcastPlayerData(double deltaTime, PlayerController* player);
+	vector<OtherPlayer*>* players;
+
+public:
+	PlayerGameState(GameStateMachine* pMachine);
+	~PlayerGameState();
 };
