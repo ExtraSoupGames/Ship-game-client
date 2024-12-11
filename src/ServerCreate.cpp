@@ -12,6 +12,7 @@ ServerCreate::~ServerCreate() {
 }
 void ServerCreate::Update(double deltaTime)
 {
+	GameState::UIUpdate();
 }
 
 void ServerCreate::Render(SDL_Renderer* renderer)

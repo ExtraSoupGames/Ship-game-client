@@ -70,14 +70,21 @@ void ClickableUIElement::HandleClickInput(SDL_Event& e)
 			currentTexture = clickTexture;
 		}
 	}
-	else if (e.type == SDL_MOUSEMOTION) {
-		if (IsInBounds(e.button.x, e.button.y)) {
+}
+void ClickableUIElement::Update() {
+	int* mouseX = new int();
+	int* mouseY = new int();
+	SDL_GetMouseState(mouseX, mouseY);
+	if (currentTexture != clickTexture) {
+		if (IsInBounds(*mouseX, *mouseY)) {
 			currentTexture = hoverTexture;
 		}
 		else {
 			currentTexture = unHoverTexture;
 		}
 	}
+	delete mouseX;
+	delete mouseY;
 }
 void ClickableUIElement::Render(SDL_Renderer* renderer) {
 	SDL_Rect* destRect;

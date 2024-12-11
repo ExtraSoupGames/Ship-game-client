@@ -18,3 +18,6 @@ void ReportVisual::Render(SDL_Renderer* renderer) {
 void ReportVisual::Input(SDL_Event& e)
 {
 }
+void ReportVisual::Update() {
+
+}

@@ -11,6 +11,11 @@ void GameState::RenderUI(SDL_Renderer* renderer)
         u->Render(renderer);
     }
 }
+void GameState::UIUpdate() {
+    for (UIElement* u : UIElements) {
+        u->Update();
+    }
+}
 GameState::~GameState() {
     UIElements.clear();
 }
@@ -110,5 +115,7 @@ void GameStateMachine::WipeSettings()
     delete settings;
     settings = new GlobalSettingsProfile(keepRenderer, keepScreenWidth, keepScreenHeight);
 }
-
+void GameStateMachine::Quit() {
+    running = false;
+}
 

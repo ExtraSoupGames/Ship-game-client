@@ -10,6 +10,7 @@ public:
 	void TransferToDiscoveryScreen();
 	void TransferToSettingsScreen();
 	void TransferToCreateScreen();
+	void ExitGame();
 	void Update(double deltaTime);
 	void Render(SDL_Renderer* renderer);
 	void OnEnter();

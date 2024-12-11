@@ -49,6 +49,7 @@ void DiscoveryScreen::Render(SDL_Renderer* renderer) {
     SDL_RenderPresent(renderer);
 }
 void DiscoveryScreen::Update(double deltaTime) {
+    GameState::UIUpdate();
     discoverTimer++; //normally would use SDL_GetTicks(), but accuracy is not important so this innaccurate way is fine
     if (discoverTimer > discoverDelay) {
         discoverTimer -= discoverDelay;

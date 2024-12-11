@@ -18,4 +18,5 @@ public:
 	~ReportVisual();
 	void Render(SDL_Renderer* renderer) override;
 	void Input(SDL_Event& e) override;
+	void Update() override;
 };

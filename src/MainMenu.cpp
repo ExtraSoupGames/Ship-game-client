@@ -8,12 +8,14 @@ MainMenu::MainMenu(GameStateMachine* pMachine) : GameState(pMachine)
 	UIElements.push_back(new Button("Search for a server", 25, 10, [this] {this->TransferToDiscoveryScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
 	UIElements.push_back(new Button("Settings", 25, 30, [this] {this->TransferToSettingsScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
 	UIElements.push_back(new Button("Create a server", 25, 50, [this] {this->TransferToCreateScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+	UIElements.push_back(new Button("Exit Game", 25, 70, [this] {this->ExitGame(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
 }
 MainMenu::~MainMenu() {
 
 }
 void MainMenu::Update(double deltaTime)
 {
+	GameState::UIUpdate();
 }
 void MainMenu::Render(SDL_Renderer* renderer)
 {
@@ -47,4 +49,7 @@ void MainMenu::TransferToSettingsScreen()
 void MainMenu::TransferToCreateScreen()
 {
 	machine->SwitchState(new ServerCreate(machine));
+}
+void MainMenu::ExitGame() {
+	machine->Quit();
 }

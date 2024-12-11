@@ -13,12 +13,13 @@ protected:
 	GameStateMachine* machine;
 	vector<UIElement*> UIElements;
 	void RenderUI(SDL_Renderer* renderer);
+	void UIInput(SDL_Event& e);
+	void UIUpdate();
 public:
 	GameState(GameStateMachine* pMachine) {
 		machine = pMachine;
 	}
 	~GameState();
-	void UIInput(SDL_Event& e);
 	virtual void Update(double deltaTime) = 0;
 	virtual void Render(SDL_Renderer* renderer) = 0;
 	virtual void OnEnter() = 0;
@@ -40,4 +41,5 @@ public:
 	void SwitchState(GameState* newState);
 	void Run();
 	void WipeSettings();
+	void Quit();
 };

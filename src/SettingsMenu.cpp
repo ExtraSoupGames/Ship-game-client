@@ -8,6 +8,7 @@ SettingsMenu::~SettingsMenu() {
 }
 void SettingsMenu::Update(double deltaTime)
 {
+	GameState::UIUpdate();
 }
 
 void SettingsMenu::Render(SDL_Renderer* renderer)
