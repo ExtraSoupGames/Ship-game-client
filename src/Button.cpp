@@ -1,7 +1,17 @@
 #include "Button.h"
 #include "GameState.h"
+UIElementSize GetButtonSizeValue(int characterCount) {
+	if (characterCount < 3) {
+		cout << "character count was:" << characterCount << endl;
+		return Tiny;
+	}
+	if (characterCount < 15) {
+		return Small;
+	}
+	return Normal;
+}
 Button::Button(string buttonText, int buttonX, int buttonY, function<void()> clickEvent, TextureManager* textureManager, int pScreenScaling, int fontSize = 10)
-	: ClickableUIElement(buttonX , buttonY , pScreenScaling, (displayText.size() < 15), textureManager, clickEvent) {
+	: ClickableUIElement(buttonX , buttonY , pScreenScaling, GetButtonSizeValue(buttonText.length()), textureManager, clickEvent) {
 	displayText = buttonText;
 	screenScaling = pScreenScaling;
 	font = UIRendering::LoadFontAtPixelHeight(fontSize, screenScaling);

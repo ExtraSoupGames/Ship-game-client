@@ -351,7 +351,17 @@ bool TextureManager::LoadTexture(string name) {
 }
 void TextureManager::InitializeAllTextures() {
     vector<string> texturesToLoad = *new vector<string>{
-    "Pirate", "PirateResult", "UI\\Button", "UI\\ButtonSmall"};
+    "Pirate",
+    "PirateResult",
+    "UI\\ButtonTiny",
+    "UI\\ButtonTinyHover",
+    "UI\\ButtonTinyClick",
+    "UI\\ButtonSmall",
+    "UI\\ButtonSmallHover",
+    "UI\\ButtonSmallClick",
+    "UI\\Button",
+    "UI\\ButtonHover",
+    "UI\\ButtonClick"};
     for (string s : texturesToLoad) {
         LoadTexture(s);
     }

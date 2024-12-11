@@ -18,7 +18,7 @@ char Textbox::GetCharFromEvent(SDL_Event& e)
 }
 
 Textbox::Textbox(string defaultText, int x, int y, int pScreenScaling, TextureManager* textureManager, int fontSize)
-	: ClickableUIElement(x , y, pScreenScaling, false, textureManager , [this] { this->Select(); }, [this] {this->Deselect(); })
+	: ClickableUIElement(x , y, pScreenScaling, Normal, textureManager , [this] { this->Select(); }, [this] {this->Deselect(); })
 {
 	selected = false;
 	currentText = defaultText;

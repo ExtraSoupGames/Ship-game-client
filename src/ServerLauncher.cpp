@@ -10,7 +10,7 @@ ServerLauncher::ServerLauncher(string nameForServer) {
 #endif
 }
 void ServerLauncher::RunServer() {
-	std::string command = "\"C:\\Program Files\\Java\\jdk-21\\bin\\java.exe\" -jar ..\\Assets\\ServerBuild\\Pong.jar " + serverName;
+	std::string command = "\"C:\\Program Files\\Java\\jdk-21\\bin\\java.exe\" -jar ..\\Assets\\ServerBuild\\ShipGameServer.jar " + serverName;
     // Setup the process information
     STARTUPINFO si = { sizeof(STARTUPINFO) };
     PROCESS_INFORMATION pi;

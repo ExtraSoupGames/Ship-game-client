@@ -1,23 +1,34 @@
 #include "UIElement.h"
 
-ClickableUIElement::ClickableUIElement(int pX, int pY, int pScreenScaling, bool isSmall , TextureManager* textureManager, function<void()> clickFunc, function<void()> clickOffFunc)
+ClickableUIElement::ClickableUIElement(int pX, int pY, int pScreenScaling, UIElementSize size , TextureManager* textureManager, function<void()> clickFunc, function<void()> clickOffFunc)
 {
 	clickFunction = clickFunc;
 	x = pX * pScreenScaling;
 	y = pY * pScreenScaling;
 	clickAwayFunction = clickOffFunc;
-
-	if (isSmall) {
+	switch (size) {
+	case Tiny:
+		width = 16 * pScreenScaling;
+		height = 17 * pScreenScaling;
+		unHoverTexture = textureManager->GetTexture("UI\\ButtonTiny");
+		hoverTexture = textureManager->GetTexture("UI\\ButtonTinyHover");
+		clickTexture = textureManager->GetTexture("UI\\ButtonTinyClick");
+		break;
+	case Small:
 		width = 80 * pScreenScaling;
-		height = 16 * pScreenScaling;
+		height = 17 * pScreenScaling;
 		unHoverTexture = textureManager->GetTexture("UI\\ButtonSmall");
 		hoverTexture = textureManager->GetTexture("UI\\ButtonSmallHover");
-	}
-	else {
+		clickTexture = textureManager->GetTexture("UI\\ButtonSmallCLick");
+		break;
+	case Normal:
+	default:
 		width = 160 * pScreenScaling;
-		height = 16 * pScreenScaling;
+		height = 17 * pScreenScaling;
 		unHoverTexture = textureManager->GetTexture("UI\\Button");
 		hoverTexture = textureManager->GetTexture("UI\\ButtonHover");
+		clickTexture = textureManager->GetTexture("UI\\ButtonClick");
+		break;
 	}
 	currentTexture = unHoverTexture;
 }

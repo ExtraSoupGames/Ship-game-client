@@ -3,6 +3,11 @@
 #include <functional>
 #include "TextureManager.h"
 using namespace std;
+enum UIElementSize {
+	Tiny,
+	Small,
+	Normal
+};
 class UIElement {
 public:
 	virtual void Render(SDL_Renderer* renderer) = 0;
@@ -19,9 +24,10 @@ protected:
 	function<void()> clickAwayFunction;
 	SDL_Texture* currentTexture;
 	SDL_Texture* unHoverTexture;
+	SDL_Texture* clickTexture;
 	SDL_Texture* hoverTexture;
 public:
-	ClickableUIElement(int x, int y, int pScreenScaling , bool isSmall , TextureManager* textureManager , function<void()> clickFunc, function<void()> clickOffFunc = 0);
+	ClickableUIElement(int x, int y, int pScreenScaling , UIElementSize size , TextureManager* textureManager , function<void()> clickFunc, function<void()> clickOffFunc = 0);
 	bool IsInBounds(int clickX, int clickY);
 	void HandleClickInput(SDL_Event& e);
 	void OnClick();
