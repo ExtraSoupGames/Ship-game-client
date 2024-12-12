@@ -54,7 +54,7 @@ void DiscoveryScreen::Update(double deltaTime) {
     if (discoverTimer > discoverDelay) {
         discoverTimer -= discoverDelay;
         //send requests
-        string discoverRequest = "0000";
+        string discoverRequest = "0000"; // client request info code
         machine->settings->server->SendMessage(discoverRequest);
     }
     if (selecting) {
@@ -65,7 +65,7 @@ void DiscoveryScreen::Update(double deltaTime) {
 }
 void DiscoveryScreen::OnReceive(char* inData, int dataLength) {
     string data = ServerManager::CharToBinary(inData, dataLength);
-    if (data.substr(0, 4) == "0001") {
+    if (data.substr(0, 4) == "0000") { // server information code   
         string host = ServerManager::DecompressHost(data.substr(4, 128));
         int port = ServerManager::IntDecompress(data.substr(132, 32));
         string name = ServerManager::DecompressString(data.substr(164, 512));

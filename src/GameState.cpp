@@ -170,7 +170,7 @@ void PlayerGameState::BroadcastPlayerData(double deltaTime, PlayerController* pl
         broadcastTimer -= broadcastSpacing;
         // Prepare player data
         stringstream binaryText;
-        binaryText << "0100" <<
+        binaryText << "0010" <<
             machine->settings->server->IntCompress(machine->settings->clientID) <<
             machine->settings->server->PositionCompress(player->GetXForServer(), player->GetYForServer()) <<
             machine->settings->server->PlayerStateCompress(player->GetState()) <<

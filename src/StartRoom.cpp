@@ -34,17 +34,14 @@ void StartRoom::OnReceive(char* inData, int dataLength)
     string message = machine->settings->server->CharToBinary(inData, dataLength);
     string messageType = message.substr(0, 4); // first 4 bits denote type of data in packet
     message = message.substr(4);
-    if (messageType == "0101") { // player data code
+    if (messageType == "0010") { // player data code
         HandlePlayerData(message, players);
     }
-    if (messageType == "1100") { //start room info code
-        machine->settings->server->SendImportantMessageConfirmation(message, machine->settings->clientID);
-    }
-    if (messageType == "1101") { // game start code
+    if (messageType == "0101") { // game start code
         machine->settings->server->SendImportantMessageConfirmation(message, machine->settings->clientID);
         machine->SwitchState(new MyGame(machine));
     }
-    if (messageType == "1110") { //starting pad info
+    if (messageType == "0110") { //starting pad info
         HandleStartPadData(message);
     }
 }
@@ -55,7 +52,7 @@ void StartRoom::Input(SDL_Event& event)
     if (event.type == SDL_KEYDOWN) {
         if (event.key.keysym.sym == SDLK_SPACE) {
             if (startPad->GetLeverBox()->Collides(Hitbox{ player->GetXForServer(), player->GetYForServer(), 16, 16 })) {
-                machine->settings->server->SendMessage("1100"); // lever pulled code
+                machine->settings->server->SendMessage("0100"); // lever pulled code
                 cout << "Lever pulled" << endl;
             }
         }

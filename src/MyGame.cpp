@@ -146,20 +146,20 @@ void MyGame::OnReceive(char* data, int messagelength) {
     string message = machine->settings->server->CharToBinary(data, messagelength);
     string messageType = message.substr(0, 4); // first 4 bits denote type of data in packet
     message = message.substr(4);
-    if (messageType == "1000") { // enemy positions code
+    if (messageType == "0011") { // enemy positions code
         HandleEnemyData(message);
     }
-    if (messageType == "0101") { // player data code
+    if (messageType == "0010") { // player data code
         HandlePlayerData(message, players);
     }
-    if (messageType == "0011") { // boundary data code
+    if (messageType == "0001") { // boundary data code
         HandleBoundaryData(message);
         cout << "Game Initiated!" << endl;
     }
-    if (messageType == "1010") { // important message confirmation from server code
+    if (messageType == "1110") { // important message confirmation from server code
         machine->settings->server->ReceiveImportantMessageConfirmation(message);
     }
-    if (messageType == "1001") { // game over code
+    if (messageType == "0100") { // game over code
         //TODO process incoming game report data
         GameReport* report = new GameReport(); // add processing here
         machine->SwitchState(new GameOver(machine, report));
@@ -183,7 +183,7 @@ void MyGame::Update(double deltaTime) {
 #pragma region boundaryRequests
     if (collisions->IsEmpty()) {
         stringstream binaryText;
-        binaryText << "0010"; // this is a boundary data request code
+        binaryText << "0001"; // this is a boundary data request code
         machine->settings->server->SendMessage(binaryText.str());
         cout << "Requesting boundary info" << endl;
         cout << "machine server settings: " << machine->settings->server->ToString() << endl;
@@ -251,7 +251,7 @@ vector<Enemy*> MyGame::GetCollidingEnemies(Hitbox area)
 void MyGame::SendEnemyDamageMessage(Enemy* enemyDamaged, int damage) {
     stringstream binaryText;
     int knockback = 0;
-    binaryText << "0110" << 
+    binaryText << "0011" << 
         machine->settings->server->IntCompress(enemyDamaged->GetID()) << 
         machine->settings->server->IntCompress(damage) << 
         machine->settings->server->IntCompress(knockback);
