@@ -14,6 +14,8 @@ bool Hitbox::Collides(Hitbox& other) {
 MyGame::MyGame(GameStateMachine* pMachine) : PlayerGameState(pMachine){
     collisions = new CollisionManager();
     playerController = new PlayerController(machine, collisions);
+    timerDisplay = new GameTimeDisplay(machine->settings->textureManager, 100, 100, machine->settings->screenScaling());
+    UIElements.push_back(timerDisplay);
 
     enemies = new vector<Enemy*>();
 
@@ -23,6 +25,7 @@ MyGame::MyGame(GameStateMachine* pMachine) : PlayerGameState(pMachine){
 MyGame::~MyGame() {
     delete collisions;
     delete playerController;
+    delete timerDisplay;
     delete enemies;
 }
 void MyGame::AdjustCamera() {
@@ -166,13 +169,14 @@ void MyGame::OnReceive(char* data, int messagelength) {
     }
     if (messageType == "0111") {
         int time = machine->settings->server->IntDecompress(message);
-        cout << "current game time: " << time << endl;
+        timerDisplay->SetTimeSurvived(time);
     }
 }
 #pragma endregion incomingData
 
 void MyGame::Input(SDL_Event& event) {
     playerController->HandleInput(event, this);
+    GameState::UIInput(event);
     if (event.type == SDL_KEYDOWN) {
         if (event.key.keysym.sym == SDLK_p) {
             machine->SwitchState(new MainMenu(machine));
@@ -192,6 +196,7 @@ void MyGame::Update(double deltaTime) {
 #pragma endregion boundaryRequests
     BroadcastPlayerData(deltaTime, playerController);
     AdjustCamera();
+    GameState::UIUpdate();
 #pragma region playerProcessing
     playerController->UpdateMove(deltaTime, machine->settings->screenScaling());
     playerController->UpdateEnemyAttacks(this);

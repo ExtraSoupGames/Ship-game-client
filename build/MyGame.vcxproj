@@ -319,6 +319,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\src\Discovery.cpp" />
     <ClCompile Include="..\src\GameOver.cpp" />
     <ClCompile Include="..\src\GameState.cpp" />
+    <ClCompile Include="..\src\GameTimeDisplay.cpp" />
     <ClCompile Include="..\src\GlobalSettings.cpp" />
     <ClCompile Include="..\src\Interpolator.cpp" />
     <ClCompile Include="..\src\MainMenu.cpp" />
@@ -344,6 +345,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\src\Discovery.h" />
     <ClInclude Include="..\src\GameOver.h" />
     <ClInclude Include="..\src\GameState.h" />
+    <ClInclude Include="..\src\GameTimeDisplay.h" />
     <ClInclude Include="..\src\GlobalSettings.h" />
     <ClInclude Include="..\src\Interpolator.h" />
     <ClInclude Include="..\src\MainMenu.h" />

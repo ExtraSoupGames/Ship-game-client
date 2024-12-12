@@ -34,13 +34,7 @@
     <ClCompile Include="..\src\Button.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\UIRendering.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Textbox.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\UIElement.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="..\src\PlayerPad.cpp">
@@ -72,6 +66,15 @@
     </ClCompile>
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\MyGame.cpp">
       <Filter>GameStates\Playable</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\GameTimeDisplay.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\UIElement.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\UIRendering.cpp">
+      <Filter>UI\Base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,13 +111,7 @@
     <ClInclude Include="..\src\Button.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\UIRendering.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\Textbox.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\UIElement.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="..\src\PlayerPad.h">
@@ -147,6 +144,15 @@
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MyGame.h">
       <Filter>GameStates\Playable</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\GameTimeDisplay.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\UIElement.h">
+      <Filter>UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\UIRendering.h">
+      <Filter>UI\Base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\jonny\Desktop\CI628\CMakeLists.txt" />
@@ -175,6 +181,9 @@
     </Filter>
     <Filter Include="GameStates\Playable">
       <UniqueIdentifier>{d2644ee4-f22d-4376-88e2-99f7b7f203b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Base">
+      <UniqueIdentifier>{c103ada5-c2f2-4106-a862-0309b6f838ca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

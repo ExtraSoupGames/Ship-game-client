@@ -17,6 +17,7 @@
 #include "PlayerController.h"
 #include "Data.h"
 #include "GameState.h"
+#include "GameTimeDisplay.h"
 using namespace std;
 struct Hitbox {
     //defined by a point and a width and height
@@ -32,6 +33,7 @@ class MyGame : public PlayerGameState{
         vector<Enemy*>* enemies;
         CollisionManager* collisions;
         PlayerController* playerController;
+        GameTimeDisplay* timerDisplay;
         double serverBroadcastTimer = 0;
         double serverBroadcastDelay = 500;//adjust this to change how quickly important messages are resent - could affect performance if too low
 
