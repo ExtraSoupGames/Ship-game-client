@@ -23,7 +23,7 @@ Button::~Button()
 }
 void Button::Render(SDL_Renderer* renderer) {
 	ClickableUIElement::Render(renderer);
-	UIRendering::RenderText(renderer, displayText, x + (3 * screenScaling), y + (4 * screenScaling), font);
+	UIRendering::RenderText(renderer, displayText, x + (4 * screenScaling), y + (4 * screenScaling), font);
 }
 void Button::Input(SDL_Event& e)
 {

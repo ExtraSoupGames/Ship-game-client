@@ -164,6 +164,10 @@ void MyGame::OnReceive(char* data, int messagelength) {
         GameReport* report = new GameReport(); // add processing here
         machine->SwitchState(new GameOver(machine, report));
     }
+    if (messageType == "0111") {
+        int time = machine->settings->server->IntDecompress(message);
+        cout << "current game time: " << time << endl;
+    }
 }
 #pragma endregion incomingData
 
