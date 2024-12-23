@@ -26,10 +26,20 @@ int InputMapping::GetDirectionState(Vector2 playerPos) {
     int returnState = static_cast<int>((angle + (M_PI / 8.0f)) / (M_PI / 4.0f)) % 8;
     return returnState;
 }
+bool InputMapping::IsMovingLeft() { // TODO account for moving exactly up and down, most likely change this to return an int value and switch on it
+    Vector2 directionVec = GetDirectionMoving().Normalise();
+    double angle = atan2(directionVec.x, directionVec.y);
+    //atan2 returns in range [-pi - pi] so convert to [0 - 2pi]
+    if (angle < 0) {
+        angle += M_PI * 2;
+    }
+    int returnState = static_cast<int>((angle + (M_PI / 8.0f)) / (M_PI / 4.0f)) % 8;
+    return returnState > 4;
+}
 #pragma endregion InputMapping
 #pragma region PlayerController
 
-PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager* pCollisionManager) : Animatable(*new vector<string>{ "%Cat", "%run", "%dash" }, pMachine->settings->textureManager) {
+PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager* pCollisionManager) : Animatable(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%dash"}, pMachine->settings->textureManager) {
     //player's values
     attackCooldown = 500;
     playerHealth = 100;
@@ -324,8 +334,26 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
             (attackBox->h) * machine->settings->screenScaling() };
         SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
         SDL_RenderDrawRect(renderer, DebugAttackBoxRect);
-        if (currentAnimation != movementState) {
-            Animatable::PlayAnimation(movementState);
+        switch (movementState) {
+        case 0:
+            //standing still
+            Animatable::PlayAnimation(0);
+            break;
+        case 1:
+            //left or right walk
+            if (inputs->IsMovingLeft()) {
+                //left
+                Animatable::PlayAnimation(1);
+            }
+            else {
+                //right
+                Animatable::PlayAnimation(2);
+            }
+            break;
+        case 2:
+            //dashing
+            Animatable::PlayAnimation(3);
+            break;
         }
         Animatable::UpdateAnimation();
         Animatable::Render(renderer, xPos - camOffX, yPos - camOffY, 16, 16, settings);

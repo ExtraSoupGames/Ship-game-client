@@ -17,6 +17,7 @@ struct InputMapping {
     Vector2 GetDirectionMoving();
     bool IsStill();
     int GetDirectionState(Vector2 playerState);
+    bool IsMovingLeft();
 };
 class PlayerController : public Animatable {
 private:
