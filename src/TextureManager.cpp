@@ -190,7 +190,8 @@ struct BMP {
                 uint8_t newBlue = colourMap->data[channels * ((uint32_t)green * bmp_info_header.width + (uint32_t)blue) + 0];
                 uint8_t newGreen = colourMap->data[channels * ((uint32_t)green * bmp_info_header.width + (uint32_t)blue) + 1];
                 uint8_t newRed = colourMap->data[channels * ((uint32_t)green * bmp_info_header.width + (uint32_t)blue) + 2];
-                set_pixel(x, y, newBlue, newGreen, newRed, 255);
+                uint8_t newAlpha = colourMap->data[channels * ((uint32_t)green * bmp_info_header.width + (uint32_t)blue) + 3];
+                set_pixel(x, y, newBlue, newGreen, newRed, newAlpha);
             }
         }
     }

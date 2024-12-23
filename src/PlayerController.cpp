@@ -29,7 +29,7 @@ int InputMapping::GetDirectionState(Vector2 playerPos) {
 #pragma endregion InputMapping
 #pragma region PlayerController
 
-PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager* pCollisionManager) : Animatable(*new vector<string>{ "%walk", "%run", "%dash" }, pMachine->settings->textureManager) {
+PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager* pCollisionManager) : Animatable(*new vector<string>{ "%Cat", "%run", "%dash" }, pMachine->settings->textureManager) {
     //player's values
     attackCooldown = 500;
     playerHealth = 100;
