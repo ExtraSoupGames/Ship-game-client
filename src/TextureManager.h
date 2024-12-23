@@ -11,6 +11,7 @@ class TextureManager
 private:
 	map<string, SDL_Texture*>* textures;
 	Frame* LoadFrame(string name, string suffix);
+	Frame* LoadFrame(string name, string suffix, string paletteName);
 	void LoadTextures();
 	bool LoadTexture(string name);
 	SDL_Renderer* renderer;
@@ -21,5 +22,6 @@ public:
 	SDL_Texture* GetTexture(string name);
 	SDL_Texture* GetErrorTexture();
 	vector<Frame> LoadAnimation(string name);
+	vector<Frame> LoadAnimation(string name, string paletteName);
 };
 

@@ -5,6 +5,12 @@ Animation::Animation(string name, TextureManager* t, double frameDuration, bool 
 	totalDuration = frameDuration * frames.size();
 	looping = loop;
 }
+Animation::Animation(string name, TextureManager* t, double frameDuration, bool loop, string paletteName)
+{
+	frames = t->LoadAnimation(name, paletteName);
+	totalDuration = frameDuration * frames.size();
+	looping = loop;
+}
 float Animation::frameDuration() {
 	return totalDuration / frames.size();
 }
@@ -19,6 +25,20 @@ Animatable::Animatable(vector<string> animationNames, TextureManager* t, int def
 	for (string animation : animationNames) {
 		bool animationIsLooping = animation.at(0) == '%';
 		animations->push_back(new Animation(animation, t, 100, animationIsLooping));
+	}
+}
+Animatable::Animatable(vector<string> animationNames, TextureManager* t, string paletteName, int defaultAnim)
+{
+	animations = new vector<Animation*>();
+	animating = true;
+	currentAnimation = 0;
+	defaultAnimation = defaultAnim;
+	currentFrame = 0;
+	lastAnimated = SDL_GetTicks();
+	texture = t->GetErrorTexture();
+	for (string animation : animationNames) {
+		bool animationIsLooping = animation.at(0) == '%';
+		animations->push_back(new Animation(animation, t, 100, animationIsLooping, paletteName));
 	}
 }
 Animatable::~Animatable() {

@@ -274,6 +274,23 @@ vector<Frame> TextureManager::LoadAnimation(string name) {
     }
     return frames;
 }
+vector<Frame> TextureManager::LoadAnimation(string name, string paletteName)
+{
+    int frame = 0;
+    vector<Frame> frames;
+    string suffix = "_0";
+    while (true) {
+        cout << "Added frame " << name << suffix << endl;
+        Frame* newFrame = LoadFrame(name, suffix, paletteName);
+        if (newFrame == nullptr) {
+            break;
+        }
+        frames.push_back(*newFrame);
+        frame++;
+        suffix = "_" + to_string(frame);
+    }
+    return frames;
+}
 void TextureManager::LoadTextures() {
 
 }
@@ -306,6 +323,41 @@ Frame* TextureManager::LoadFrame(string name, string suffix) {
         }
         else {
             cout << "Texture map found, but no related colour map found under the name " << name << ". Add your colour map to Assets/ColourMaps" << endl;
+            return nullptr;
+        }
+    }
+    else {
+        cout << "No relevant file exists under the name: " << name << ". Add the texture file to either Assets/Fulltextures or Assets/TextureMaps" << endl;
+        return nullptr;
+    }
+}
+Frame* TextureManager::LoadFrame(string name, string suffix, string paletteName)
+{
+    SDL_Texture* returnTexture;
+    if (FileExists("..\\Assets\\FullTextures\\" + name + suffix + ".bmp")) {
+        //if this is a pre coloured texture
+        cout << "Palette Name specified in animation constructor, but pre coloured animation frame found, something is wrong!" << endl;
+        return nullptr;
+    }
+    else if (FileExists("..\\Assets\\TextureMaps\\" + name + suffix + ".bmp")) {
+        if (FileExists("..\\Assets\\ColourMaps\\" + paletteName + "ColourMap.bmp")) {
+            //if the texture needs to be coloured in from a map
+            //animations have a seperate suffix, this is because an animation uses 1 colour map for the whole animation so the colour map is just
+            //named after the animation name
+            string textureMapFileName = "..\\Assets\\TextureMaps\\" + name + suffix + ".bmp";
+            string colourMapFileName = "..\\Assets\\ColourMaps\\" + paletteName + "ColourMap.bmp";
+            string outFileName = "..\\Assets\\CreatedTextures\\" + name + suffix + "Generated.bmp";
+            BMP textureMap(textureMapFileName.c_str());
+            BMP colourMap(colourMapFileName.c_str());
+            textureMap.ApplyColourMap(&colourMap);
+            textureMap.write(outFileName.c_str());
+            SDL_Surface* surface = SDL_LoadBMP(outFileName.c_str());
+            SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+            SDL_FreeSurface(surface);
+            return new Frame(texture);
+        }
+        else {
+            cout << "Texture map found, but no related colour map found under the name " << paletteName << ". Add your colour map to Assets/ColourMaps" << endl;
             return nullptr;
         }
     }
