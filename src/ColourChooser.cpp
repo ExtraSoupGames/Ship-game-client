@@ -38,10 +38,6 @@ void ColourChooser::ColourChosen(int colourID)
 
 void ColourChooser::IncomingData(string message)
 {
-	if (message.size() != 6) {
-		//cout << "invalid colour data received" << endl;
-		//TODO figure out why message size is never 6
-	}
 	for (int i = 0; i < 6; i++) {
 		if (message[i] == '1') {
 			availableColours->at(i) = true;
