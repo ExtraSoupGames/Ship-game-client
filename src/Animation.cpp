@@ -96,3 +96,12 @@ void Animatable::Render(SDL_Renderer* renderer, int xPos, int yPos, int width, i
 	const SDL_Rect *dst = new SDL_Rect{ xPos * screenScale, yPos * screenScale, width * screenScale, height * screenScale };
 	SDL_RenderCopy(renderer, texture, NULL, dst);
 }
+
+void Animatable::ReloadAllFrames(vector<string> animationNames, TextureManager* t, string paletteName, int defaultAnim)
+{
+	animations = new vector<Animation*>();
+	for (string animation : animationNames) {
+		bool animationIsLooping = animation.at(0) == '%';
+		animations->push_back(new Animation(animation, t, 100, animationIsLooping, paletteName));
+	}
+}

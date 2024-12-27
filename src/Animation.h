@@ -41,4 +41,5 @@ public:
 	void StopAnimating();
 	void UpdateAnimation();
 	void Render(SDL_Renderer* renderer, int xPos, int yPos, int width, int height, GlobalSettingsProfile* settings);
+	void ReloadAllFrames(vector<string> animationNames, TextureManager* t, string paletteName, int defaultAnim = 0);
 };

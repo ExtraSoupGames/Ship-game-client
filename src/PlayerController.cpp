@@ -39,7 +39,8 @@ bool InputMapping::IsMovingLeft() { // TODO account for moving exactly up and do
 #pragma endregion InputMapping
 #pragma region PlayerController
 
-PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager* pCollisionManager) : Animatable(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatDash"}, pMachine->settings->textureManager, "Cat") {
+PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager* pCollisionManager)
+    : Animatable(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatDash"}, pMachine->settings->textureManager, "Cats\\Cat000") {
     //player's values
     attackCooldown = 500;
     playerHealth = 100;
@@ -358,5 +359,9 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
         Animatable::UpdateAnimation();
         Animatable::Render(renderer, xPos - camOffX, yPos - camOffY, 16, 32, settings);
     }
+}
+void PlayerController::ReloadTexturesWithPalette(string palette)
+{
+    Animatable::ReloadAllFrames(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatDash" }, machine->settings->textureManager, "Cats\\Cat" + palette);
 }
 #pragma endregion PlayerController
