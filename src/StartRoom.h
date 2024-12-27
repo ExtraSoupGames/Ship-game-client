@@ -5,17 +5,21 @@
 #include "Interpolator.h"
 #include "PlayerController.h"
 #include "PlayerPad.h"
+#include "ColourChooser.h"
 #include <iostream>
 using namespace std;
 class StartRoom : public PlayerGameState {
 private:
 	PlayerController* player;
 	StartPad* startPad;
+	ColourChooser* colourChooser;
 
 	double serverBroadcastTimer = 0;
 	double serverBroadcastDelay = 500;//adjust this to change how quickly important messages are resent - could affect performance if too low
 
 	void HandleStartPadData(string message);
+	void HandleColourData(string message);
+	void HandleSelectionConfirmation(string message);
 public:
 	StartRoom(GameStateMachine* pMachine);
 	~StartRoom();

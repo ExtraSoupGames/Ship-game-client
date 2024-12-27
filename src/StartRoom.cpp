@@ -4,6 +4,14 @@ StartRoom::StartRoom(GameStateMachine* pMachine) : PlayerGameState(pMachine)
 {
     player = new PlayerController(pMachine, new CollisionManager());
     startPad = new StartPad(machine->settings->textureManager);
+    colourChooser = new ColourChooser(machine->settings->server, machine->settings->clientID);
+    UIElements.push_back(new Button("ChooseColour1", 50, 50, [this] {colourChooser->ColourChosen(1); }, machine->settings->textureManager, machine->settings->screenScaling(), 20));
+    UIElements.push_back(new Button("ChooseColour2", 50, 100, [this] {colourChooser->ColourChosen(2); }, machine->settings->textureManager, machine->settings->screenScaling(), 20));
+    UIElements.push_back(new Button("ChooseColour3", 50, 150, [this] {colourChooser->ColourChosen(3); }, machine->settings->textureManager, machine->settings->screenScaling(), 20));
+    UIElements.push_back(new Button("ChooseColour4", 200, 50, [this] {colourChooser->ColourChosen(4); }, machine->settings->textureManager, machine->settings->screenScaling(), 20));
+    UIElements.push_back(new Button("ChooseColour5", 200, 100, [this] {colourChooser->ColourChosen(5); }, machine->settings->textureManager, machine->settings->screenScaling(), 20));
+    UIElements.push_back(new Button("ChooseColour6", 200, 150, [this] {colourChooser->ColourChosen(6); }, machine->settings->textureManager, machine->settings->screenScaling(), 20));
+
 }
 
 StartRoom::~StartRoom()
@@ -11,6 +19,7 @@ StartRoom::~StartRoom()
     delete player;
     delete players;
     delete startPad;
+    delete colourChooser;
 }
 
 void StartRoom::Render(SDL_Renderer* renderer)
@@ -24,10 +33,21 @@ void StartRoom::Render(SDL_Renderer* renderer)
         p->Render(renderer, machine->settings, 0 ,0); // no camera movement on start room screen
     }
     player->Render(renderer, machine->settings, 0 ,0); // no camera movement on start room screen
+    GameState::RenderUI(renderer);
+
     SDL_RenderPresent(renderer);
 }
 void StartRoom::HandleStartPadData(string message) {
     startPad->UpdateTexture(message);
+}
+void StartRoom::HandleColourData(string message) {
+    colourChooser->IncomingData(message);
+}
+void StartRoom::HandleSelectionConfirmation(string message) {
+    cout << message.at(32) << endl;;
+    if (message.at(32) == '1') {
+        colourChooser->SelectedColour(message.substr(33,3));
+    }
 }
 void StartRoom::OnReceive(char* inData, int dataLength)
 {
@@ -44,10 +64,23 @@ void StartRoom::OnReceive(char* inData, int dataLength)
     if (messageType == "0110") { //starting pad info
         HandleStartPadData(message);
     }
+    if (messageType == "1000") { // confirmation of a colour selection
+        machine->settings->server->SendImportantMessageConfirmation(message, machine->settings->clientID);
+        if (machine->settings->server->IntDecompress(message.substr(36, 32)) == machine->settings->clientID) {
+            HandleSelectionConfirmation(message);
+        }
+    }
+    if (messageType == "1001") { // available colour info
+        HandleColourData(message);
+    }
+    if (messageType == "1110") { // important message confirmation
+        machine->settings->server->ReceiveImportantMessageConfirmation(message);
+    }
 }
 
 void StartRoom::Input(SDL_Event& event)
 {
+    GameState::UIInput(event);
     player->HandleInput(event, nullptr);
     if (event.type == SDL_KEYDOWN) {
         if (event.key.keysym.sym == SDLK_SPACE) {
@@ -61,6 +94,7 @@ void StartRoom::Input(SDL_Event& event)
 
 void StartRoom::Update(double deltaTime)
 {
+    GameState::UIUpdate();
     BroadcastPlayerData(deltaTime, player);
     player->UpdateMove(deltaTime, machine->settings->screenScaling());
 
@@ -68,6 +102,11 @@ void StartRoom::Update(double deltaTime)
     double timern = clientServerTimeDiff + SDL_GetTicks() - delay;
     for (OtherPlayer* p : *players) {
         p->Interpolate(timern);
+    }
+    serverBroadcastTimer += deltaTime;
+    if (serverBroadcastTimer > serverBroadcastDelay) {
+        serverBroadcastTimer -= serverBroadcastDelay;
+        machine->settings->server->SendAllImportantMessages();
     }
 }
 

@@ -112,7 +112,6 @@ void ServerManager::ReceiveImportantMessageConfirmation(string binaryIn) {
         }
         //find the correct message and remove it as we dont need to send it anymore
         importantMessages->erase(remove(importantMessages->begin(), importantMessages->end(), im));
-        cout << "successful hit fully processed" << endl;
         return;
     }
 }
