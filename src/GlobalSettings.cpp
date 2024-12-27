@@ -27,6 +27,7 @@ GlobalSettingsProfile::GlobalSettingsProfile(SDL_Renderer* pRenderer, int pScree
 	server = new ServerManager(socket, clientID);
 	screenWidth = pScreenWidth;
     screenHeight = pScreenHeight;
+    playerPalette = "111";
 }
 GlobalSettingsProfile::~GlobalSettingsProfile() {
     delete server;

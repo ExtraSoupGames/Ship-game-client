@@ -49,6 +49,7 @@ void StartRoom::HandleSelectionConfirmation(string message) {
         string colourCode = message.substr(33, 3);
         colourChooser->SelectedColour(colourCode);
         player->ReloadTexturesWithPalette(colourCode);
+        machine->settings->playerPalette = colourCode;
     }
 }
 void StartRoom::OnReceive(char* inData, int dataLength)

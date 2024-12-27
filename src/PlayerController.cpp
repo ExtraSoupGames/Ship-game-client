@@ -40,7 +40,7 @@ bool InputMapping::IsMovingLeft() { // TODO account for moving exactly up and do
 #pragma region PlayerController
 
 PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager* pCollisionManager)
-    : Animatable(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatDash"}, pMachine->settings->textureManager, "Cats\\Cat000") {
+    : Animatable(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatDash"}, pMachine->settings->textureManager, "Cats\\Cat" + pMachine->settings->playerPalette) {
     //player's values
     attackCooldown = 500;
     playerHealth = 100;
