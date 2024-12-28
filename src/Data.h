@@ -5,11 +5,13 @@ struct PlayerState {
     int direction;
     int movementState;
     int attackState;
-    PlayerState(int pDirection, int pMovementState, int pAttackState);
+    int animationState;
+    PlayerState(int pDirection, int pMovementState, int pAttackState, int animationState);
     PlayerState() {
         direction = 0;
         movementState = 0;
         attackState = 0;
+        animationState = 0;
     }
 };
 enum FlopperStates {

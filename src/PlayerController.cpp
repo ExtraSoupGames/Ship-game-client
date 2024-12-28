@@ -90,7 +90,7 @@ PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager*
 
 #pragma region Getters
 PlayerState PlayerController::GetState() {
-    return *new PlayerState(direction, movementState, attackState);
+    return *new PlayerState(direction, movementState, attackState, inputs->GetAnimationID());
 }
 int PlayerController::GetXForServer()
 {

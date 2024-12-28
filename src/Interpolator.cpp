@@ -162,33 +162,24 @@ void OtherPlayer::OnInterpolate(DataPoint* data){
     PlayerData* playerData = (PlayerData*)(data);
     if (state.movementState != playerData->state.movementState) {
         switch (state.movementState) {
-            //TODO make this readable (copy player controller)
         case 0:
             //stood still
             Animatable::PlayAnimation(0);
             break;
         case 2:
             //dashing
-            Animatable::PlayAnimation(3);
+            Animatable::PlayAnimation(4);
             break;
         case 1:
-            //TODO make this be the players movement not the direction they are facing (change from mouse dir to player dir)
             //walking
-            if (state.direction > 4) {
-                //left
-                Animatable::PlayAnimation(1);
-            }
-            else {
-                //right
-                Animatable::PlayAnimation(2);
-            }
+            Animatable::PlayAnimation(state.animationState);
             break;
         }
     }
     state = playerData->state;
 }
-OtherPlayer::OtherPlayer(int ID, TextureManager* t) : Interpolator(ID), Animatable(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatDash" }, t, "Cat") {
-    state = *new PlayerState(0 ,0, 0); // default state is direction 0, standing still = 0, and not attacking = 0
+OtherPlayer::OtherPlayer(int ID, TextureManager* t) : Interpolator(ID), Animatable(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash"}, t, "Cats\\Cat111") {
+    state = *new PlayerState(0 ,0, 0, 0); // default state is direction 0, standing still = 0, and not attacking = 0, and animation state of 0
     isAlive = true;
 }
 #pragma endregion OtherPlayer

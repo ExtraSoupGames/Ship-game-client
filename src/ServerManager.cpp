@@ -1,9 +1,10 @@
 #include "ServerManager.h"
 #include "PlayerController.h"
-PlayerState::PlayerState(int pDirection, int pMovementState, int pAttackState) {
+PlayerState::PlayerState(int pDirection, int pMovementState, int pAttackState, int pAnimationState) {
     direction = pDirection;
     movementState = pMovementState;
     attackState = pAttackState;
+    animationState = pAnimationState;
 }
 
 ServerManager::ServerManager(UDPsocket serverSocket, int pClientID) {
@@ -174,20 +175,22 @@ __int64 ServerManager::TimestampDecompress(string binaryIn) {
 }
 PlayerState ServerManager::PlayerStateDecompress(string binaryIn)
 {
-    if (binaryIn.size() != 7) {
-        cout << "PlayerState binary in must be exactly 7 bits" << endl;
+    if (binaryIn.size() != 9) {
+        cout << "PlayerState binary in must be exactly 9 bits" << endl;
     }
     int direction = IntDecompress(binaryIn.substr(0, 3));
-    int movementState = IntDecompress(binaryIn.substr(3, 5));
-    int attackState = IntDecompress(binaryIn.substr(5, 7));
-    return PlayerState(direction,  movementState, attackState);
+    int movementState = IntDecompress(binaryIn.substr(3, 2));
+    int attackState = IntDecompress(binaryIn.substr(5, 2));
+    int animationState = IntDecompress(binaryIn.substr(7,2));
+    return PlayerState(direction,  movementState, attackState, animationState);
 }
 string ServerManager::PlayerStateCompress(PlayerState state)
 {
     bitset<3> dirBits(state.direction);
     bitset<2> movBits(state.movementState);
     bitset<2> atkBits(state.attackState);
-    string out = dirBits.to_string().append(movBits.to_string().append(atkBits.to_string()));
+    bitset<2> animBits(state.animationState);
+    string out = dirBits.to_string().append(movBits.to_string().append(atkBits.to_string().append(animBits.to_string())));
     return out;
 }
 string ServerManager::DecompressHost(string binaryIn)

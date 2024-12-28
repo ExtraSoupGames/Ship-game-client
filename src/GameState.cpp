@@ -121,8 +121,8 @@ void GameStateMachine::Quit() {
     running = false;
 }
 void PlayerGameState::HandlePlayerData(string message, vector<OtherPlayer*>* players) {
-    if (!((message.size() - 64) % 56) == 0 && message.size() > 1) { // size shoule be a multiple of 32 for the ID + 16 for the position + 7 for the state per player + 64 for timestamp
-        int padding = (message.size() - 64) % 56;
+    if (!((message.size() - 64) % 58) == 0 && message.size() > 1) { // size shoule be a multiple of 32 for the ID + 16 for the position + 9 for the state per player + 64 for timestamp
+        int padding = (message.size() - 64) % 58;
         message = message.substr(0, message.size() - padding); // remove the padding
     }
     double timestamp = machine->settings->server->TimestampDecompress(message.substr(message.size() - 64, 64)); // the timestamp is the final piece of data
@@ -133,7 +133,7 @@ void PlayerGameState::HandlePlayerData(string message, vector<OtherPlayer*>* pla
         clientServerTimeDiff = serverStartTime - SDL_GetTicks();
     }
     string playerData = message.substr(0, (message.size() - 64));
-    for (int i = 0; i < ((int)(playerData.size()) - 55); i += 56) { //iterate through each player data (each player has 3 args: ID, X, Y)
+    for (int i = 0; i < ((int)(playerData.size()) - 57); i += 58) { //iterate through each player data (each player has 3 args: ID, X, Y)
         int ID = machine->settings->server->IntDecompress(playerData.substr(i, 32));
         if (ID == machine->settings->clientID) {
             continue; // this player's movement is handled by its own playercontroller
@@ -141,8 +141,8 @@ void PlayerGameState::HandlePlayerData(string message, vector<OtherPlayer*>* pla
         int* position = machine->settings->server->PositionDecompress(playerData.substr(i + 32, 16));
         int X = *position;
         int Y = *(position + 1);
-        PlayerState state = machine->settings->server->PlayerStateDecompress(playerData.substr(i + 48, 7));
-        bool isAlive = (playerData.at(i + 55) == '1');
+        PlayerState state = machine->settings->server->PlayerStateDecompress(playerData.substr(i + 48, 9));
+        bool isAlive = (playerData.at(i + 57) == '1');
         if (ID != machine->settings->clientID) {
             //ignore the incoming data about this client as the client has authority on it's own player's movement
 
