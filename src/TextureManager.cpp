@@ -409,12 +409,15 @@ void TextureManager::InitializeAllTextures() {
     "UI\\ButtonTiny",
     "UI\\ButtonTinyHover",
     "UI\\ButtonTinyClick",
+    "UI\\DisabledButtonTiny",
     "UI\\ButtonSmall",
     "UI\\ButtonSmallHover",
     "UI\\ButtonSmallClick",
+    "UI\\DisabledButtonSmall",
     "UI\\Button",
     "UI\\ButtonHover",
-    "UI\\ButtonClick"};
+    "UI\\ButtonClick",
+    "UI\\DisabledButton"};
     for (string s : texturesToLoad) {
         LoadTexture(s);
     }

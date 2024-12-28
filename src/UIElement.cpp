@@ -13,6 +13,7 @@ ClickableUIElement::ClickableUIElement(int pX, int pY, int pScreenScaling, UIEle
 		unHoverTexture = textureManager->GetTexture("UI\\ButtonTiny");
 		hoverTexture = textureManager->GetTexture("UI\\ButtonTinyHover");
 		clickTexture = textureManager->GetTexture("UI\\ButtonTinyClick");
+		disabledTexture = textureManager->GetTexture("UI\\DisabledButtonTiny");
 		break;
 	case Small:
 		width = 80 * pScreenScaling;
@@ -20,6 +21,7 @@ ClickableUIElement::ClickableUIElement(int pX, int pY, int pScreenScaling, UIEle
 		unHoverTexture = textureManager->GetTexture("UI\\ButtonSmall");
 		hoverTexture = textureManager->GetTexture("UI\\ButtonSmallHover");
 		clickTexture = textureManager->GetTexture("UI\\ButtonSmallClick");
+		disabledTexture = textureManager->GetTexture("UI\\DisabledButtonSmall");
 		break;
 	case Normal:
 	default:
@@ -28,14 +30,18 @@ ClickableUIElement::ClickableUIElement(int pX, int pY, int pScreenScaling, UIEle
 		unHoverTexture = textureManager->GetTexture("UI\\Button");
 		hoverTexture = textureManager->GetTexture("UI\\ButtonHover");
 		clickTexture = textureManager->GetTexture("UI\\ButtonClick");
+		disabledTexture = textureManager->GetTexture("UI\\DisabledButton");
 		break;
 	}
 	currentTexture = unHoverTexture;
+	enabled = true;
 }
 
 void ClickableUIElement::OnClick()
 {
-	clickFunction();
+	if (enabled) {
+		clickFunction();
+	}
 }
 void ClickableUIElement::OnClickOff() {
 	if (clickAwayFunction != 0) {
@@ -72,6 +78,9 @@ void ClickableUIElement::HandleClickInput(SDL_Event& e)
 	}
 }
 void ClickableUIElement::Update() {
+	if (!enabled) {
+		return;
+	}
 	int* mouseX = new int();
 	int* mouseY = new int();
 	SDL_GetMouseState(mouseX, mouseY);
@@ -90,4 +99,17 @@ void ClickableUIElement::Render(SDL_Renderer* renderer) {
 	SDL_Rect* destRect;
 	destRect = new SDL_Rect{ x, y, width, height };
 	SDL_RenderCopy(renderer, currentTexture, NULL, destRect);
+}
+
+void ClickableUIElement::Disable()
+{
+	currentTexture = disabledTexture;
+	enabled = false;
+	cout << "Disabling Clickable UI ELement" << endl;
+}
+
+void ClickableUIElement::Enable()
+{
+	enabled = true;
+	currentTexture = unHoverTexture;
 }

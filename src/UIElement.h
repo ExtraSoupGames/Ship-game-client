@@ -27,6 +27,8 @@ protected:
 	SDL_Texture* unHoverTexture;
 	SDL_Texture* clickTexture;
 	SDL_Texture* hoverTexture;
+	SDL_Texture* disabledTexture;
+	bool enabled;
 public:
 	ClickableUIElement(int x, int y, int pScreenScaling , UIElementSize size , TextureManager* textureManager , function<void()> clickFunc, function<void()> clickOffFunc = 0);
 	bool IsInBounds(int clickX, int clickY);
@@ -35,4 +37,6 @@ public:
 	void Update();
 	void HandleClickInput(SDL_Event& e);
 	void Render(SDL_Renderer* renderer) override;
+	void Disable();
+	void Enable();
 };

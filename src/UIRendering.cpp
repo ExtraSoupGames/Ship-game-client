@@ -1,6 +1,6 @@
 #include "UIRendering.h"
-void UIRendering::RenderText(SDL_Renderer* renderer, string textToRender, int x, int y, TTF_Font* font) {
-	SDL_Color color = { 205, 148, 68 };
+void UIRendering::RenderText(SDL_Renderer* renderer, string textToRender, int x, int y, TTF_Font* font, SDL_Color textColour) {
+	SDL_Color color = textColour;
 	SDL_Surface* surface = TTF_RenderText_Solid(font,textToRender.c_str(), color);
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 	int texW = 0;

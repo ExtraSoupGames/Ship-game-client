@@ -21,12 +21,14 @@ class DiscoveryScreen : public GameState{
 	int selectedServer;
 	vector<ServerHost*> servers;
 	bool ServerExists(string host, int port);
-	bool selecting = false;
+	bool selecting;
+	Button* connectButton;
 	double discoverDelay; // dont spam packets as this is unneccesary load on network
 	double discoverTimer;
 	TTF_Font* font;
 	void ServerClickedEvent();
 	void TransferToMainMenu();
+	void SelectServer(int serverID);
 public:
 	DiscoveryScreen(GameStateMachine* machine);
 	~DiscoveryScreen();

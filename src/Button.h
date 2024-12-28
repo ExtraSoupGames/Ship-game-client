@@ -15,4 +15,5 @@ public:
 	~Button();
 	void Render(SDL_Renderer* renderer) override;
 	void Input(SDL_Event& e) override;
+	void SetText(string text);
 };

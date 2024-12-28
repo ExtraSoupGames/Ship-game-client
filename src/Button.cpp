@@ -23,9 +23,20 @@ Button::~Button()
 }
 void Button::Render(SDL_Renderer* renderer) {
 	ClickableUIElement::Render(renderer);
-	UIRendering::RenderText(renderer, displayText, x + (4 * screenScaling), y + (4 * screenScaling), font);
+	if (enabled) {
+		UIRendering::RenderText(renderer, displayText, x + (4 * screenScaling), y + (4 * screenScaling), font);
+	}
+	else {
+		UIRendering::RenderText(renderer, displayText, x + (4 * screenScaling), y + (4 * screenScaling), font, {156, 156, 156});
+	}
 }
 void Button::Input(SDL_Event& e)
 {
 	HandleClickInput(e);
 }
+
+void Button::SetText(string text)
+{
+	displayText = text;
+}
+
