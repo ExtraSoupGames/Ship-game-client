@@ -2,15 +2,20 @@
 #include "MyGame.h"
 StartRoom::StartRoom(GameStateMachine* pMachine) : PlayerGameState(pMachine)
 {
-    player = new PlayerController(pMachine, new CollisionManager());
+    collisions = new CollisionManager();
+    collisions->AddBoundary(new CollisionBoundary(0, 0, 200, 0, 0, 1));
+    collisions->AddBoundary(new CollisionBoundary(200, 0, 200, 180, -1, 0));
+    collisions->AddBoundary(new CollisionBoundary(0, 180, 200, 180, 0, -1));
+    collisions->AddBoundary(new CollisionBoundary(0, 0, 0, 180, 1, 0));
+    player = new PlayerController(pMachine, collisions);
     startPad = new StartPad(machine->settings->textureManager);
     colourChooser = new ColourChooser(machine->settings->server, machine->settings->clientID);
-    UIElements.push_back(new Button("ChooseColour1", 50, 50, [this] {colourChooser->ColourChosen(1); }, machine->settings->textureManager, machine->settings->screenScaling(), 20));
-    UIElements.push_back(new Button("ChooseColour2", 50, 100, [this] {colourChooser->ColourChosen(2); }, machine->settings->textureManager, machine->settings->screenScaling(), 20));
-    UIElements.push_back(new Button("ChooseColour3", 50, 150, [this] {colourChooser->ColourChosen(3); }, machine->settings->textureManager, machine->settings->screenScaling(), 20));
-    UIElements.push_back(new Button("ChooseColour4", 200, 50, [this] {colourChooser->ColourChosen(4); }, machine->settings->textureManager, machine->settings->screenScaling(), 20));
-    UIElements.push_back(new Button("ChooseColour5", 200, 100, [this] {colourChooser->ColourChosen(5); }, machine->settings->textureManager, machine->settings->screenScaling(), 20));
-    UIElements.push_back(new Button("ChooseColour6", 200, 150, [this] {colourChooser->ColourChosen(6); }, machine->settings->textureManager, machine->settings->screenScaling(), 20));
+    UIElements.push_back(new Button("ChooseColour1", 220, 5, [this] {colourChooser->ColourChosen(1); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    UIElements.push_back(new Button("ChooseColour2", 220, 35, [this] {colourChooser->ColourChosen(2); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    UIElements.push_back(new Button("ChooseColour3", 220, 65, [this] {colourChooser->ColourChosen(3); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    UIElements.push_back(new Button("ChooseColour4", 220, 95, [this] {colourChooser->ColourChosen(4); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    UIElements.push_back(new Button("ChooseColour5", 220, 125, [this] {colourChooser->ColourChosen(5); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    UIElements.push_back(new Button("ChooseColour6", 220, 155, [this] {colourChooser->ColourChosen(6); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
 
 }
 
@@ -34,7 +39,7 @@ void StartRoom::Render(SDL_Renderer* renderer)
     }
     player->Render(renderer, machine->settings, 0 ,0); // no camera movement on start room screen
     GameState::RenderUI(renderer);
-
+    collisions->DrawDebug(renderer, 0, 0, machine->settings->screenScaling());
     SDL_RenderPresent(renderer);
 }
 void StartRoom::HandleStartPadData(string message) {

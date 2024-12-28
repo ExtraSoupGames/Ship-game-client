@@ -13,6 +13,7 @@ private:
 	PlayerController* player;
 	StartPad* startPad;
 	ColourChooser* colourChooser;
+	CollisionManager* collisions;
 
 	double serverBroadcastTimer = 0;
 	double serverBroadcastDelay = 500;//adjust this to change how quickly important messages are resent - could affect performance if too low
