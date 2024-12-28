@@ -1,17 +1,21 @@
 #include "GameOver.h"
 #include "MainMenu.h"
-GameOver::GameOver(GameStateMachine* machine) : GameOver(machine, new GameReport()) {
+GameOver::GameOver(GameStateMachine* machine) : GameOver(machine, new GameReport(0)) {
 }
 GameOver::GameOver(GameStateMachine* pMachine, GameReport* report) : PlayerGameState(pMachine) {
     machine = pMachine;
-	UIElements.push_back(new Button("Exit", 25, 10, [this] {this->ExitButtonPressed(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-	//TODO add UI element to show game report
-	UIElements.push_back(new ReportVisual(report, 100, 50, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    collisions = new CollisionManager();
+    collisions->AddBoundary(new CollisionBoundary(0, 0, 160, 0, 0, 1));
+    collisions->AddBoundary(new CollisionBoundary(160, 0, 160, 180, -1, 0));
+    collisions->AddBoundary(new CollisionBoundary(0, 180, 160, 180, 0, -1));
+    collisions->AddBoundary(new CollisionBoundary(0, 0, 0, 180, 1, 0));
+	UIElements.push_back(new Button("Exit", 200, 10, [this] {this->ExitButtonPressed(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+	UIElements.push_back(new ReportVisual(report, 200, 50, machine->settings->textureManager, machine->settings->screenScaling(), 25));
 	serverStartTime = 0;
 	clientServerTimeDiff = 0;
 	broadcastTimer = 0;
 	players = new vector<OtherPlayer*>();
-	player = new PlayerController(pMachine, new CollisionManager());
+	player = new PlayerController(pMachine, collisions);
 	newGamePad = new PlayerPad(machine->settings->textureManager);
 
 }

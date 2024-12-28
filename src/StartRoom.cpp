@@ -3,9 +3,9 @@
 StartRoom::StartRoom(GameStateMachine* pMachine) : PlayerGameState(pMachine)
 {
     collisions = new CollisionManager();
-    collisions->AddBoundary(new CollisionBoundary(0, 0, 200, 0, 0, 1));
-    collisions->AddBoundary(new CollisionBoundary(200, 0, 200, 180, -1, 0));
-    collisions->AddBoundary(new CollisionBoundary(0, 180, 200, 180, 0, -1));
+    collisions->AddBoundary(new CollisionBoundary(0, 0, 160, 0, 0, 1));
+    collisions->AddBoundary(new CollisionBoundary(160, 0, 160, 180, -1, 0));
+    collisions->AddBoundary(new CollisionBoundary(0, 180, 160, 180, 0, -1));
     collisions->AddBoundary(new CollisionBoundary(0, 0, 0, 180, 1, 0));
     player = new PlayerController(pMachine, collisions);
     startPad = new StartPad(machine->settings->textureManager);

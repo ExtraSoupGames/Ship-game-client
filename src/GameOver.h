@@ -13,6 +13,7 @@ private:
 	double clientServerTimeDiff;
 	PlayerController* player;
 	GameStateMachine* machine;
+	CollisionManager* collisions;
 
 	double broadcastTimer;
 	double broadcastSpacing = 20;

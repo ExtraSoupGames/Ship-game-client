@@ -86,7 +86,7 @@ struct DataStream {
 };
 struct GameReport {
     int timeSurvived;
-    GameReport() {
-        timeSurvived = 100; // TODO remove this its only for testing
+    GameReport(int survivalTime) {
+        timeSurvived = survivalTime;
     }
 };

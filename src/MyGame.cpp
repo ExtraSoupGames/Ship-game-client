@@ -163,11 +163,13 @@ void MyGame::OnReceive(char* data, int messagelength) {
         machine->settings->server->ReceiveImportantMessageConfirmation(message);
     }
     if (messageType == "0100") { // game over code
-        //TODO process incoming game report data
-        GameReport* report = new GameReport(); // add processing here
+        machine->settings->server->SendImportantMessageConfirmation(message, machine->settings->clientID);
+        string reportData = message.substr(32,  32);
+        int timeSurvived = ServerManager::IntDecompress(reportData);
+        GameReport* report = new GameReport(timeSurvived);
         machine->SwitchState(new GameOver(machine, report));
     }
-    if (messageType == "0111") {
+    if (messageType == "0111") { // time survived display code
         int time = machine->settings->server->IntDecompress(message);
         timerDisplay->SetTimeSurvived(time);
     }
