@@ -79,6 +79,9 @@
     <ClCompile Include="..\src\ColourChooser.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\TextDisplay.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Interpolator.h">
@@ -158,6 +161,9 @@
     </ClInclude>
     <ClInclude Include="..\src\ColourChooser.h">
       <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TextDisplay.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

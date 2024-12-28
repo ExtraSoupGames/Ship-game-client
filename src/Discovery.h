@@ -5,6 +5,7 @@
 #include "GameState.h"
 #include "ServerLauncher.h"
 #include "Button.h"
+#include "TextDisplay.h"
 #include <vector>
 using namespace std;
 struct ServerHost {
@@ -23,6 +24,7 @@ class DiscoveryScreen : public GameState{
 	bool ServerExists(string host, int port);
 	bool selecting;
 	Button* connectButton;
+	TextDisplay* selectedServerText;
 	double discoverDelay; // dont spam packets as this is unneccesary load on network
 	double discoverTimer;
 	TTF_Font* font;

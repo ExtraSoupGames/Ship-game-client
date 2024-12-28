@@ -62,6 +62,9 @@ bool ClickableUIElement::IsInBounds(int clickX, int clickY)
 
 void ClickableUIElement::HandleClickInput(SDL_Event& e)
 {
+	if (!enabled) {
+		return;
+	}
 	if (e.type == SDL_MOUSEBUTTONUP) {
 		if (IsInBounds(e.button.x, e.button.y)) {
 			OnClick();

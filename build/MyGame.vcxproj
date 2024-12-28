@@ -333,6 +333,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\src\PlayerPad.cpp" />
     <ClCompile Include="..\src\StartRoom.cpp" />
     <ClCompile Include="..\src\Textbox.cpp" />
+    <ClCompile Include="..\src\TextDisplay.cpp" />
     <ClCompile Include="..\src\TextureManager.cpp" />
     <ClCompile Include="..\src\UIElement.cpp" />
     <ClCompile Include="..\src\UIRendering.cpp" />
@@ -360,6 +361,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\src\PlayerPad.h" />
     <ClInclude Include="..\src\StartRoom.h" />
     <ClInclude Include="..\src\Textbox.h" />
+    <ClInclude Include="..\src\TextDisplay.h" />
     <ClInclude Include="..\src\TextureManager.h" />
     <ClInclude Include="..\src\UIElement.h" />
     <ClInclude Include="..\src\UIRendering.h" />

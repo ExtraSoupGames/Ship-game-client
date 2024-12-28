@@ -27,7 +27,7 @@ void Button::Render(SDL_Renderer* renderer) {
 		UIRendering::RenderText(renderer, displayText, x + (4 * screenScaling), y + (4 * screenScaling), font);
 	}
 	else {
-		UIRendering::RenderText(renderer, displayText, x + (4 * screenScaling), y + (4 * screenScaling), font, {156, 156, 156});
+		UIRendering::RenderText(renderer, displayText, x + (4 * screenScaling), y + (4 * screenScaling), font, {156, 156, 156}); // NOTE FOR JONNY: align server buttons, change connect button text, 
 	}
 }
 void Button::Input(SDL_Event& e)

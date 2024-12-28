@@ -19,7 +19,9 @@ DiscoveryScreen::DiscoveryScreen(GameStateMachine* pMachine) : GameState(machine
     discoverTimer = 0;
     machine = pMachine;
     font = TTF_OpenFont("PixelatedElegance.ttf", 15);
-    connectButton = new Button("Connect", 25, 10, [this]() {this->ServerClickedEvent(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25);
+    selectedServerText = new TextDisplay(machine->settings->textureManager, 25, 50, machine->settings->screenScaling(), "Selected: none");
+    UIElements.push_back(selectedServerText);
+    connectButton = new Button("No server selected", 25, 10, [this]() {this->ServerClickedEvent(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25);
     UIElements.push_back(connectButton);
     connectButton->Disable();
     UIElements.push_back(new Button("Back", 25, 30, [this] {this->TransferToMainMenu(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
@@ -60,11 +62,11 @@ void DiscoveryScreen::OnReceive(char* inData, int dataLength) {
             ServerHost* newServer = new ServerHost(host, port, name);
             servers.push_back(newServer);
             cout << "creating server at size: " << servers.size() << endl;
-            UIElements.push_back(new Button(name, servers.size() * 50, 100,
+            UIElements.push_back(new Button(name, 25, 50 + servers.size() * 20,
                 [this] {this->SelectServer(servers.size()); },
                 machine->settings->textureManager,
                 machine->settings->screenScaling(),
-                20));
+                25));
         }
     }
 }
@@ -82,6 +84,8 @@ void DiscoveryScreen::Input(SDL_Event& event) {
 void DiscoveryScreen::SelectServer(int serverID) {
     selectedServer = serverID;
     connectButton->Enable();
+    connectButton->SetText("Connect");
+    selectedServerText->SetText("Selected: " + servers.at(serverID - 1)->name);
 }
 void DiscoveryScreen::OnEnter()
 {
