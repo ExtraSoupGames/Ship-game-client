@@ -108,7 +108,6 @@ void ClickableUIElement::Disable()
 {
 	currentTexture = disabledTexture;
 	enabled = false;
-	cout << "Disabling Clickable UI ELement" << endl;
 }
 
 void ClickableUIElement::Enable()

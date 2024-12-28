@@ -26,21 +26,36 @@ int InputMapping::GetDirectionState(Vector2 playerPos) {
     int returnState = static_cast<int>((angle + (M_PI / 8.0f)) / (M_PI / 4.0f)) % 8;
     return returnState;
 }
-bool InputMapping::IsMovingLeft() { // TODO account for moving exactly up and down, most likely change this to return an int value and switch on it
+int InputMapping::GetAnimationID() {
     Vector2 directionVec = GetDirectionMoving().Normalise();
     double angle = atan2(directionVec.x, directionVec.y);
     //atan2 returns in range [-pi - pi] so convert to [0 - 2pi]
     if (angle < 0) {
         angle += M_PI * 2;
     }
-    int returnState = static_cast<int>((angle + (M_PI / 8.0f)) / (M_PI / 4.0f)) % 8;
-    return returnState > 4;
+    int direction = static_cast<int>((angle + (M_PI / 8.0f)) / (M_PI / 4.0f)) % 8;
+    switch (direction) {
+    case 0:
+        return 0; // // if player is moving straight down return the cat down animation ID
+    case 1:
+    case 2:
+    case 3:
+        return 2; // if player is moving left at all, return the cat facing left animation ID
+    case 4:
+        return 3; // if player is moving straight up, return the cat up animation ID
+    case 5:
+    case 6:
+    case 7:
+        return 1; // if player is moving right at all, return the cat facing right animation ID
+    default:
+        return 0;
+    }
 }
 #pragma endregion InputMapping
 #pragma region PlayerController
 
 PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager* pCollisionManager)
-    : Animatable(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatDash"}, pMachine->settings->textureManager, "Cats\\Cat" + pMachine->settings->playerPalette) {
+    : Animatable(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash"}, pMachine->settings->textureManager, "Cats\\Cat" + pMachine->settings->playerPalette) {
     //player's values
     attackCooldown = 500;
     playerHealth = 100;
@@ -341,15 +356,8 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
             Animatable::PlayAnimation(0);
             break;
         case 1:
-            //left or right walk
-            if (inputs->IsMovingLeft()) {
-                //left
-                Animatable::PlayAnimation(1);
-            }
-            else {
-                //right
-                Animatable::PlayAnimation(2);
-            }
+            //walking left, right, up or down
+            Animatable::PlayAnimation(inputs->GetAnimationID());
             break;
         case 2:
             //dashing
@@ -362,6 +370,6 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
 }
 void PlayerController::ReloadTexturesWithPalette(string palette)
 {
-    Animatable::ReloadAllFrames(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatDash" }, machine->settings->textureManager, "Cats\\Cat" + palette);
+    Animatable::ReloadAllFrames(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash"}, machine->settings->textureManager, "Cats\\Cat" + palette);
 }
 #pragma endregion PlayerController

@@ -3,7 +3,7 @@
 PlayerPad::PlayerPad(TextureManager* t)
 {
 	x = 50;
-	y = 50;
+	y = 100;
 	poweredState = 0;
 	unpoweredTexture = t->GetTexture("UI\\ButtonTinyHover");
 	partialPoweredTexture = t->GetTexture("UI\\ButtonTiny");
@@ -39,14 +39,10 @@ void PlayerPad::UpdateTexture(string binaryData)
 	}
 }
 
-Hitbox* PlayerPad::GetLeverBox()
-{
-	return new Hitbox{x - 16, y - 16, 48, 48};
-}
 
 StartingLever::StartingLever(TextureManager* t)
 {
-	x = 30;
+	x = 70;
 	y = 30;
 	unpoweredTexture = t->GetTexture("LeverUnpowered");
 	poweredTexture = t->GetTexture("LeverPowered");
@@ -66,7 +62,7 @@ void StartingLever::Render(SDL_Renderer* renderer, int screenScaling)
 	SDL_Rect* dstRect = new SDL_Rect{ x * screenScaling, y * screenScaling, 16 * screenScaling, 16 * screenScaling };
 	SDL_RenderCopy(renderer, currentTexture, NULL, dstRect);
 	SDL_SetRenderDrawColor(renderer, 255, 255 ,255 ,255);
-	SDL_Rect rect = { (x - 16) * screenScaling, (y - 16) * screenScaling, 48 * screenScaling, 48 * screenScaling };
+	SDL_Rect rect = { (x - 30) * screenScaling, (y - 30) * screenScaling, 76 * screenScaling, 76 * screenScaling };
 	SDL_RenderDrawRect(renderer, &rect);
 }
 
@@ -79,6 +75,11 @@ void StartingLever::UpdateTexture(string binaryData)
 	else {
 		currentTexture = unpoweredTexture;
 	}
+}
+
+Hitbox* StartingLever::GetHitbox()
+{
+	return new Hitbox{x-30, y-30, 76, 76};
 }
 
 StartPad::StartPad(TextureManager* t) : PlayerPad(t)
@@ -100,4 +101,8 @@ void StartPad::UpdateTexture(string binaryData) {
 		//TODO add big countdown
 	}
 	PlayerPad::UpdateTexture(binaryData);
+}
+Hitbox* StartPad::GetLeverBox()
+{
+	return startLever->GetHitbox();
 }
