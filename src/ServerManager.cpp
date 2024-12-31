@@ -117,7 +117,7 @@ void ServerManager::ReceiveImportantMessageConfirmation(string binaryIn) {
     }
 }
 void ServerManager::SendImportantMessageConfirmation(string messageIn, int clientID) {
-    string returnHeader = "1011"; // this is the header code for all confirmation messages from client to server
+    string returnHeader = "1110"; // this is the header code for all confirmation messages from client to server
     string messageID = messageIn.substr(0, 32);
     string clntID = IntCompress(clientID);
     SendMessage(returnHeader.append(messageID.append(clntID)));

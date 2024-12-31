@@ -82,6 +82,9 @@
     <ClCompile Include="..\src\TextDisplay.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\DisconnectScreen.cpp">
+      <Filter>GameStates\Menus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Interpolator.h">
@@ -164,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="..\src\TextDisplay.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\DisconnectScreen.h">
+      <Filter>GameStates\Menus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

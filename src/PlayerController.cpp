@@ -59,10 +59,11 @@ PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager*
     //player's values
     attackCooldown = 500;
     playerHealth = 100;
+    playerSpeed = 12;
     //dash values
     dashCooldown = 1000; // time after start of dash when another dash can be initiated, must be greather than dashduration
-    dashDuration = 200; // time spent physically dashing
-    dashLength = 200; // distance covered in a dash
+    dashDuration = 250; // time spent physically dashing
+    dashLength = 100; // distance covered in a dash
     //stun values
     stunDuration = 500;
     //starting position
@@ -233,7 +234,7 @@ void PlayerController::UpdateEnemyAttacks(MyGame* game)
 }
 void PlayerController::UpdateBasicMovement(double deltaTime)
 {
-    double speed = 0.0008f;
+    double speed = 0.0001f * playerSpeed;
     Vector2 currentPos = *new Vector2{ xPos, yPos };
     Vector2 endPos;
     Vector2 finalPos;
@@ -361,7 +362,7 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
             break;
         case 2:
             //dashing
-            Animatable::PlayAnimation(3);
+            Animatable::PlayAnimation(4);
             break;
         }
         Animatable::UpdateAnimation();

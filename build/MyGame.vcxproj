@@ -317,6 +317,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="..\src\Button.cpp" />
     <ClCompile Include="..\src\Collision.cpp" />
     <ClCompile Include="..\src\ColourChooser.cpp" />
+    <ClCompile Include="..\src\DisconnectScreen.cpp" />
     <ClCompile Include="..\src\Discovery.cpp" />
     <ClCompile Include="..\src\GameOver.cpp" />
     <ClCompile Include="..\src\GameState.cpp" />
@@ -345,6 +346,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="..\src\Collision.h" />
     <ClInclude Include="..\src\ColourChooser.h" />
     <ClInclude Include="..\src\Data.h" />
+    <ClInclude Include="..\src\DisconnectScreen.h" />
     <ClInclude Include="..\src\Discovery.h" />
     <ClInclude Include="..\src\GameOver.h" />
     <ClInclude Include="..\src\GameState.h" />

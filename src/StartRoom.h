@@ -8,7 +8,7 @@
 #include "ColourChooser.h"
 #include <iostream>
 using namespace std;
-class StartRoom : public PlayerGameState {
+class StartRoom : public HeartbeatGameState {
 private:
 	PlayerController* player;
 	StartPad* startPad;

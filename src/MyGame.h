@@ -27,7 +27,7 @@ struct Hitbox {
     int h;
     bool Collides(Hitbox& other);
 };
-class MyGame : public PlayerGameState{
+class MyGame : public HeartbeatGameState {
 
     private:
         vector<Enemy*>* enemies;

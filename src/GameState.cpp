@@ -1,5 +1,6 @@
 #include "GameState.h"
 #include "ServerManager.h"
+#include "DisconnectScreen.h"
 #include "PlayerController.h"
 void GameState::UIInput(SDL_Event& e)
 {
@@ -71,7 +72,7 @@ void GameStateMachine::Run() {
         lastFrameTime = currentTime;
         currentTime = SDL_GetPerformanceCounter();
         deltaTime = (double)((currentTime - lastFrameTime) * 1000 / (double)SDL_GetPerformanceFrequency());
-
+        cout << "Delta time: " << deltaTime << endl;
         if (currentState != nullptr) {
             currentState->Update(deltaTime);
 
@@ -129,8 +130,11 @@ void PlayerGameState::HandlePlayerData(string message, vector<OtherPlayer*>* pla
 
     //the first packet that comes from the server will be the base start time offset for all other packets
     if (serverStartTime < 100) {
-        serverStartTime = timestamp;
-        clientServerTimeDiff = serverStartTime - SDL_GetTicks();
+        serverStartTime = timestamp; // serverstarttime = time of server when first player packet is recieved
+        clientServerTimeDiff = serverStartTime - SDL_GetTicks(); 
+        // clientServerTimeDiff = time of server when player first connected minus the current time of the client 
+        // so basically how far along the server was in theory when the client would have been launched 
+        // adding sdl get ticks and a delay to this value should get what incoming data values should be at in terms of server timestamp
     }
     string playerData = message.substr(0, (message.size() - 64));
     for (int i = 0; i < ((int)(playerData.size()) - 57); i += 58) { //iterate through each player data (each player has 3 args: ID, X, Y)
@@ -143,22 +147,18 @@ void PlayerGameState::HandlePlayerData(string message, vector<OtherPlayer*>* pla
         int Y = *(position + 1);
         PlayerState state = machine->settings->server->PlayerStateDecompress(playerData.substr(i + 48, 9));
         bool isAlive = (playerData.at(i + 57) == '1');
-        if (ID != machine->settings->clientID) {
-            //ignore the incoming data about this client as the client has authority on it's own player's movement
-
-            auto it = std::find_if(players->begin(), players->end(), [&ID](OtherPlayer* e) {return e->HasID(ID); });
-            if (it == players->end()) {
-                //if this is a new other player
-                OtherPlayer* newPlayer = new OtherPlayer(ID, machine->settings->textureManager);
-                newPlayer->PlayAnimation(0);
-                newPlayer->AddToBuffer(new DataStream({ new PlayerData(X, Y, state), timestamp }));
-                players->push_back(newPlayer);
-            }
-            else {
-                OtherPlayer* player = *it;
-                player->AddToBuffer(new DataStream({ new PlayerData(X, Y, state), timestamp }));
-                player->isAlive = isAlive;
-            }
+        auto it = std::find_if(players->begin(), players->end(), [&ID](OtherPlayer* e) {return e->HasID(ID); });
+        if (it == players->end()) {
+            //if this is a new other player
+            OtherPlayer* newPlayer = new OtherPlayer(ID, machine->settings->textureManager);
+            newPlayer->PlayAnimation(0);
+            newPlayer->AddToBuffer(new DataStream({ new PlayerData(X, Y, state), timestamp }));
+            players->push_back(newPlayer);
+        }
+        else {
+            OtherPlayer* player = *it;
+            player->AddToBuffer(new DataStream({ new PlayerData(X, Y, state), timestamp }));
+            player->isAlive = isAlive;
         }
     }
 }
@@ -180,17 +180,48 @@ void PlayerGameState::BroadcastPlayerData(double deltaTime, PlayerController* pl
     }
 }
 
+
 PlayerGameState::PlayerGameState(GameStateMachine* pMachine) : GameState(pMachine)
 {
     broadcastTimer = 0;
-    broadcastSpacing = 20;
+    broadcastSpacing = 50;
     clientServerTimeDiff = 0;
     serverStartTime = 0;
     players = new vector<OtherPlayer*>();
-
 }
 
 PlayerGameState::~PlayerGameState()
 {
     delete players;
+}
+
+void HeartbeatGameState::HandleHeartbeat()
+{
+    heartbeatTimer = 0;
+    string heartbeatResponse = "0111" + machine->settings->server->IntCompress(machine->settings->clientID);
+    machine->settings->server->SendMessage(heartbeatResponse);
+}
+
+void HeartbeatGameState::UpdateBeat(double deltaTime)
+{
+    heartbeatTimer += deltaTime;
+    if (heartbeatTimer > 5000) { // if 5 seconds go with no heartbeat, disconnect
+        Disconnect();
+    }
+}
+
+void HeartbeatGameState::Disconnect()
+{
+    machine->SwitchState(new DisconnectScreen(machine));
+}
+
+void HeartbeatGameState::PlayerKicked(string messageData)
+{
+    int clientID = ServerManager::IntDecompress(messageData);
+    players->erase(remove_if(players->begin(), players->end(), [clientID](OtherPlayer* player) {return player->HasID(clientID); }), players->end());
+}
+
+HeartbeatGameState::HeartbeatGameState(GameStateMachine* pMachine) : PlayerGameState(pMachine)
+{
+    heartbeatTimer = 0;
 }

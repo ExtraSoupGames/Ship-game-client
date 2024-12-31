@@ -49,7 +49,7 @@ class PlayerGameState : public GameState {
 protected:
 
 	double broadcastTimer;
-	double broadcastSpacing = 20;
+	double broadcastSpacing;
 	double serverStartTime;
 	double clientServerTimeDiff;
 	void HandlePlayerData(string message, vector<OtherPlayer*>* players);
@@ -59,4 +59,14 @@ protected:
 public:
 	PlayerGameState(GameStateMachine* pMachine);
 	~PlayerGameState();
+};
+class HeartbeatGameState : public PlayerGameState {
+protected:
+	double heartbeatTimer;
+	void HandleHeartbeat();
+	void UpdateBeat(double deltaTime);
+	void Disconnect();
+	void PlayerKicked(string messageData);
+public:
+	HeartbeatGameState(GameStateMachine* pMachine);
 };

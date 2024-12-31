@@ -23,6 +23,7 @@ class PlayerController : public Animatable {
 private:
     //player values
     int playerHealth;
+    int playerSpeed;
     //player actions
     void Attack(MyGame* game);
     void Dash();

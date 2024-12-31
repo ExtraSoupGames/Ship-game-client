@@ -6,7 +6,7 @@
 #include "Interpolator.h"
 #include "PlayerPad.h"
 using namespace std;
-class GameOver : public PlayerGameState {
+class GameOver : public HeartbeatGameState {
 private:
 	PlayerPad* newGamePad;
 	double serverStartTime;

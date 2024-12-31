@@ -1,6 +1,6 @@
 #include "StartRoom.h"
 #include "MyGame.h"
-StartRoom::StartRoom(GameStateMachine* pMachine) : PlayerGameState(pMachine)
+StartRoom::StartRoom(GameStateMachine* pMachine) : HeartbeatGameState(pMachine)
 {
     collisions = new CollisionManager();
     collisions->AddBoundary(new CollisionBoundary(0, 0, 160, 0, 0, 1));
@@ -84,6 +84,12 @@ void StartRoom::OnReceive(char* inData, int dataLength)
     if (messageType == "1110") { // important message confirmation
         machine->settings->server->ReceiveImportantMessageConfirmation(message);
     }
+    if (messageType == "1010") {
+        HeartbeatGameState::HandleHeartbeat();
+    }
+    if (messageType == "1011") {
+        HeartbeatGameState::PlayerKicked(message);
+    }
 }
 
 void StartRoom::Input(SDL_Event& event)
@@ -101,6 +107,7 @@ void StartRoom::Input(SDL_Event& event)
 
 void StartRoom::Update(double deltaTime)
 {
+
     GameState::UIUpdate();
     BroadcastPlayerData(deltaTime, player);
     player->UpdateMove(deltaTime, machine->settings->screenScaling());
@@ -115,6 +122,7 @@ void StartRoom::Update(double deltaTime)
         serverBroadcastTimer -= serverBroadcastDelay;
         machine->settings->server->SendAllImportantMessages();
     }
+    HeartbeatGameState::UpdateBeat(deltaTime);
 }
 
 void StartRoom::OnEnter()

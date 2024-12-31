@@ -33,7 +33,6 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 #pragma endregion initialization
-
     GameStateMachine* game = new GameStateMachine();
     GameState* gameState = (GameState*)new MainMenu(game);
     game->SwitchState(gameState);

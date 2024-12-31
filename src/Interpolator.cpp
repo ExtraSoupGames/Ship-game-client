@@ -156,11 +156,6 @@ void OtherPlayer::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings
         SDL_RenderDrawRect(renderer, playerRect);
         Animatable::UpdateAnimation();
         Animatable::Render(renderer, x - camOffX, y - camOffY, 16, 32, settings);
-    }
-}
-void OtherPlayer::OnInterpolate(DataPoint* data){
-    PlayerData* playerData = (PlayerData*)(data);
-    if (state.movementState != playerData->state.movementState) {
         switch (state.movementState) {
         case 0:
             //stood still
@@ -176,6 +171,9 @@ void OtherPlayer::OnInterpolate(DataPoint* data){
             break;
         }
     }
+}
+void OtherPlayer::OnInterpolate(DataPoint* data){
+    PlayerData* playerData = (PlayerData*)(data);
     state = playerData->state;
 }
 OtherPlayer::OtherPlayer(int ID, TextureManager* t) : Interpolator(ID), Animatable(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash"}, t, "Cats\\Cat111") {

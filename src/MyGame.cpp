@@ -11,7 +11,7 @@ bool Hitbox::Collides(Hitbox& other) {
     return true;
 }
 
-MyGame::MyGame(GameStateMachine* pMachine) : PlayerGameState(pMachine){
+MyGame::MyGame(GameStateMachine* pMachine) : HeartbeatGameState(pMachine){
     collisions = new CollisionManager();
     playerController = new PlayerController(machine, collisions);
     timerDisplay = new GameTimeDisplay(machine->settings->textureManager, 100, 100, machine->settings->screenScaling());
@@ -33,7 +33,7 @@ void MyGame::AdjustCamera() {
     int playerScreenY = playerController->GetYForServer() - cameraOffsetY;
     int playerWidth = playerController->GetWidth();
     int playerHeight = playerController->GetHeight();
-    float screenRatio = 0.6; // the amount of screen (0 - 1) that the player occupies
+    float screenRatio = 0.4; // the amount of screen (0 - 1) that the player occupies
     float minRatio = 0.5 - screenRatio / 2;
     float maxRatio = 0.5 + screenRatio / 2;
     int screenWidthScaled = machine->settings->screenWidth / machine->settings->screenScaling();
@@ -173,6 +173,12 @@ void MyGame::OnReceive(char* data, int messagelength) {
         int time = machine->settings->server->IntDecompress(message);
         timerDisplay->SetTimeSurvived(time);
     }
+    if (messageType == "1010") {
+        HeartbeatGameState::HandleHeartbeat();
+    }
+    if (messageType == "1011") {
+        HeartbeatGameState::PlayerKicked(message);
+    }
 }
 #pragma endregion incomingData
 
@@ -204,8 +210,8 @@ void MyGame::Update(double deltaTime) {
     playerController->UpdateEnemyAttacks(this);
     double delay = 100;  //snapshot buffer should be 3-4x base rate of packets - this way we can lose 2 packets and not experience jittering
     double timern = clientServerTimeDiff + SDL_GetTicks() - delay;
-    //cout << "ClientServerDiff: " << clientServerTimeDiff << endl;
-    //cout << "Time right now: " << timern << endl;
+    cout << "ClientServerDiff: " << clientServerTimeDiff << endl;
+    cout << "Time right now: " << timern << endl;
     for (Enemy* e : *enemies) {
         e->Interpolate(timern);
     }
@@ -219,6 +225,7 @@ void MyGame::Update(double deltaTime) {
         serverBroadcastTimer -= serverBroadcastDelay;
         machine->settings->server->SendAllImportantMessages();
     }
+    HeartbeatGameState::UpdateBeat(deltaTime);
 #pragma endregion serverUpdates
 }
 void MyGame::Render(SDL_Renderer* renderer) {

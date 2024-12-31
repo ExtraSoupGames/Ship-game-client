@@ -2,7 +2,7 @@
 #include "MainMenu.h"
 GameOver::GameOver(GameStateMachine* machine) : GameOver(machine, new GameReport(0)) {
 }
-GameOver::GameOver(GameStateMachine* pMachine, GameReport* report) : PlayerGameState(pMachine) {
+GameOver::GameOver(GameStateMachine* pMachine, GameReport* report) : HeartbeatGameState(pMachine) {
     machine = pMachine;
     collisions = new CollisionManager();
     collisions->AddBoundary(new CollisionBoundary(0, 0, 160, 0, 0, 1));
@@ -24,14 +24,18 @@ GameOver::~GameOver() {
 }
 void GameOver::Update(double deltaTime)
 {
+
     BroadcastPlayerData(deltaTime, player);
     player->UpdateMove(deltaTime, machine->settings->screenScaling());
 
     double delay = 100;  //snapshot buffer should be 3-4x base rate of packets - this way we can lose 2 packets and not experience jittering
     double timern = clientServerTimeDiff + SDL_GetTicks() - delay;
+    cout << "ClientServerDiff: " << clientServerTimeDiff << endl;
+    cout << "Time right now: " << timern << endl;
     for (OtherPlayer* p : *players) {
         p->Interpolate(timern);
     }
+    HeartbeatGameState::UpdateBeat(deltaTime);
 }
 void GameOver::HandleNewGamePadData(string message) {
     newGamePad->UpdateTexture(message);
@@ -79,6 +83,12 @@ void GameOver::OnReceive(char* inData, int dataLength)
     }
     if (messageType == "0110") { //starting pad info
         HandleNewGamePadData(message);
+    }
+    if (messageType == "1010") {
+        HeartbeatGameState::HandleHeartbeat();
+    }
+    if (messageType == "1011") {
+        HeartbeatGameState::PlayerKicked(message);
     }
 }
 
