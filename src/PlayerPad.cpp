@@ -44,8 +44,8 @@ StartingLever::StartingLever(TextureManager* t)
 {
 	x = 70;
 	y = 30;
-	unpoweredTexture = t->GetTexture("LeverUnpowered");
-	poweredTexture = t->GetTexture("LeverPowered");
+	unpoweredTexture = t->GetTexture("UI\\StartLeverUnpowered");
+	poweredTexture = t->GetTexture("UI\\StartLeverPowered");
 	currentTexture = unpoweredTexture;
 	powered = false;
 }
@@ -59,7 +59,7 @@ StartingLever::~StartingLever()
 
 void StartingLever::Render(SDL_Renderer* renderer, int screenScaling)
 {
-	SDL_Rect* dstRect = new SDL_Rect{ x * screenScaling, y * screenScaling, 16 * screenScaling, 16 * screenScaling };
+	SDL_Rect* dstRect = new SDL_Rect{ x * screenScaling, y * screenScaling, 32 * screenScaling, 32 * screenScaling };
 	SDL_RenderCopy(renderer, currentTexture, NULL, dstRect);
 	SDL_SetRenderDrawColor(renderer, 255, 255 ,255 ,255);
 	SDL_Rect rect = { (x - 30) * screenScaling, (y - 30) * screenScaling, 76 * screenScaling, 76 * screenScaling };

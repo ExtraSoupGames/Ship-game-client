@@ -49,7 +49,6 @@ void StartRoom::HandleColourData(string message) {
     colourChooser->IncomingData(message);
 }
 void StartRoom::HandleSelectionConfirmation(string message) {
-    cout << message.at(32) << endl;;
     if (message.at(32) == '1') {
         string colourCode = message.substr(33, 3);
         colourChooser->SelectedColour(colourCode);

@@ -210,8 +210,6 @@ void MyGame::Update(double deltaTime) {
     playerController->UpdateEnemyAttacks(this);
     double delay = 100;  //snapshot buffer should be 3-4x base rate of packets - this way we can lose 2 packets and not experience jittering
     double timern = clientServerTimeDiff + SDL_GetTicks() - delay;
-    cout << "ClientServerDiff: " << clientServerTimeDiff << endl;
-    cout << "Time right now: " << timern << endl;
     for (Enemy* e : *enemies) {
         e->Interpolate(timern);
     }

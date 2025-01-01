@@ -417,7 +417,9 @@ void TextureManager::InitializeAllTextures() {
     "UI\\Button",
     "UI\\ButtonHover",
     "UI\\ButtonClick",
-    "UI\\DisabledButton"};
+    "UI\\DisabledButton",
+    "UI\\StartLeverPowered",
+    "UI\\StartLeverUnpowered"};
     for (string s : texturesToLoad) {
         LoadTexture(s);
     }

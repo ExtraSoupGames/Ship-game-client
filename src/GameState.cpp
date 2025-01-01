@@ -72,7 +72,6 @@ void GameStateMachine::Run() {
         lastFrameTime = currentTime;
         currentTime = SDL_GetPerformanceCounter();
         deltaTime = (double)((currentTime - lastFrameTime) * 1000 / (double)SDL_GetPerformanceFrequency());
-        cout << "Delta time: " << deltaTime << endl;
         if (currentState != nullptr) {
             currentState->Update(deltaTime);
 
