@@ -345,6 +345,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MainMenu.h" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\MyGame.cpp" />
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MyGame.h" />
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\PlayerAttack.cpp" />
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\PlayerAttack.h" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\PlayerController.cpp" />
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\PlayerController.h" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\PlayerPad.cpp" />

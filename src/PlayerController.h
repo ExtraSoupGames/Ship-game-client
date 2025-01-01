@@ -3,6 +3,7 @@
 #include "Collision.h"
 #include "Data.h"
 #include "Animation.h"
+#include "PlayerAttack.h"
 #include "GameState.h"
 struct Hitbox;
 class MyGame;
@@ -41,6 +42,7 @@ private:
     double width;
     double height;
     Hitbox GetPlayerBox();
+    vector<PlayerAttack*>* attacks;
 
     //movement
     double xPos;

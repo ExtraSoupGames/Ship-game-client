@@ -87,6 +87,7 @@ PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager*
     inputs = new InputMapping();
     xVelo = 0;
     yVelo = 0;
+    attacks = new vector<PlayerAttack*>();
 }
 
 #pragma region Getters
@@ -178,6 +179,18 @@ void PlayerController::HandleInput(SDL_Event& event, MyGame* game){
 
 #pragma region UpdateMovement
 void PlayerController::UpdateMove(double deltaTime, int screenScaling){
+    for (PlayerAttack* pA : *attacks) {
+        pA->Update(deltaTime);
+    }
+    attacks->erase(remove_if(attacks->begin(),
+        attacks->end(),
+        [](PlayerAttack* attack) {
+            if (attack->Delete()) {
+                delete attack;
+                return true;
+            }
+            return false;
+    }), attacks->end());
 #pragma region stateUpdate
     if (inputs->IsStill()) {
         if (movementState == 1) {
@@ -286,7 +299,7 @@ void PlayerController::Attack(MyGame* game) {
     //update attack hitbox offset
     Vector2 currentDirection = inputs->GetDirectionFacing(Vector2(xPos,yPos));
     Vector2 middle = GetMiddle();
-    int attackSize = 40;
+    int attackSize = 24;
     attackBoxOffset.x = (currentDirection.x * attackSize) - attackSize;
     attackBoxOffset.y = (currentDirection.y * attackSize) - attackSize;
     //update attack box size (might be useful later when attack size could vary)
@@ -295,6 +308,9 @@ void PlayerController::Attack(MyGame* game) {
     //update attack box position
     attackBox->x = attackBoxOffset.x + middle.x;
     attackBox->y = attackBoxOffset.y + middle.y;
+    int attackAnimationX = middle.x + attackBoxOffset.x;
+    int attackAnimationY = middle.y + attackBoxOffset.y;
+    attacks->push_back(new PlayerAttack(machine->settings, attackAnimationX, attackAnimationY));
     //find enemies hit
     vector<Enemy*> enemiesHit = game->GetCollidingEnemies(*attackBox);
     //send message to the server detailing enemies caught in attack
@@ -326,6 +342,9 @@ void PlayerController::Stun()
 }
 #pragma endregion PlayerActions
 void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY) {
+    for (PlayerAttack* pA : *attacks) {
+        pA->Render(renderer, camOffX, camOffY);
+    }
     if (IsAlive()) // TODO add a ghost sprite for rendering player when they are dead
     {
         //convert the mouse coordinates back into world coordinates here because the offset is passed in
@@ -334,12 +353,6 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
         int mouseY;
         SDL_GetMouseState(&mouseX, &mouseY);
         inputs->mousePos = Vector2(mouseX / machine->settings->screenScaling() + camOffX, mouseY / machine->settings->screenScaling() + camOffY);
-        SDL_Rect* DebugAttackBoxRect = new SDL_Rect{ (attackBox->x - camOffX) * machine->settings->screenScaling(),
-            (attackBox->y - camOffY) * machine->settings->screenScaling(),
-            (attackBox->w) * machine->settings->screenScaling(),
-            (attackBox->h) * machine->settings->screenScaling() };
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-        SDL_RenderDrawRect(renderer, DebugAttackBoxRect);
         switch (movementState) {
         case 0:
             //standing still
@@ -363,3 +376,15 @@ void PlayerController::ReloadTexturesWithPalette(string palette)
     Animatable::ReloadAllFrames(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash"}, machine->settings->textureManager, "Cats\\Cat" + palette);
 }
 #pragma endregion PlayerController
+
+
+/*
+Debug attack box rendering code, add to render function when debugging attack
+
+        SDL_Rect* DebugAttackBoxRect = new SDL_Rect{ (attackBox->x - camOffX) * machine->settings->screenScaling(),
+            (attackBox->y - camOffY) * machine->settings->screenScaling(),
+            (attackBox->w) * machine->settings->screenScaling(),
+            (attackBox->h) * machine->settings->screenScaling() };
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        SDL_RenderDrawRect(renderer, DebugAttackBoxRect);
+*/

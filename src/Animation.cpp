@@ -42,7 +42,7 @@ Animatable::Animatable(vector<string> animationNames, TextureManager* t, string 
 	}
 }
 Animatable::~Animatable() {
-	delete[] animations;
+	delete animations;
 }
 void Animatable::PlayAnimation(int ID) {
 	if (ID >= animations->size() || ID < 0) {

@@ -43,6 +43,9 @@
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\MyGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\PlayerAttack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\PlayerController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -127,6 +130,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MyGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\PlayerAttack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\PlayerController.h">

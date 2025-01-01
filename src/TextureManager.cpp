@@ -419,7 +419,12 @@ void TextureManager::InitializeAllTextures() {
     "UI\\ButtonClick",
     "UI\\DisabledButton",
     "UI\\StartLeverPowered",
-    "UI\\StartLeverUnpowered"};
+    "UI\\StartLeverUnpowered",
+    "Cat\\Attack_0",
+    "Cat\\Attack_1", 
+    "Cat\\Attack_2", 
+    "Cat\\Attack_3", 
+    "Cat\\Attack_4"};
     for (string s : texturesToLoad) {
         LoadTexture(s);
     }
