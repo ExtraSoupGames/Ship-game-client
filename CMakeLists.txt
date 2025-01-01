@@ -39,7 +39,7 @@ if(WIN32)
             "${CMAKE_SOURCE_DIR}/libs/SDL2_ttf/lib/x64/libfreetype-6.dll"
             "${CMAKE_SOURCE_DIR}/libs/SDL2_ttf/lib/x64/SDL2_ttf.dll"
             "${CMAKE_SOURCE_DIR}/libs/SDL2_net/lib/x64/SDL2_net.dll"
-            DESTINATION ${CMAKE_BINARY_DIR})
+            DESTINATION ${CMAKE_BINARY_DIR}/Out/MyGame/Debug)
 else()
     # let FindSDL2.cmake figure out where it is on Mac/Linux
     # Put the FindSDL2.cmake in ./cmake and tell CMake to find it there
@@ -59,17 +59,21 @@ include_directories(${SDL2_INCLUDE_DIR}
                     ${SDL2_TTF_INCLUDE_DIR}
                     ${SDL2_NET_INCLUDE_DIR})
 
+
 # load user source and header files
 file(GLOB_RECURSE SOURCE_FILES "src/*.h" "src/*.cpp")
-add_executable(${PROJECT_NAME} WIN32 ${SOURCE_FILES})
+add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+set_target_properties(MyGame PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/Out/MyGame"
+)
 
-# make assets directory in build
-#file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/assets)
+
 
 # copy game assets into build/assets directory
-#file(COPY
-#        "assets/assetName.png"
-#        DESTINATION ${CMAKE_BINARY_DIR}/assets)
+file(COPY "${CMAKE_SOURCE_DIR}/Assets" DESTINATION "${CMAKE_BINARY_DIR}/Out/MyGame")
+
+# copy font
+file(COPY "${CMAKE_SOURCE_DIR}/build/PixelatedElegance.ttf" DESTINATION "${CMAKE_BINARY_DIR}/Out/MyGame/Debug")
 
 # SDL2MAIN_LIBRARY is needed for Windows specific main function.
 target_link_libraries(${PROJECT_NAME}
