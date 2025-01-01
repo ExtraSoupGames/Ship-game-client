@@ -1,5 +1,6 @@
 ## Ignore textures created by my texture manager, as these are always generated at runtime
 CreatedTextures/
+build/assets/
 
 
 
