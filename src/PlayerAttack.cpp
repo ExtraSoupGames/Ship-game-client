@@ -1,9 +1,11 @@
 #include "PlayerAttack.h"
-PlayerAttack::PlayerAttack(GlobalSettingsProfile* g, int pX, int pY) : Animatable(vector<string>{"Cat\\Attack"}, g->textureManager) {
+PlayerAttack::PlayerAttack(GlobalSettingsProfile* g, int pX, int pY) : Animatable(vector<string>{"Cat\\Attack"}, g->textureManager, g->textureManager->GetTexture("Cat\\Attack_0")) {
 	settings = g;
 	timeAlive = 0;
 	x = pX;
 	y = pY;
+	Animatable::UpdateAnimation();
+	Animatable::PlayAnimation(0);
 }
 
 PlayerAttack::~PlayerAttack()

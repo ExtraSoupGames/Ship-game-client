@@ -10,6 +10,7 @@ class TextureManager
 {
 private:
 	map<string, SDL_Texture*>* textures;
+	map<string, vector<Frame>>* quickLoadAnimations;
 	Frame* LoadFrame(string name, string suffix);
 	Frame* LoadFrame(string name, string suffix, string paletteName);
 	void LoadTextures();

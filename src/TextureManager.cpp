@@ -259,6 +259,10 @@ bool FileExists(string fileName)
 }
 #pragma endregion FileTools
 vector<Frame> TextureManager::LoadAnimation(string name) {
+    //if the animation is a quick load animation then we can just return the preloaded animation
+    if (quickLoadAnimations->find(name) != quickLoadAnimations->end()) {
+        return quickLoadAnimations->at(name);
+    }
     int frame = 0;
     vector<Frame> frames;
     string suffix = "_0";
@@ -403,6 +407,7 @@ bool TextureManager::LoadTexture(string name) {
     return true;
 }
 void TextureManager::InitializeAllTextures() {
+    //load all textures;
     vector<string> texturesToLoad = *new vector<string>{
     "Pirate",
     "PirateResult",
@@ -428,10 +433,17 @@ void TextureManager::InitializeAllTextures() {
     for (string s : texturesToLoad) {
         LoadTexture(s);
     }
+    //load all quickLoadAnimations
+    vector<string> animationsToLoad = *new vector<string>{
+    "Cat\\Attack"};
+    for (string s : animationsToLoad) {
+        quickLoadAnimations->insert({ s, LoadAnimation(s) });
+    }
 }
 TextureManager::TextureManager(SDL_Renderer* pRenderer) {
     renderer = pRenderer;
     textures = new map<string, SDL_Texture*>;
+    quickLoadAnimations = new map<string, vector<Frame>>;
 }
 TextureManager::~TextureManager()
 {

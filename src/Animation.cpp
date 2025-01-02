@@ -27,6 +27,20 @@ Animatable::Animatable(vector<string> animationNames, TextureManager* t, int def
 		animations->push_back(new Animation(animation, t, 100, animationIsLooping));
 	}
 }
+Animatable::Animatable(vector<string> animationNames, TextureManager* t, SDL_Texture* startingTexture, int defaultAnim)
+{
+	animations = new vector<Animation*>();
+	animating = true;
+	currentAnimation = 0;
+	defaultAnimation = defaultAnim;
+	currentFrame = 0;
+	lastAnimated = SDL_GetTicks();
+	texture = startingTexture;
+	for (string animation : animationNames) {
+		bool animationIsLooping = animation.at(0) == '%';
+		animations->push_back(new Animation(animation, t, 100, animationIsLooping));
+	}
+}
 Animatable::Animatable(vector<string> animationNames, TextureManager* t, string paletteName, int defaultAnim)
 {
 	animations = new vector<Animation*>();

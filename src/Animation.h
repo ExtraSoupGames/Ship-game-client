@@ -34,6 +34,7 @@ protected:
 	int currentAnimation;
 public:
 	Animatable(vector<string> animationNames, TextureManager* t, int defaultAnim = 0);
+	Animatable(vector<string> animationNames, TextureManager* t, SDL_Texture* startingTexture, int defaultAnim = 0);
 	Animatable(vector<string> animationNames, TextureManager* t, string paletteName, int defaultAnim = 0);
 	~Animatable();
 	void PlayAnimation(int ID);
