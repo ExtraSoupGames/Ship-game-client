@@ -1,6 +1,6 @@
 #include "ReportVisual.h"
 ReportVisual::ReportVisual(GameReport* report, int pX, int pY, TextureManager* textureManager, int pScreenScaling, int fontSize = 10) {
-	displayText = "Time Survived: " + to_string(report->timeSurvived);
+	displayText = "Time Survived: " + to_string(report->timeSurvived / 10.00).substr(0, 6);
 	screenScaling = pScreenScaling;
 	font = UIRendering::LoadFontAtPixelHeight(fontSize, screenScaling);
 	texture = textureManager->GetTexture("UI\\Button");
