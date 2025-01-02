@@ -67,6 +67,7 @@ Vector2 CollisionManager::ApplyCollision(Vector2 start, Vector2 desiredEnd) {
 	return realEnd;
 }
 void CollisionManager::DrawDebug(SDL_Renderer* renderer, int camOffX, int camOffY, int screenScaling) {
+	SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
 	for (CollisionBoundary* cb : *boundaries) {
 		cb->Draw(renderer, camOffX, camOffY, screenScaling);
 	}

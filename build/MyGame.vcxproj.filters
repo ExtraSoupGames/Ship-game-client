@@ -7,69 +7,175 @@
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\MyGame.cpp">
       <Filter>GameStates\Playable</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Animation.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Button.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Collision.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\ColourChooser.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\DisconnectScreen.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Discovery.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\GameOver.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\GameState.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\GameTimeDisplay.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\GlobalSettings.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Interpolator.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\MainMenu.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\PlayerController.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\PlayerPad.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\ReportVisual.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\ServerCreate.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\ServerLauncher.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\ServerManager.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\SettingsMenu.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\StartRoom.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\TextDisplay.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Textbox.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\TextureManager.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\UIElement.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\UIRendering.cpp" />
-    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Vector2.cpp" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\PlayerAttack.cpp">
       <Filter>GameFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Animation.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Collision.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\ColourChooser.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\ServerCreate.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\ServerLauncher.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\ServerManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\TextureManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Button.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\GameTimeDisplay.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\ReportVisual.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Textbox.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\TextDisplay.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\UIRendering.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\UIElement.cpp">
+      <Filter>UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\PlayerController.cpp">
+      <Filter>GameFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Interpolator.cpp">
+      <Filter>GameFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\DisconnectScreen.cpp">
+      <Filter>GameStates\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Discovery.cpp">
+      <Filter>GameStates\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\MainMenu.cpp">
+      <Filter>GameStates\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\GameOver.cpp">
+      <Filter>GameStates\Playable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\StartRoom.cpp">
+      <Filter>GameStates\Playable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\GameState.cpp">
+      <Filter>GameStates\Other</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\SettingsMenu.cpp">
+      <Filter>GameStates\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\PlayerPad.cpp">
+      <Filter>GameFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Vector2.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\GlobalSettings.cpp">
+      <Filter>Data</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MyGame.h">
       <Filter>GameStates\Playable</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Animation.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Button.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Collision.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\ColourChooser.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Data.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\DisconnectScreen.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Discovery.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\GameOver.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\GameState.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\GameTimeDisplay.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\GlobalSettings.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Interpolator.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MainMenu.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\PlayerController.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\PlayerPad.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\ReportVisual.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\ServerCreate.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\ServerLauncher.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\ServerManager.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\SettingsMenu.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\StartRoom.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\TextDisplay.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Textbox.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\TextureManager.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\UIElement.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\UIRendering.h" />
-    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Vector2.h" />
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\PlayerAttack.h">
       <Filter>GameFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Animation.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Collision.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\ColourChooser.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\ServerCreate.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\ServerLauncher.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\ServerManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\TextureManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Button.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\GameTimeDisplay.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\ReportVisual.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Textbox.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\TextDisplay.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\UIElement.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\UIRendering.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\PlayerController.h">
+      <Filter>GameFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Interpolator.h">
+      <Filter>GameFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\DisconnectScreen.h">
+      <Filter>GameStates\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Discovery.h">
+      <Filter>GameStates\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MainMenu.h">
+      <Filter>GameStates\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\GameOver.h">
+      <Filter>GameStates\Playable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\StartRoom.h">
+      <Filter>GameStates\Playable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\GameState.h">
+      <Filter>GameStates\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\SettingsMenu.h">
+      <Filter>GameStates\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\PlayerPad.h">
+      <Filter>GameFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Vector2.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Data.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\GlobalSettings.h">
+      <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
