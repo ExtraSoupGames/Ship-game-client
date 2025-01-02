@@ -429,7 +429,8 @@ void TextureManager::InitializeAllTextures() {
     "Cat\\Attack_1", 
     "Cat\\Attack_2", 
     "Cat\\Attack_3", 
-    "Cat\\Attack_4"};
+    "Cat\\Attack_4",
+    "Ship"};
     for (string s : texturesToLoad) {
         LoadTexture(s);
     }

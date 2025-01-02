@@ -34,6 +34,7 @@ class MyGame : public HeartbeatGameState {
         CollisionManager* collisions;
         PlayerController* playerController;
         GameTimeDisplay* timerDisplay;
+        SDL_Texture* shipTexture;
         double serverBroadcastTimer = 0;
         double serverBroadcastDelay = 500;//adjust this to change how quickly important messages are resent - could affect performance if too low
 

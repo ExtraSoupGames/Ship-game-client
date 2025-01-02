@@ -21,6 +21,7 @@ MyGame::MyGame(GameStateMachine* pMachine) : HeartbeatGameState(pMachine){
 
     cameraOffsetX = 0;
     cameraOffsetY = 0;
+    shipTexture = machine->settings->textureManager->GetTexture("Ship");
 }
 MyGame::~MyGame() {
     delete collisions;
@@ -229,7 +230,11 @@ void MyGame::Update(double deltaTime) {
 void MyGame::Render(SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
     SDL_RenderClear(renderer);
-
+    SDL_RenderCopy(renderer, shipTexture, NULL,new SDL_Rect{
+        machine->settings->screenScaling() * (0-cameraOffsetX),
+        machine->settings->screenScaling() * (0-cameraOffsetY),
+        machine->settings->screenScaling() * 720,
+        machine->settings->screenScaling() * 480});
     for (Enemy* e : *enemies) {
         e->Render(renderer, machine->settings, cameraOffsetX, cameraOffsetY);
     }

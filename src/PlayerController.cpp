@@ -59,7 +59,7 @@ PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager*
     //player's values
     attackCooldown = 500;
     playerHealth = 100;
-    playerSpeed = 12;
+    playerSpeed = 10;
     //dash values
     dashCooldown = 1000; // time after start of dash when another dash can be initiated, must be greather than dashduration
     dashDuration = 250; // time spent physically dashing
@@ -69,8 +69,8 @@ PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager*
     //starting position
     xPos = 20;
     yPos = 50;
-    width = 20;
-    height = 20;
+    width = 16;
+    height = 32;
     //used later
     lastAttackTimestamp = 0;
     lastDashTimestamp = 0;
@@ -310,7 +310,8 @@ void PlayerController::Attack(MyGame* game) {
     attackBox->y = attackBoxOffset.y + middle.y;
     int attackAnimationX = middle.x + attackBoxOffset.x;
     int attackAnimationY = middle.y + attackBoxOffset.y;
-    attacks->push_back(new PlayerAttack(machine->settings, attackAnimationX, attackAnimationY));
+    //last parameter of playerattack constructor is bool for flipped, so we just check if the x the player is facing is negative
+    attacks->push_back(new PlayerAttack(machine->settings, attackAnimationX, attackAnimationY, (currentDirection.x < 0)));
     //find enemies hit
     vector<Enemy*> enemiesHit = game->GetCollidingEnemies(*attackBox);
     //send message to the server detailing enemies caught in attack

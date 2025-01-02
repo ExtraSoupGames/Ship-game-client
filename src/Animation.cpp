@@ -105,10 +105,14 @@ void Animatable::SetTexture(SDL_Texture* t)
 {
 	texture = t;
 }
-void Animatable::Render(SDL_Renderer* renderer, int xPos, int yPos, int width, int height, GlobalSettingsProfile* settings) {
+void Animatable::Render(SDL_Renderer* renderer, int xPos, int yPos, int width, int height, GlobalSettingsProfile* settings, bool flipped) {
 	int screenScale = settings->screenScaling();
 	const SDL_Rect *dst = new SDL_Rect{ xPos * screenScale, yPos * screenScale, width * screenScale, height * screenScale };
-	SDL_RenderCopy(renderer, texture, NULL, dst);
+	if (!flipped) {
+		SDL_RenderCopy(renderer, texture, NULL, dst);
+		return;
+	}
+	SDL_RenderCopyEx(renderer, texture, NULL, dst, 0, NULL, SDL_RendererFlip::SDL_FLIP_HORIZONTAL);
 }
 
 void Animatable::ReloadAllFrames(vector<string> animationNames, TextureManager* t, string paletteName, int defaultAnim)

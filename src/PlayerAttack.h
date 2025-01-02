@@ -7,9 +7,10 @@ private:
 	double timeAlive; // should die at 599
 	int x;
 	int y;
+	bool isFlipped;
 	GlobalSettingsProfile* settings;
 public:
-	PlayerAttack(GlobalSettingsProfile* g, int pX, int pY);
+	PlayerAttack(GlobalSettingsProfile* g, int pX, int pY, bool flipped);
 	~PlayerAttack();
 	void Render(SDL_Renderer* renderer, int camOffX, int camOffY);
 	void Update(double deltaTime);
