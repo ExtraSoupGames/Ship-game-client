@@ -63,20 +63,21 @@ EnemyType Enemy::GetEnemyTypeFromBinary(string binaryIn)
     return FLOPPER;
 }
 Enemy::Enemy(int ID) : Interpolator(ID) {
-    width = 20;
-    height = 20;
     lastAttackTimestamp = 0;
 }
 void Enemy::OnInterpolate(DataPoint* data)
 {
 }
-Hitbox Enemy::GetHitbox() {
-    return *new Hitbox{x, y, width, height};
-}
 #pragma endregion Enemy
 #pragma region Bobleech
 Bobleech::Bobleech(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{"%Bobleech", "%Bobleech"}, t) {
     Animatable::PlayAnimation(0);
+    width = 16;
+    height = 16;
+}
+Hitbox Bobleech::GetHitbox()
+{
+    return Hitbox{x + 2, y + 7, 12, 8};
 }
 void Bobleech::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY) {
     Animatable::Render(renderer, x - camOffX, y - camOffY, 16, 16, settings);
@@ -95,6 +96,12 @@ EnemyAttackData Bobleech::GetAttackData()
 #pragma region Flopper
 Flopper::Flopper(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{ "%FlopperIdle", "FlopperLaunch", "FlopperSpawn", "%FlopperFly"}, t, 3) {//set flopper fly as default so after launching it goes to that TODO add queueing system
     state = SPAWNING;
+    width = 32;
+    height = 32;
+}
+Hitbox Flopper::GetHitbox()
+{
+    return Hitbox{x + 3, y + 10, 26, 19};
 }
 void Flopper::OnInterpolate(DataPoint* data) {
     FlopperData* flopperData = (FlopperData*)data;
@@ -125,6 +132,13 @@ void Clingabing::OnInterpolate(DataPoint* data)
 Clingabing::Clingabing(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{}, t) // TODO add animation names
 {
     state = IDLE;
+    width = 32;
+    height = 32;
+}
+
+Hitbox Clingabing::GetHitbox()
+{
+    return Hitbox();
 }
 
 void Clingabing::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY)

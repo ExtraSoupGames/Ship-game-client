@@ -69,8 +69,8 @@ PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager*
     //starting position
     xPos = 20;
     yPos = 50;
-    width = 16;
-    height = 32;
+    width = 10;
+    height = 24;
     //used later
     lastAttackTimestamp = 0;
     lastDashTimestamp = 0;
@@ -116,7 +116,7 @@ Vector2 PlayerController::GetMiddle()
 }
 Hitbox PlayerController::GetPlayerBox()
 {
-    return Hitbox{(int)xPos, (int)yPos, (int)height, (int)width};
+    return Hitbox{(int)xPos + 3, (int)yPos + 8, (int)height, (int)width};
 }
 bool PlayerController::IsAlive() {
     return playerHealth > 0;
@@ -240,7 +240,7 @@ void PlayerController::UpdateEnemyAttacks(MyGame* game)
             Vector2 playerPos = Vector2(xPos, yPos);
             Vector2 enemyPos = Vector2(incomingAttack.enemyMiddleX, incomingAttack.enemyMiddleY);
             Vector2 knockbackDirection = (playerPos - enemyPos).Normalise();
-            Vector2 finalKnockback = knockbackDirection * (incomingAttack.knockbackModifier);
+            Vector2 finalKnockback = knockbackDirection * (incomingAttack.knockbackModifier) * 0.5f;
             ApplyForce(finalKnockback.x, finalKnockback.y);
         }
     }
