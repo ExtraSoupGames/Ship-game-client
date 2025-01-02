@@ -7,8 +7,8 @@ GameTimeDisplay::GameTimeDisplay(TextureManager* t, int pX, int pY, int pScreenS
 	currentTimeSurvived = 0;
 	screenScaling = pScreenScaling;
 	font = UIRendering::LoadFontAtPixelHeight(15, screenScaling);
-	x = pX;
-	y = pY;
+	x = pX * screenScaling;
+	y = pY * screenScaling;
 
 }
 

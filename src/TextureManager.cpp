@@ -425,6 +425,7 @@ void TextureManager::InitializeAllTextures() {
     "UI\\DisabledButton",
     "UI\\StartLeverPowered",
     "UI\\StartLeverUnpowered",
+    "UI\\HealthBar",
     "Cat\\Attack_0",
     "Cat\\Attack_1", 
     "Cat\\Attack_2", 

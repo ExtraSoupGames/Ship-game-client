@@ -59,6 +59,7 @@ PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager*
     //player's values
     attackCooldown = 500;
     playerHealth = 100;
+    maxHealth = playerHealth;
     playerSpeed = 10;
     //dash values
     dashCooldown = 1000; // time after start of dash when another dash can be initiated, must be greather than dashduration
@@ -66,7 +67,7 @@ PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager*
     dashLength = 100; // distance covered in a dash
     //stun values
     stunDuration = 500;
-    //starting position
+    //starting position / hitbox size
     xPos = 20;
     yPos = 50;
     width = 10;
@@ -120,6 +121,10 @@ Hitbox PlayerController::GetPlayerBox()
 }
 bool PlayerController::IsAlive() {
     return playerHealth > 0;
+}
+int PlayerController::GetHealthPercent()
+{
+    return ((double)playerHealth / maxHealth) * 100;
 }
 void PlayerController::ApplyForce(double xForce, double yForce)
 {

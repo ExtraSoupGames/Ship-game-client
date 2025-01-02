@@ -1,6 +1,7 @@
 #include "MyGame.h"
 #include "MainMenu.h"
 #include "GameOver.h"
+#include "HealthBar.h"
 bool Hitbox::Collides(Hitbox& other) {
     if (other.x + other.w < x || x + w < other.x) {
         return false;
@@ -14,8 +15,9 @@ bool Hitbox::Collides(Hitbox& other) {
 MyGame::MyGame(GameStateMachine* pMachine) : HeartbeatGameState(pMachine){
     collisions = new CollisionManager();
     playerController = new PlayerController(machine, collisions);
-    timerDisplay = new GameTimeDisplay(machine->settings->textureManager, 100, 100, machine->settings->screenScaling());
+    timerDisplay = new GameTimeDisplay(machine->settings->textureManager, 10, 10, machine->settings->screenScaling());
     UIElements.push_back(timerDisplay);
+    UIElements.push_back(new HealthBar(machine->settings->textureManager, 30, 10, machine->settings->screenScaling(), playerController));
 
     enemies = new vector<Enemy*>();
 

@@ -24,6 +24,7 @@ class PlayerController : public Animatable {
 private:
     //player values
     int playerHealth;
+    int maxHealth;
     int playerSpeed;
     //player actions
     void Attack(MyGame* game);
@@ -84,6 +85,7 @@ public:
     int GetWidth();
     int GetHeight();
     bool IsAlive();
+    int GetHealthPercent();
 
     PlayerController(GameStateMachine* machine, CollisionManager* pCollisionManager);
     void HandleInput(SDL_Event& event, MyGame* game);
