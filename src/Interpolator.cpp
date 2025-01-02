@@ -172,12 +172,20 @@ void OtherPlayer::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings
         }
     }
 }
+void OtherPlayer::CheckColour(string newPalette, TextureManager* t)
+{
+    if (newPalette != colourPalette) {
+        colourPalette = newPalette;
+        Animatable::ReloadAllFrames(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash" }, t, "Cats\\Cat" + colourPalette);
+    }
+}
 void OtherPlayer::OnInterpolate(DataPoint* data){
     PlayerData* playerData = (PlayerData*)(data);
     state = playerData->state;
 }
-OtherPlayer::OtherPlayer(int ID, TextureManager* t) : Interpolator(ID), Animatable(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash"}, t, "Cats\\Cat111") {
+OtherPlayer::OtherPlayer(int ID, TextureManager* t, string playerPalette) : Interpolator(ID), Animatable(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash"}, t, "Cats\\Cat" + playerPalette) {
     state = *new PlayerState(0 ,0, 0, 0); // default state is direction 0, standing still = 0, and not attacking = 0, and animation state of 0
     isAlive = true;
+    colourPalette = playerPalette;
 }
 #pragma endregion OtherPlayer

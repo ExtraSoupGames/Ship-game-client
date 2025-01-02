@@ -89,10 +89,12 @@ class OtherPlayer : public Interpolator, public Animatable
 {
 protected:
 	PlayerState state;
+	string colourPalette;
 	void OnInterpolate(DataPoint* data) override;
 public:
 	bool isAlive;
-	OtherPlayer(int ID, TextureManager* t);
+	OtherPlayer(int ID, TextureManager* t, string playerPalette);
 	void Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY);
+	void CheckColour(string newPalette, TextureManager* t);
 };
 

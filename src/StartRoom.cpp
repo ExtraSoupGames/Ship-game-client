@@ -10,12 +10,12 @@ StartRoom::StartRoom(GameStateMachine* pMachine) : HeartbeatGameState(pMachine)
     player = new PlayerController(pMachine, collisions);
     startPad = new StartPad(machine->settings->textureManager);
     colourChooser = new ColourChooser(machine->settings->server, machine->settings->clientID);
-    UIElements.push_back(new Button("ChooseColour1", 220, 5, [this] {colourChooser->ColourChosen(1); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-    UIElements.push_back(new Button("ChooseColour2", 220, 35, [this] {colourChooser->ColourChosen(2); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-    UIElements.push_back(new Button("ChooseColour3", 220, 65, [this] {colourChooser->ColourChosen(3); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-    UIElements.push_back(new Button("ChooseColour4", 220, 95, [this] {colourChooser->ColourChosen(4); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-    UIElements.push_back(new Button("ChooseColour5", 220, 125, [this] {colourChooser->ColourChosen(5); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-    UIElements.push_back(new Button("ChooseColour6", 220, 155, [this] {colourChooser->ColourChosen(6); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    UIElements.push_back(new Button("Pick Colour 1", 220, 5, [this] {colourChooser->ColourChosen(1); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    UIElements.push_back(new Button("Pick Colour 2", 220, 35, [this] {colourChooser->ColourChosen(2); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    UIElements.push_back(new Button("Pick Colour 3", 220, 65, [this] {colourChooser->ColourChosen(3); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    UIElements.push_back(new Button("Pick Colour 4", 220, 95, [this] {colourChooser->ColourChosen(4); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    UIElements.push_back(new Button("Pick Colour 5", 220, 125, [this] {colourChooser->ColourChosen(5); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+    UIElements.push_back(new Button("Pick Colour 6", 220, 155, [this] {colourChooser->ColourChosen(6); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
 
 }
 
