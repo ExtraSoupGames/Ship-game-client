@@ -18,6 +18,7 @@ private:
 	vector<ImportantMessage*>* importantMessages;
 	int nextMessageID = 0;
 	int clientID;
+	void Send(bitset<32> headerData, vector<bitset<8>> packetData, IPaddress address, int length);
 public:
 	ServerManager(UDPsocket serverSocket, int pClientID);
 	~ServerManager();

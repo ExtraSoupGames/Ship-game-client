@@ -7,6 +7,33 @@ PlayerState::PlayerState(int pDirection, int pMovementState, int pAttackState, i
     animationState = pAnimationState;
 }
 
+void ServerManager::Send(bitset<32> headerData, vector<bitset<8>> packetData, IPaddress address, int length)
+{
+    // Prepare the packet to send, based on the size of the data
+    UDPpacket* packet = SDLNet_AllocPacket(length);
+    //handle errors from the packet preperation
+    if (!packet) {
+        std::cerr << "SDLNet_AllocPacket: " << SDLNet_GetError() << std::endl;
+        SDLNet_UDP_Close(socket);
+        SDLNet_Quit();
+        SDL_Quit();
+    }
+    //copy the header to the start of the packet data
+    memcpy(packet->data, &headerData, 4);
+    //iterate through the data, copying each byte in one at a time
+    for (int i = 0; i < packetData.size(); i++) {
+        memcpy(packet->data + 4 + i, &packetData.at(i), 1);
+    }
+    //set the length of the packet
+    packet->len = length + 1;
+    //set the address of the packet to the IP address we found earlier
+    packet->address = address;
+    // Send the packet and handle any errors
+    if (SDLNet_UDP_Send(socket, -1, packet) == 0) {
+        std::cerr << "SDLNet_UDP_Send: " << SDLNet_GetError() << std::endl;
+    }
+}
+
 ServerManager::ServerManager(UDPsocket serverSocket, int pClientID) {
 	socket = serverSocket;
     host = "255.255.255.255";
@@ -60,32 +87,10 @@ void ServerManager::SendMessage(string messageBinary) {
         // convert this into a bitset of 8 bits and add to data vector
         newData.push_back(bitset<8>(stoi(byteData, nullptr, 2)));
     }
-    //calculate the size of the compressed data
+    //calculate the size of the compressed data, with the header
     __int32 bytesWithHeader = newData.size() + 4;
     bitset<32> bytesHeader(bytesWithHeader);
-    // Prepare the packet to send, based on the size of the data
-    UDPpacket* packet = SDLNet_AllocPacket(bytesWithHeader);
-    //handle errors from the packet preperation
-    if (!packet) {
-        std::cerr << "SDLNet_AllocPacket: " << SDLNet_GetError() << std::endl;
-        SDLNet_UDP_Close(socket);
-        SDLNet_Quit();
-        SDL_Quit();
-    }
-    //copy the header to the start of the packet data
-    memcpy(packet->data, &bytesHeader, 4);
-    //iterate through the data, copying each byte in one at a time
-    for (int i = 0; i < newData.size(); i++) {
-        memcpy(packet->data + 4 + i, &newData.at(i), 1);
-    }
-    //set the length of the packet
-    packet->len = bytesWithHeader + 1;
-    //set the address of the packet to the IP address we found earlier
-    packet->address = ip;
-    // Send the packet and handle any errors
-    if (SDLNet_UDP_Send(socket, -1, packet) == 0) {
-        std::cerr << "SDLNet_UDP_Send: " << SDLNet_GetError() << std::endl;
-    }
+    Send(bytesHeader, newData, ip, bytesWithHeader);
 }
 void ServerManager::SendImportantMessage(string binaryContents)
 {
@@ -132,9 +137,10 @@ string ServerManager::CharToBinary(char* inData, int dataLength) {
     return ss.str().substr(0, dataLength * 8);
 }
 string ServerManager::PositionCompress(int positionX, int positionY) {
+    //all positions are divided by 4, then remultiplied, so they are essentially being rounded to save on packet size
     positionX = positionX / 4;
     positionY = positionY / 4;
-    //data is made smaller, then resized at decompression
+    //we then convert the 2 integers into a bitset of 8 bits, then convert that into a string of 0s and 1s, ready to be transmitted
     bitset<8> xbits = (__int8)positionX;
     bitset<8> ybits = (__int8)positionY;
     stringstream ss;
