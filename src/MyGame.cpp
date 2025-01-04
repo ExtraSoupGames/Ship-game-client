@@ -245,7 +245,6 @@ void MyGame::Render(SDL_Renderer* renderer) {
     }
     playerController->Render(renderer, machine->settings, cameraOffsetX, cameraOffsetY);
 
-    collisions->DrawDebug(renderer, cameraOffsetX, cameraOffsetY, machine->settings->screenScaling());
     GameState::RenderUI(renderer);
     SDL_RenderPresent(renderer);
 }

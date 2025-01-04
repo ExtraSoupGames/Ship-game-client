@@ -39,7 +39,6 @@ void StartRoom::Render(SDL_Renderer* renderer)
     }
     player->Render(renderer, machine->settings, 0 ,0); // no camera movement on start room screen
     GameState::RenderUI(renderer);
-    collisions->DrawDebug(renderer, 0, 0, machine->settings->screenScaling());
     SDL_RenderPresent(renderer);
 }
 void StartRoom::HandleStartPadData(string message) {
