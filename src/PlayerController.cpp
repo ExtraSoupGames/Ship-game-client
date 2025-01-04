@@ -68,8 +68,8 @@ PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager*
     //stun values
     stunDuration = 500;
     //starting position / hitbox size
-    xPos = 20;
-    yPos = 50;
+    xPos = 100;
+    yPos = 100;
     width = 10;
     height = 24;
     //used later
