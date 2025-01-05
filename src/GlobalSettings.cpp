@@ -34,5 +34,6 @@ GlobalSettingsProfile::GlobalSettingsProfile(SDL_Renderer* pRenderer, int pScree
 GlobalSettingsProfile::~GlobalSettingsProfile() {
     delete server;
     delete textureManager;
+    delete soundManager;
     SDLNet_UDP_Close(socket);
 }

@@ -66,6 +66,9 @@ EnemyType Enemy::GetEnemyTypeFromBinary(string binaryIn)
     else if (binaryIn == "001") {
         return FLOPPER;
     }
+    else if (binaryIn == "010") {
+        return CLINGABING;
+    }
     return FLOPPER;
 }
 Enemy::Enemy(int ID) : Interpolator(ID) {
@@ -133,13 +136,27 @@ EnemyAttackData Flopper::GetAttackData()
 #pragma region Clingabing
 void Clingabing::OnInterpolate(DataPoint* data)
 {
+    ClingabingData* clingabingData = (ClingabingData*)data;
+    if (state != clingabingData->state) {
+        state = clingabingData->state;
+        switch (state) {
+        case IDLE:
+            Animatable::PlayAnimation(0);
+            break;
+        case DASHING:
+            Animatable::PlayAnimation(1);
+            break;
+        case ATTACHED:
+            Animatable::PlayAnimation(2);
+        }
+    }
 }
 
-Clingabing::Clingabing(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{}, t) // TODO add animation names
+Clingabing::Clingabing(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vector<string>{"%ClingabingIdle", "ClingabingDash", "%ClingabingDashing"}, t, 2)
 {
     state = IDLE;
-    width = 32;
-    height = 32;
+    width = 16;
+    height = 16;
 }
 
 Hitbox Clingabing::GetHitbox()
@@ -150,8 +167,8 @@ Hitbox Clingabing::GetHitbox()
 void Clingabing::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY)
 {
     //TODO add clingabing frames and animate
-    SDL_Rect* clingabingRect = new SDL_Rect{(x - camOffX) * settings->screenScaling(), (y - camOffY) * settings->screenScaling(), 15, 15};
-    SDL_RenderDrawRect(renderer, clingabingRect);
+    Animatable::UpdateAnimation();
+    Animatable::Render(renderer, x - camOffX, y - camOffY, 16, 16, settings);
 }
 bool Clingabing::IsAttacking()
 {
