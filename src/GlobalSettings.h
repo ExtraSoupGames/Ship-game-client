@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "SDL_net.h"
+#include "SoundManager.h"
 #include <iostream>
 using namespace std;
 class ServerManager;
@@ -10,6 +11,7 @@ public:
 	UDPsocket socket;
 	ServerManager* server;
 	TextureManager* textureManager;
+	SoundManager* soundManager;
 	int clientID;
 	int screenHeight;
 	int screenWidth;

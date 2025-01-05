@@ -3,19 +3,25 @@
 #include "Data.h"
 #pragma region Interpolator
 void Interpolator::AddToBuffer(DataStream* newData) {
+    //add the new data element to the buffer
 	incomingDataBuffer.push_back(newData);
+    //sort the data buffer by the timestamp so that the elements are in increasing timestamp order
 	std::sort(incomingDataBuffer.begin(), incomingDataBuffer.end(), [](DataStream*& a, DataStream*& b) {return a->timestamp < b->timestamp; });
 }
 void Interpolator::Interpolate(double currentTime) {
+    //only interpolate if there are more than 2 elements in the buffer
     if (incomingDataBuffer.size() >= 2) {
         if (incomingDataBuffer[1]->timestamp < currentTime) {
             incomingDataBuffer.erase(incomingDataBuffer.begin());
             //if the time is past the second element of incomingDataBuffer, then we dont need the first element for interpolation anymore so we can remove it
         }
-
+        //check again if the data bufer has more than 2 elements, one may have been deleted since the first check
         if (incomingDataBuffer.size() >= 2) {
+            //calculate the duration of the snapshot (the time between the first and second data elements)
             double snapshotDuration = (incomingDataBuffer[1]->timestamp - incomingDataBuffer[0]->timestamp);
+            //calculate time since the start of the snapshot
             double snapshotSinceStart = (currentTime - incomingDataBuffer[0]->timestamp);
+            //calculate progress through this snapshot
             double snapshotProgress = snapshotSinceStart / snapshotDuration;
             if (snapshotProgress > 1) { //a new packet has taken too long to arrive, no data is available for where the object should currently be so just stay still
                 x = incomingDataBuffer[1]->data->X;

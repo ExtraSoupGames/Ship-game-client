@@ -300,6 +300,7 @@ void PlayerController::Attack(MyGame* game) {
         //attack on cooldown
         return;
     }
+    machine->settings->soundManager->PlaySound("testSound");
     lastAttackTimestamp = SDL_GetTicks();
     //update attack hitbox offset
     Vector2 currentDirection = inputs->GetDirectionFacing(Vector2(xPos,yPos));

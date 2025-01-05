@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_net.h>
+#include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <iostream>
 #include <cstring>
@@ -30,6 +31,15 @@ int main(int argc, char* argv[]) {
         cerr << "TTF Could not initialize! TTF_Error: " << TTF_GetError() << endl;
         SDL_Quit();
         SDLNet_Quit();
+        return 1;
+    }
+    //Initialize SDL_mixer
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    {
+        printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+        SDL_Quit();
+        SDLNet_Quit();
+        Mix_Quit();
         return 1;
     }
 #pragma endregion initialization

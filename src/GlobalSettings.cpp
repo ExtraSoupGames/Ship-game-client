@@ -25,6 +25,8 @@ GlobalSettingsProfile::GlobalSettingsProfile(SDL_Renderer* pRenderer, int pScree
     textureManager = new TextureManager(renderer);
     textureManager->InitializeAllTextures();
 	server = new ServerManager(socket, clientID);
+    soundManager = new SoundManager();
+    soundManager->LoadSounds();
 	screenWidth = pScreenWidth;
     screenHeight = pScreenHeight;
     playerPalette = "111";

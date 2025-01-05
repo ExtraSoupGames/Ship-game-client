@@ -322,8 +322,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\HealthBar.cpp" />
+    <ClCompile Include="..\src\SoundManager.cpp" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Animation.cpp" />
     <ClInclude Include="..\src\HealthBar.h" />
+    <ClInclude Include="..\src\SoundManager.h" />
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Animation.h" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Button.cpp" />
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Button.h" />

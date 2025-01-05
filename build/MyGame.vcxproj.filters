@@ -91,6 +91,9 @@
     <ClCompile Include="..\src\HealthBar.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\SoundManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\MyGame.h">
@@ -182,6 +185,9 @@
     </ClInclude>
     <ClInclude Include="..\src\HealthBar.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\SoundManager.h">
+      <Filter>Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
