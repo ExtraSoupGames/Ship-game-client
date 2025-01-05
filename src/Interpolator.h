@@ -58,6 +58,10 @@ public:
 };
 #pragma region Enemies
 class Bobleech : public Enemy, public Animatable {
+private:
+	bool flipped;
+protected:
+	void OnInterpolate(DataPoint* data) override;
 public:
 	Bobleech(int ID, TextureManager* t);
 	Hitbox GetHitbox() override;

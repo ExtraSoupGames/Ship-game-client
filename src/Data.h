@@ -37,7 +37,18 @@ struct EnemyData : public DataPoint {
     }
 };
 struct BobleechData : public EnemyData {
-    BobleechData(int x, int y) : EnemyData(x, y){
+    bool flipped;
+    BobleechData(int x, int y, string binaryIn) : EnemyData(x, y){
+        if (binaryIn == "00") {
+            flipped = false;
+        }
+        else if(binaryIn == "01") {
+            flipped = true;
+        }
+        else {
+            flipped = false;
+            throw new exception("Invalid Bobleech state provided");
+        }
     }
 };
 struct FlopperData : public EnemyData {

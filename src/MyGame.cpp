@@ -104,7 +104,7 @@ void MyGame::HandleEnemyData(string message) {
         //process the data for the enemy, depending on the type of enemy
         switch (enemyType) {
         case LEECH:
-            ProcessEnemy<Bobleech>(new BobleechData(X, Y), ID, timestamp);
+            ProcessEnemy<Bobleech>(new BobleechData(X, Y, extraData), ID, timestamp);
             break;
         case FLOPPER:
             ProcessEnemy<Flopper>(new FlopperData(X, Y, extraData), ID, timestamp);

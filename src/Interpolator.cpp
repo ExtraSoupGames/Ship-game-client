@@ -83,13 +83,14 @@ Bobleech::Bobleech(int ID, TextureManager* t) : Enemy(ID), Animatable(*new vecto
     Animatable::PlayAnimation(0);
     width = 16;
     height = 16;
+    flipped = false;
 }
 Hitbox Bobleech::GetHitbox()
 {
     return Hitbox{x + 2, y + 7, 12, 8};
 }
 void Bobleech::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY) {
-    Animatable::Render(renderer, x - camOffX, y - camOffY, 16, 16, settings);
+    Animatable::Render(renderer, x - camOffX, y - camOffY, 16, 16, settings, flipped);
     Animatable::UpdateAnimation();
 }
 bool Bobleech::IsAttacking()
@@ -100,6 +101,10 @@ bool Bobleech::IsAttacking()
 EnemyAttackData Bobleech::GetAttackData()
 {
     return EnemyAttackData(x, y, 3, 0.2f);
+}
+void Bobleech::OnInterpolate(DataPoint* data) {
+    BobleechData* bobleechData = (BobleechData*)data;
+    flipped = bobleechData->flipped;
 }
 #pragma endregion Bobleech
 #pragma region Flopper
