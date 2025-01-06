@@ -205,7 +205,7 @@ void OtherPlayer::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings
             break;
         case 2:
             //dashing
-            Animatable::PlayAnimation(4);
+            Animatable::PlayAnimation(5);
             break;
         case 1:
             //walking
@@ -218,7 +218,7 @@ void OtherPlayer::CheckColour(string newPalette, TextureManager* t)
 {
     if (newPalette != colourPalette) {
         colourPalette = newPalette;
-        Animatable::ReloadAllFrames(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash" }, t, "Cats\\Cat" + colourPalette);
+        Animatable::ReloadAllFrames(*new vector<string>{ "%CatStill", "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash" }, t, "Cats\\Cat" + colourPalette);
     }
 }
 void OtherPlayer::OnInterpolate(DataPoint* data){

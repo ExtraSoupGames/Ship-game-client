@@ -36,17 +36,17 @@ int InputMapping::GetAnimationID() {
     int direction = static_cast<int>((angle + (M_PI / 8.0f)) / (M_PI / 4.0f)) % 8;
     switch (direction) {
     case 0:
-        return 0; // // if player is moving straight down return the cat down animation ID
+        return 1; // // if player is moving straight down return the cat down animation ID
     case 1:
     case 2:
     case 3:
-        return 2; // if player is moving left at all, return the cat facing left animation ID
+        return 3; // if player is moving left at all, return the cat facing left animation ID
     case 4:
-        return 3; // if player is moving straight up, return the cat up animation ID
+        return 4; // if player is moving straight up, return the cat up animation ID
     case 5:
     case 6:
     case 7:
-        return 1; // if player is moving right at all, return the cat facing right animation ID
+        return 2; // if player is moving right at all, return the cat facing right animation ID
     default:
         return 0;
     }
@@ -55,7 +55,7 @@ int InputMapping::GetAnimationID() {
 #pragma region PlayerController
 
 PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager* pCollisionManager)
-    : Animatable(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash"}, pMachine->settings->textureManager, "Cats\\Cat" + pMachine->settings->playerPalette) {
+    : Animatable(*new vector<string>{ "%CatStill", "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash"}, pMachine->settings->textureManager, "Cats\\Cat" + pMachine->settings->playerPalette) {
     //player's values
     attackCooldown = 500;
     playerHealth = 100;
@@ -300,7 +300,6 @@ void PlayerController::Attack(MyGame* game) {
         //attack on cooldown
         return;
     }
-    machine->settings->soundManager->PlaySound("testSound");
     lastAttackTimestamp = SDL_GetTicks();
     //update attack hitbox offset
     Vector2 currentDirection = inputs->GetDirectionFacing(Vector2(xPos,yPos));
@@ -371,7 +370,7 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
             break;
         case 2:
             //dashing
-            Animatable::PlayAnimation(4);
+            Animatable::PlayAnimation(5);
             break;
         }
         Animatable::UpdateAnimation();
@@ -380,7 +379,7 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
 }
 void PlayerController::ReloadTexturesWithPalette(string palette)
 {
-    Animatable::ReloadAllFrames(*new vector<string>{ "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash"}, machine->settings->textureManager, "Cats\\Cat" + palette);
+    Animatable::ReloadAllFrames(*new vector<string>{ "%CatStill", "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash"}, machine->settings->textureManager, "Cats\\Cat" + palette);
 }
 #pragma endregion PlayerController
 
