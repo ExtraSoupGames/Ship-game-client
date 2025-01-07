@@ -4,7 +4,9 @@
 #include <vector>
 #include <stdexcept>
 #include <iostream>
-
+// BMPEditor region copied and modified from
+// https://github.com/sol-prog/cpp-bmp-images/tree/master?tab=readme-ov-file
+// Paul Silisteanu
 #pragma region BMPEditor
 #pragma pack(push, 1)
 struct BMPFileHeader {
