@@ -5,10 +5,11 @@
 #include "Textbox.h"
 MainMenu::MainMenu(GameStateMachine* pMachine) : GameState(pMachine)
 {
-	UIElements.push_back(new Button("Search for a server", 25, 10, [this] {this->TransferToDiscoveryScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-	UIElements.push_back(new Button("Settings", 25, 30, [this] {this->TransferToSettingsScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-	UIElements.push_back(new Button("Create a server", 25, 50, [this] {this->TransferToCreateScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
-	UIElements.push_back(new Button("Exit Game", 25, 70, [this] {this->ExitGame(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+	UIElements.push_back(new TextDisplay(machine->settings->textureManager, 25, 10, machine->settings->screenScaling(), "Tidal Tussle"));
+	UIElements.push_back(new Button("Search for a server", 25, 30, [this] {this->TransferToDiscoveryScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+	UIElements.push_back(new Button("Settings", 25, 50, [this] {this->TransferToSettingsScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+	UIElements.push_back(new Button("Create a server", 25, 70, [this] {this->TransferToCreateScreen(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
+	UIElements.push_back(new Button("Exit Game", 25, 90, [this] {this->ExitGame(); }, machine->settings->textureManager, machine->settings->screenScaling(), 25));
 }
 MainMenu::~MainMenu() {
 

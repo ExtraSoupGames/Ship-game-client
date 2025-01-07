@@ -28,7 +28,7 @@ GameStateMachine::GameStateMachine()
     int screenHeight = 180 * screenScale;
     int screenWidth = 320 * screenScale;
     SDL_Window* window = SDL_CreateWindow(
-        "Multiplayer Ship Game Client",
+        "Tidal Tussle",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
         screenWidth, screenHeight,
         SDL_WINDOW_SHOWN
