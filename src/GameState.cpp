@@ -24,7 +24,7 @@ GameState::~GameState() {
 }
 GameStateMachine::GameStateMachine()
 {
-    int screenScale = 4;
+    int screenScale = 2;
     int screenHeight = 180 * screenScale;
     int screenWidth = 320 * screenScale;
     SDL_Window* window = SDL_CreateWindow(
@@ -78,14 +78,20 @@ void GameStateMachine::Run() {
 #pragma region receivePackets
             //only receive packets when required
             if (receivingPackets) {
-                //receive the packet into the packet variable, from the socket
-                int packets = SDLNet_UDP_Recv(settings->socket, packet);
-                //if any packets were received
-                if (packets) {
-                    //copy the packet data into an array of char
-                    char* inData = ((char*)packet->data);
-                    //allow the current state to process whatever data is received
-                    currentState->OnReceive(inData, packet->len);
+                bool collectedAllPackets = false;
+                while (!collectedAllPackets) {
+                    //receive the packet into the packet variable, from the socket
+                    int packets = SDLNet_UDP_Recv(settings->socket, packet);
+                    //if any packets were received
+                    if (packets) {
+                        //copy the packet data into an array of char
+                        char* inData = ((char*)packet->data);
+                        //allow the current state to process whatever data is received
+                        currentState->OnReceive(inData, packet->len);
+                    }
+                    else {
+                        collectedAllPackets = true;
+                    }
                 }
             }
 #pragma endregion receivePackets
@@ -100,9 +106,23 @@ void GameStateMachine::Run() {
                 if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
                     running = false;
                 }
+                if (event.type == SDL_WINDOWEVENT) {
+                    if (event.window.event == SDL_WINDOWEVENT_MINIMIZED) {
+                        std::cout << "Window minimized" << std::endl;
+                        // Optional: Reduce updates or rendering to save resources but keep the game running
+                    }
+                    else if (event.window.event == SDL_WINDOWEVENT_HIDDEN) {
+                        std::cout << "Window hidden" << std::endl;
+                        // Optional: Similar to minimized, but game can keep updating
+                    }
+                }
+                if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) {
+                    // Don't pause the game or rendering here if you want the game to keep running
+                    std::cout << "Window lost focus" << std::endl;
+                }
             }
 #pragma endregion input
-
+            SDL_Delay(3); // prevent CPU overuse
             currentState->Render(settings->renderer);
             currentState = nextState;
         }

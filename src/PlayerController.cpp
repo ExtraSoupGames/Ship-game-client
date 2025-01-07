@@ -60,7 +60,7 @@ PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager*
     attackCooldown = 500;
     playerHealth = 100;
     maxHealth = playerHealth;
-    playerSpeed = 10;
+    playerSpeed = 40;
     //dash values
     dashCooldown = 1000; // time after start of dash when another dash can be initiated, must be greather than dashduration
     dashDuration = 250; // time spent physically dashing
@@ -69,7 +69,7 @@ PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager*
     stunDuration = 500;
     //starting position / hitbox size
     xPos = 100;
-    yPos = 100;
+    yPos = 50;
     width = 10;
     height = 24;
     //used later
@@ -93,7 +93,7 @@ PlayerController::PlayerController(GameStateMachine* pMachine, CollisionManager*
 
 #pragma region Getters
 PlayerState PlayerController::GetState() {
-    return *new PlayerState(direction, movementState, attackState, inputs->GetAnimationID());
+    return *new PlayerState(direction, movementState, attackState, inputs->GetAnimationID() - 1);
 }
 int PlayerController::GetXForServer()
 {
@@ -221,7 +221,7 @@ void PlayerController::UpdateMove(double deltaTime, int screenScaling){
         //0 or 1 is still or moving so just do movement code for either incase the still state is inaccurate
     case 0:
     case 1:
-        UpdateBasicMovement(deltaTime * screenScaling); // multiplying by screen scaling is a hacky way to adjust player speed for screen size
+        UpdateBasicMovement(deltaTime); // multiplying by screen scaling is a hacky way to adjust player speed for screen size
         break;
     case 2:
         UpdateDashMovement();
@@ -380,6 +380,11 @@ void PlayerController::Render(SDL_Renderer* renderer, GlobalSettingsProfile* set
 void PlayerController::ReloadTexturesWithPalette(string palette)
 {
     Animatable::ReloadAllFrames(*new vector<string>{ "%CatStill", "%CatStraight", "%CatLeft", "%CatRight", "%CatUp", "%CatDash"}, machine->settings->textureManager, "Cats\\Cat" + palette);
+}
+void PlayerController::ResetPosition()
+{
+    xPos = 100;
+    yPos = 50;
 }
 #pragma endregion PlayerController
 

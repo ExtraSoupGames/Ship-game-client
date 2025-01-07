@@ -188,14 +188,12 @@ EnemyAttackData Clingabing::GetAttackData()
 #pragma region OtherPlayer
 void OtherPlayer::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings, int camOffX, int camOffY) {
     if (isAlive) {
-        SDL_Rect* playerRect = new SDL_Rect{ (x - camOffX) * settings->screenScaling(), (y - camOffY) * settings->screenScaling(), 20, 20 };
         if (state.attackState == 1) {
             SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
         }
         else {
             SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
         }
-        SDL_RenderDrawRect(renderer, playerRect);
         Animatable::UpdateAnimation();
         Animatable::Render(renderer, x - camOffX, y - camOffY, 16, 32, settings);
         switch (state.movementState) {
@@ -209,7 +207,7 @@ void OtherPlayer::Render(SDL_Renderer* renderer, GlobalSettingsProfile* settings
             break;
         case 1:
             //walking
-            Animatable::PlayAnimation(state.animationState);
+            Animatable::PlayAnimation(state.animationState + 1);
             break;
         }
     }

@@ -170,6 +170,7 @@ void MyGame::OnReceive(char* data, int messagelength) {
         string reportData = message.substr(32,  32);
         int timeSurvived = ServerManager::IntDecompress(reportData);
         GameReport* report = new GameReport(timeSurvived);
+        playerController->ResetPosition();
         machine->SwitchState(new GameOver(machine, report));
     }
     if (messageType == "0111") { // time survived display code

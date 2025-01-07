@@ -47,11 +47,10 @@ int main(int argc, char* argv[]) {
     GameState* gameState = (GameState*)new MainMenu(game);
     game->SwitchState(gameState);
     game->receivingPackets = true;
-
     game->Run();
-    // Clean up
     SDLNet_Quit();
     SDL_Quit();
+    Mix_Quit();
 
     return 0;
 }

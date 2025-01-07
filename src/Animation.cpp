@@ -87,8 +87,6 @@ void Animatable::UpdateAnimation() {
 	if (animating) {
 		float frameDuration = animations->at(currentAnimation)->frameDuration();
 		if (SDL_GetTicks() - lastAnimated > frameDuration) {
-			SetTexture(animations->at(currentAnimation)->frames[currentFrame].texture);
-			lastAnimated += frameDuration;
 			if (!(currentFrame < animations->at(currentAnimation)->frames.size() - 1)) {
 				currentFrame = 0;
 				if (!animations->at(currentAnimation)->looping) {
@@ -98,6 +96,8 @@ void Animatable::UpdateAnimation() {
 			else {
 				currentFrame++;
 			}
+			SetTexture(animations->at(currentAnimation)->frames[currentFrame].texture);
+			lastAnimated += frameDuration;
 		}
 	}
 }

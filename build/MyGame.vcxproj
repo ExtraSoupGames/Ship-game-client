@@ -92,16 +92,18 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <SuppressStartupBanner>
-      </SuppressStartupBanner>
+      <SupportJustMyCode></SupportJustMyCode>
+      <SuppressStartupBanner></SuppressStartupBanner>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
@@ -133,20 +135,23 @@
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Users\jonny\Desktop\CI628\libs\SDL2\include;C:\Users\jonny\Desktop\CI628\libs\SDL2_image\include;C:\Users\jonny\Desktop\CI628\libs\SDL2_mixer\include;C:\Users\jonny\Desktop\CI628\libs\SDL2_ttf\include;C:\Users\jonny\Desktop\CI628\libs\SDL2_net\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <SuppressStartupBanner>
-      </SuppressStartupBanner>
+      <SupportJustMyCode></SupportJustMyCode>
+      <SuppressStartupBanner></SuppressStartupBanner>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
@@ -178,20 +183,23 @@
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Users\jonny\Desktop\CI628\libs\SDL2\include;C:\Users\jonny\Desktop\CI628\libs\SDL2_image\include;C:\Users\jonny\Desktop\CI628\libs\SDL2_mixer\include;C:\Users\jonny\Desktop\CI628\libs\SDL2_ttf\include;C:\Users\jonny\Desktop\CI628\libs\SDL2_net\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
       <Optimization>MinSpace</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <SuppressStartupBanner>
-      </SuppressStartupBanner>
+      <SupportJustMyCode></SupportJustMyCode>
+      <SuppressStartupBanner></SuppressStartupBanner>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <DebugInformationFormat>
       </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
@@ -223,19 +231,22 @@
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Users\jonny\Desktop\CI628\libs\SDL2\include;C:\Users\jonny\Desktop\CI628\libs\SDL2_image\include;C:\Users\jonny\Desktop\CI628\libs\SDL2_mixer\include;C:\Users\jonny\Desktop\CI628\libs\SDL2_ttf\include;C:\Users\jonny\Desktop\CI628\libs\SDL2_net\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <MinimalRebuild></MinimalRebuild>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <SuppressStartupBanner>
-      </SuppressStartupBanner>
+      <SupportJustMyCode></SupportJustMyCode>
+      <SuppressStartupBanner></SuppressStartupBanner>
       <UseFullPaths>false</UseFullPaths>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
@@ -268,7 +279,7 @@
       <UseUtf8Encoding>Always</UseUtf8Encoding>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/jonny/Desktop/CI628/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\bin\cmake.exe -SC:/Users/jonny/Desktop/CI628 -BC:/Users/jonny/Desktop/CI628/build --check-stamp-file C:/Users/jonny/Desktop/CI628/build/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/jonny/Desktop/CI628 -BC:/Users/jonny/Desktop/CI628/build --check-stamp-file C:/Users/jonny/Desktop/CI628/build/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -276,12 +287,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.24.2\CMakeCXXCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.24.2\CMakeRCCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.24.2\CMakeSystem.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeCXXInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeCommonLanguageInclude.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeGenericSystem.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeInitializeConfigs.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeLanguageInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeRCInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeSystemSpecificInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Compiler\MSVC-CXX.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Compiler\MSVC.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows-MSVC.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\WindowsPaths.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.31.3\CMakeCXXCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.31.3\CMakeRCCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.31.3\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\jonny\Desktop\CI628\build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/jonny/Desktop/CI628/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\bin\cmake.exe -SC:/Users/jonny/Desktop/CI628 -BC:/Users/jonny/Desktop/CI628/build --check-stamp-file C:/Users/jonny/Desktop/CI628/build/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/jonny/Desktop/CI628 -BC:/Users/jonny/Desktop/CI628/build --check-stamp-file C:/Users/jonny/Desktop/CI628/build/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -289,12 +300,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.24.2\CMakeCXXCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.24.2\CMakeRCCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.24.2\CMakeSystem.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeCXXInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeCommonLanguageInclude.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeGenericSystem.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeInitializeConfigs.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeLanguageInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeRCInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeSystemSpecificInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Compiler\MSVC-CXX.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Compiler\MSVC.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows-MSVC.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\WindowsPaths.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.31.3\CMakeCXXCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.31.3\CMakeRCCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.31.3\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\jonny\Desktop\CI628\build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/jonny/Desktop/CI628/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
-C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\bin\cmake.exe -SC:/Users/jonny/Desktop/CI628 -BC:/Users/jonny/Desktop/CI628/build --check-stamp-file C:/Users/jonny/Desktop/CI628/build/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/jonny/Desktop/CI628 -BC:/Users/jonny/Desktop/CI628/build --check-stamp-file C:/Users/jonny/Desktop/CI628/build/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -302,12 +313,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.24.2\CMakeCXXCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.24.2\CMakeRCCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.24.2\CMakeSystem.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeCXXInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeCommonLanguageInclude.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeGenericSystem.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeInitializeConfigs.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeLanguageInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeRCInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeSystemSpecificInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Compiler\MSVC-CXX.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Compiler\MSVC.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows-MSVC.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\WindowsPaths.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.31.3\CMakeCXXCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.31.3\CMakeRCCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.31.3\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\jonny\Desktop\CI628\build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
       <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/jonny/Desktop/CI628/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
-C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\bin\cmake.exe -SC:/Users/jonny/Desktop/CI628 -BC:/Users/jonny/Desktop/CI628/build --check-stamp-file C:/Users/jonny/Desktop/CI628/build/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/jonny/Desktop/CI628 -BC:/Users/jonny/Desktop/CI628/build --check-stamp-file C:/Users/jonny/Desktop/CI628/build/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -315,17 +326,13 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.24.2\CMakeCXXCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.24.2\CMakeRCCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.24.2\CMakeSystem.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeCXXInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeCommonLanguageInclude.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeGenericSystem.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeInitializeConfigs.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeLanguageInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeRCInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeSystemSpecificInformation.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Compiler\MSVC-CXX.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Compiler\MSVC.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows-MSVC.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\Windows.cmake;C:\Users\jonny\Documents\cmake-3.24.2-windows-x86_64\share\cmake-3.24\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.31\Modules\Platform\WindowsPaths.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.31.3\CMakeCXXCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.31.3\CMakeRCCompiler.cmake;C:\Users\jonny\Desktop\CI628\build\CMakeFiles\3.31.3\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\jonny\Desktop\CI628\build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\HealthBar.cpp" />
-    <ClCompile Include="..\src\SoundManager.cpp" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Animation.cpp" />
-    <ClInclude Include="..\src\HealthBar.h" />
-    <ClInclude Include="..\src\SoundManager.h" />
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Animation.h" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Button.cpp" />
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Button.h" />
@@ -346,6 +353,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\GameTimeDisplay.h" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\GlobalSettings.cpp" />
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\GlobalSettings.h" />
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\HealthBar.cpp" />
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\HealthBar.h" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Interpolator.cpp" />
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Interpolator.h" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Main.cpp" />
@@ -369,6 +378,8 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\ServerManager.h" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\SettingsMenu.cpp" />
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\SettingsMenu.h" />
+    <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\SoundManager.cpp" />
+    <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\SoundManager.h" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\StartRoom.cpp" />
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\StartRoom.h" />
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\TextDisplay.cpp" />
@@ -384,6 +395,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\jonny\Desktop\CI628\src\Vector2.cpp" />
     <ClInclude Include="C:\Users\jonny\Desktop\CI628\src\Vector2.h" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="C:\Users\jonny\Desktop\CI628\build\ZERO_CHECK.vcxproj">
       <Project>{31E3E567-8CD3-3714-9914-2EBFA31D157D}</Project>
